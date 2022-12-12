@@ -9,7 +9,7 @@ list_animal_ids(
 )
 }
 \arguments{
-\item{connection}{A list with the username and password to connect to the ETN database.}
+\item{con}{A list with the username and password to connect to the ETN database.}
 }
 \value{
 A vector of all unique \code{id_pk} present in \code{common.animal_release}.

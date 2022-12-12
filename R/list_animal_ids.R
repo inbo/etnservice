@@ -1,6 +1,6 @@
 #' List all available animal ids
 #'
-#' @param connection A list with the username and password to connect to the ETN database.
+#' @param con A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `id_pk` present in `common.animal_release`.
 #'
