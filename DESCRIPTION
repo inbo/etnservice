@@ -1,7 +1,7 @@
 Package: etnservice
 Title: Serve Data from the European Tracking Network
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person("Pieter", "Huybrechts", , "pieter.huybrechts@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6658-6062")),
     person("Peter", "Desmet", , "peter.desmet@inbo.be", role = "aut",
@@ -9,7 +9,7 @@ Authors@R:
     person("Research Institute for Nature and Forest (INBO)", role = "cph",
            comment = "https://www.vlaanderen.be/inbo/en-gb/"),
     person("LifeWatch Belgium", role = "fnd",
-           comment = "https://lifewatch.be")
+           comment = "https://lifewatch.be"))
 Description: Provides API endpoints to the European Tracking Network. Designed 
     to be used with OpenCPU and the 'etn' package.
 License: MIT + file LICENSE
