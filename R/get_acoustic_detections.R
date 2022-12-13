@@ -74,7 +74,10 @@
 #'   receiver_id = "VR2W-124070",
 #'   acoustic_project_code = "demer"
 #' )
-get_acoustic_detections <- function(connection = con,
+get_acoustic_detections <- function(con = list(
+                                      username = Sys.getenv("userid"),
+                                      password = Sys.getenv("pwd")
+                                    ),
                                     start_date = NULL,
                                     end_date = NULL,
                                     acoustic_tag_id = NULL,
@@ -84,8 +87,11 @@ get_acoustic_detections <- function(connection = con,
                                     receiver_id = NULL,
                                     station_name = NULL,
                                     limit = FALSE) {
-  # Check connection
-  check_connection(connection)
+  # Check if we can make a connection
+  check_connection(con)
+
+  # create connection object
+  connection <- connect_to_etn(con$username, con$password)
 
   # Check start_date
   if (is.null(start_date)) {
