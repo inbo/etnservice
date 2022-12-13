@@ -5,7 +5,19 @@
 #' @param connection A connection to the ETN database. Defaults to `con`.
 #' @family helper functions
 #' @noRd
-check_connection <- function(connection) {
+check_connection <- function(con = list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)) {
+
+  assertthat::assert_that(is.list(con),
+                          msg = "Provided credentials must be a list")
+
+  assertthat::assert_that(all(names(con) %in% c("username", "password")),
+                          msg = "Please provide named arguments username and password")
+
+  connection <- connect_to_etn(con$username, con$password)
+
   assertthat::assert_that(
     methods::is(connection, "PostgreSQL"),
     msg = "Not a connection object to database."
