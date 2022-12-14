@@ -2,7 +2,7 @@
 
 #' Check the validity of the database connection
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param con A list with the username and password to connect to the ETN database.
 #' @family helper functions
 #' @noRd
 check_connection <- function(con = list(
