@@ -3,7 +3,7 @@
 #' Get data for acoustic detections, with options to filter results. Use
 #' `limit` to limit the number of returned records.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param con A list with the username and password to connect to the ETN database.
 #' @param start_date Character. Start date (inclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
 #' @param end_date Character. End date (exclusive) in ISO 8601 format (
