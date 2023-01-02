@@ -27,6 +27,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Set default connection variable
 #' con <- connect_to_etn()
 #'
@@ -74,6 +75,7 @@
 #'   receiver_id = "VR2W-124070",
 #'   acoustic_project_code = "demer"
 #' )
+#' }
 get_acoustic_detections <- function(con = list(
                                       username = Sys.getenv("userid"),
                                       password = Sys.getenv("pwd")
