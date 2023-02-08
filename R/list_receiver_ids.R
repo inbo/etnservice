@@ -5,7 +5,11 @@
 #' @return A vector of all unique `receiver` present in `acoustic.receivers`.
 #'
 #' @export
-list_receiver_ids <- function(connection = con) {
+list_receiver_ids <- function(con = list(
+                                username = Sys.getenv("userid"),
+                                password = Sys.getenv("pwd")
+                              )) {
+  connection <- connect_to_etn(con)
   query <- glue::glue_sql(
     "SELECT DISTINCT receiver FROM acoustic.receivers",
     .con = connection
