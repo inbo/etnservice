@@ -5,7 +5,10 @@
 #' @return A vector of all unique `acoustic_tag_id` in `acoustic_tag_id.sql`.
 #'
 #' @export
-list_acoustic_tag_ids <- function(connection = con) {
+list_acoustic_tag_ids <- function(connection = list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)) {
   acoustic_tag_id_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
     .con = connection
