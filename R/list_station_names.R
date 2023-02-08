@@ -6,7 +6,11 @@
 #'   `acoustic.deployments`.
 #'
 #' @export
-list_station_names <- function(connection = con) {
+list_station_names <- function(con = list(
+                                 username = Sys.getenv("userid"),
+                                 password = Sys.getenv("pwd")
+                               )) {
+  connection <- connect_to_etn(con)
   query <- glue::glue_sql(
     "SELECT DISTINCT station_name FROM acoustic.deployments WHERE station_name IS NOT NULL",
     .con = connection
