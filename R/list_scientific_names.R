@@ -6,7 +6,11 @@
 #'   `common.animal_release`.
 #'
 #' @export
-list_scientific_names <- function(connection = con) {
+list_scientific_names <- function(con = list(
+                                    username = Sys.getenv("userid"),
+                                    password = Sys.getenv("pwd")
+                                  )) {
+  connection <- connect_to_etn(con)
   query <- glue::glue_sql(
     "SELECT DISTINCT scientific_name FROM common.animal_release",
     .con = connection
