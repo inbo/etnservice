@@ -92,7 +92,7 @@ get_acoustic_detections <- function(con = list(
 
 
   # create connection object
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(con)
 
   # Check if we can make a connection
   check_connection(connection)
