@@ -1,4 +1,7 @@
-con <- connect_to_etn()
+con <- list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)
 
 test_that("list_receiver_ids() returns unique list of values", {
   vector <- list_receiver_ids(con)
