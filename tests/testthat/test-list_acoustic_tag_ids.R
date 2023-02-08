@@ -1,5 +1,10 @@
+credentials <- list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)
+
 test_that("list_acoustic_tag_ids() returns unique list of values", {
-  vector <- list_acoustic_tag_ids()
+  vector <- list_acoustic_tag_ids(credentials)
 
   expect_is(vector, "character")
   expect_false(any(duplicated(vector)))
