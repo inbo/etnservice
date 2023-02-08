@@ -6,7 +6,12 @@
 #'   `project.sql`.
 #'
 #' @export
-list_acoustic_project_codes <- function(connection = con) {
+list_acoustic_project_codes <- function(con = list(
+                                          username = Sys.getenv("userid"),
+                                          password = Sys.getenv("pwd")
+                                        )) {
+  connection <- connect_to_etn(con)
+
   project_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "project.sql", package = "etn")),
     .con = connection
