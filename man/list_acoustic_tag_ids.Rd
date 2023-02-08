@@ -5,7 +5,7 @@
 \title{List all available acoustic tag ids}
 \usage{
 list_acoustic_tag_ids(
-  connection = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  con = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
 )
 }
 \arguments{
