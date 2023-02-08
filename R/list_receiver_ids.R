@@ -9,7 +9,7 @@ list_receiver_ids <- function(con = list(
                                 username = Sys.getenv("userid"),
                                 password = Sys.getenv("pwd")
                               )) {
-  connection <- connect_to_etn(con)
+  connection <- connect_to_etn(con$username, con$password)
   query <- glue::glue_sql(
     "SELECT DISTINCT receiver FROM acoustic.receivers",
     .con = connection

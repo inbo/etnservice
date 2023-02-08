@@ -9,7 +9,7 @@ list_acoustic_tag_ids <- function(con = list(
   username = Sys.getenv("userid"),
   password = Sys.getenv("pwd")
 )) {
-  connection <- connect_to_etn(con)
+  connection <- connect_to_etn(con$username, con$password)
   acoustic_tag_id_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
     .con = connection

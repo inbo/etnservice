@@ -10,7 +10,7 @@ list_scientific_names <- function(con = list(
                                     username = Sys.getenv("userid"),
                                     password = Sys.getenv("pwd")
                                   )) {
-  connection <- connect_to_etn(con)
+  connection <- connect_to_etn(con$username, con$password)
   query <- glue::glue_sql(
     "SELECT DISTINCT scientific_name FROM common.animal_release",
     .con = connection

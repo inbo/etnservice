@@ -10,7 +10,7 @@ list_acoustic_project_codes <- function(con = list(
                                           username = Sys.getenv("userid"),
                                           password = Sys.getenv("pwd")
                                         )) {
-  connection <- connect_to_etn(con)
+  connection <- connect_to_etn(con$username, con$password)
 
   project_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "project.sql", package = "etn")),
