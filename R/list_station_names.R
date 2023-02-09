@@ -1,6 +1,6 @@
 #' List all available station names
 #'
-#' @param connection A connection to the ETN database. Defaults to `credentials`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `station_name` present in
 #'   `acoustic.deployments`.

@@ -1,6 +1,6 @@
 #' List all available acoustic tag ids
 #'
-#' @param connection A connection to the ETN database. Defaults to `credentials`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `acoustic_tag_id` in `acoustic_tag_id.sql`.
 #'
