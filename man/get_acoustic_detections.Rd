@@ -5,7 +5,7 @@
 \title{Get acoustic detections data}
 \usage{
 get_acoustic_detections(
-  con = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
   start_date = NULL,
   end_date = NULL,
   acoustic_tag_id = NULL,
@@ -18,7 +18,7 @@ get_acoustic_detections(
 )
 }
 \arguments{
-\item{con}{A list with the username and password to connect to the ETN database.}
+\item{credentials}{A list with the username and password to connect to the ETN database.}
 
 \item{start_date}{Character. Start date (inclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
