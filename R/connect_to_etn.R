@@ -18,8 +18,7 @@
 #' # Connect to the ETN database using non-default username and password
 #' con <- connect_to_etn(username = "my_username", password = "my_password")
 #' }
-connect_to_etn <- function(username,password) {
-
+connect_to_etn <- function(username, password) {
   connection <- DBI::dbConnect(
     odbc::odbc(),
     "ETN",
