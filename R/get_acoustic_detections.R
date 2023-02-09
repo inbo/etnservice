@@ -3,7 +3,7 @@
 #' Get data for acoustic detections, with options to filter results. Use
 #' `limit` to limit the number of returned records.
 #'
-#' @param con A list with the username and password to connect to the ETN database.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param start_date Character. Start date (inclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
 #' @param end_date Character. End date (exclusive) in ISO 8601 format (
@@ -76,7 +76,7 @@
 #'   acoustic_project_code = "demer"
 #' )
 #' }
-get_acoustic_detections <- function(con = list(
+get_acoustic_detections <- function(credentials = list(
                                       username = Sys.getenv("userid"),
                                       password = Sys.getenv("pwd")
                                     ),
@@ -92,7 +92,7 @@ get_acoustic_detections <- function(con = list(
 
 
   # create connection object
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
 
   # Check if we can make a connection
   check_connection(connection)
@@ -119,7 +119,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     acoustic_tag_id <- check_value(
       acoustic_tag_id,
-      list_acoustic_tag_ids(con),
+      list_acoustic_tag_ids(credentials),
       "acoustic_tag_id"
     )
     acoustic_tag_id_query <- glue::glue_sql(
@@ -135,7 +135,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     animal_project_code <- check_value(
       animal_project_code,
-      list_animal_project_codes(con),
+      list_animal_project_codes(credentials),
       "animal_project_code",
       lowercase = TRUE
     )
@@ -151,7 +151,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     scientific_name <- check_value(
       scientific_name,
-      list_scientific_names(con),
+      list_scientific_names(credentials),
       "scientific_name"
     )
     scientific_name_query <- glue::glue_sql(
@@ -166,7 +166,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     acoustic_project_code <- check_value(
       acoustic_project_code,
-      list_acoustic_project_codes(con),
+      list_acoustic_project_codes(credentials),
       "acoustic_project_code",
       lowercase = TRUE
     )
@@ -182,7 +182,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     receiver_id <- check_value(
       receiver_id,
-      list_receiver_ids(con),
+      list_receiver_ids(credentials),
       "receiver_id"
     )
     receiver_id_query <- glue::glue_sql(
@@ -197,7 +197,7 @@ get_acoustic_detections <- function(con = list(
   } else {
     station_name <- check_value(
       station_name,
-      list_station_names(con),
+      list_station_names(credentials),
       "station_name"
     )
     station_name_query <- glue::glue_sql(
@@ -269,7 +269,7 @@ get_acoustic_detections <- function(con = list(
   detections <-
     detections %>%
     dplyr::arrange(
-      factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(con)),
+      factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(credentials)),
       .data$date_time
     )
 

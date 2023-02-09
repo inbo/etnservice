@@ -5,11 +5,11 @@
 \title{List all available acoustic project codes}
 \usage{
 list_acoustic_project_codes(
-  con = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
 )
 }
 \arguments{
-\item{connection}{A connection to the ETN database. Defaults to \code{con}.}
+\item{credentials}{A list with the username and password to connect to the ETN database.}
 }
 \value{
 A vector of all unique \code{project_code} of \code{type = "acoustic"} in

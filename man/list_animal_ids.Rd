@@ -5,11 +5,11 @@
 \title{List all available animal ids}
 \usage{
 list_animal_ids(
-  con = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
 )
 }
 \arguments{
-\item{con}{A list with the username and password to connect to the ETN database.}
+\item{credentials}{A list with the username and password to connect to the ETN database.}
 }
 \value{
 A vector of all unique \code{id_pk} present in \code{common.animal_release}.

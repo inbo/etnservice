@@ -1,15 +1,15 @@
 #' List all available acoustic tag ids
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `acoustic_tag_id` in `acoustic_tag_id.sql`.
 #'
 #' @export
-list_acoustic_tag_ids <- function(con = list(
+list_acoustic_tag_ids <- function(credentials = list(
   username = Sys.getenv("userid"),
   password = Sys.getenv("pwd")
 )) {
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
   acoustic_tag_id_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
     .con = connection
