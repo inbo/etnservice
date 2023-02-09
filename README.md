@@ -5,10 +5,14 @@
 
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of etnservice is to to serve data from the European Tracking
-Network as a restful API. \#\# About/Data Policy
+Network as a restful API.
+
+## About/Data Policy
 
 Etn provides functionality to access data from the [European Tracking
 Network (ETN)](http://www.lifewatch.be/etn/) database hosted by the
@@ -73,7 +77,8 @@ However, a fork of the [etn package](https://github.com/inbo/etn) is
 currently in development that will allow you to do this using built in
 functions.
 
-Another example of the same request as above, but now using curl:
+Another example of the same request as above, but now using
+[curl](https://curl.se/):
 
 ``` bash
 #! /bin/bash

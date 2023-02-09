@@ -16,9 +16,11 @@ knitr::opts_chunk$set(
 # etnservice
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of etnservice is to to serve data from the European Tracking Network as a restful API.
+
 ## About/Data Policy
 
 Etn provides functionality to access data from the [European Tracking
