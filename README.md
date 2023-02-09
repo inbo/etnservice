@@ -64,7 +64,7 @@ endpoint <- "https://opencpu.lifewatch.be/library/etn/R/list_animal_ids"
 response <-
     httr::POST(paste(endpoint, "json", sep = "/"),
       body = list(
-        con = glue::glue('list(username = "{username}", password = "{askpass::askpass()}")')
+        credentials = glue::glue('list(username = "{username}", password = "{askpass::askpass()}")')
       )
     )
 # Take the response of the server, and convert it into an R object we can use
@@ -86,7 +86,7 @@ curl --location --request POST 'https://opencpu.lifewatch.be/library/etnservice/
 --header 'Content-Type: application/json' \
 --header 'Cookie: vliz_webc=vliz_webc2' \
 --data-raw '{
-    "con": {
+    "credentials": {
         "username": "<your username>",
         "password": "<your password>"
     }

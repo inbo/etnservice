@@ -1,16 +1,16 @@
 #' List all available acoustic project codes
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param connection A connection to the ETN database. Defaults to `credentials`.
 #'
 #' @return A vector of all unique `project_code` of `type = "acoustic"` in
 #'   `project.sql`.
 #'
 #' @export
-list_acoustic_project_codes <- function(con = list(
+list_acoustic_project_codes <- function(credentials = list(
                                           username = Sys.getenv("userid"),
                                           password = Sys.getenv("pwd")
                                         )) {
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
 
   project_sql <- glue::glue_sql(
     readr::read_file(system.file("sql", "project.sql", package = "etn")),

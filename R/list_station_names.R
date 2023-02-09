@@ -1,16 +1,16 @@
 #' List all available station names
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param connection A connection to the ETN database. Defaults to `credentials`.
 #'
 #' @return A vector of all unique `station_name` present in
 #'   `acoustic.deployments`.
 #'
 #' @export
-list_station_names <- function(con = list(
+list_station_names <- function(credentials = list(
                                  username = Sys.getenv("userid"),
                                  password = Sys.getenv("pwd")
                                )) {
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
 
   query <- glue::glue_sql(
     "SELECT DISTINCT station_name FROM acoustic.deployments WHERE station_name IS NOT NULL",

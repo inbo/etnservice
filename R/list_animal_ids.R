@@ -1,18 +1,18 @@
 #' List all available animal ids
 #'
-#' @param con A list with the username and password to connect to the ETN database.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `id_pk` present in `common.animal_release`.
 #'
 #' @export
-list_animal_ids <- function(con = list(
+list_animal_ids <- function(credentials = list(
                               username = Sys.getenv("userid"),
                               password = Sys.getenv("pwd")
                             )) {
-  stopifnot(is.list(con))
-  stopifnot(any(names(con) == c("username", "password")))
+  stopifnot(is.list(credentials))
+  stopifnot(any(names(credentials) == c("username", "password")))
 
-  connection <- connect_to_etn(con$username, con$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
 
   query <- glue::glue_sql(
     "SELECT DISTINCT id_pk FROM common.animal_release",

@@ -2,14 +2,14 @@
 
 #' Check the validity of the database connection
 #'
-#' @param con A list with the username and password to connect to the ETN database.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @family helper functions
 #' @noRd
-check_connection <- function(con = list(
+check_connection <- function(credentials = list(
   username = Sys.getenv("userid"),
   password = Sys.getenv("pwd")
-)) {
-
+), con = NULL) {
+  if(con != NULL){con <- connect_to_etn(credentials)}
   assertthat::assert_that(
     methods::is(con, "PostgreSQL"),
     msg = "Not a connection object to database."

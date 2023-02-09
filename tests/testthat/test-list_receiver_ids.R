@@ -1,10 +1,10 @@
-con <- list(
+credentials <- list(
   username = Sys.getenv("userid"),
   password = Sys.getenv("pwd")
 )
 
 test_that("list_receiver_ids() returns unique list of values", {
-  vector <- list_receiver_ids(con)
+  vector <- list_receiver_ids(credentials)
 
   expect_is(vector, "character")
   expect_false(any(duplicated(vector)))
