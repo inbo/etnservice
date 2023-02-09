@@ -10,19 +10,11 @@ check_connection <- function(con = list(
   password = Sys.getenv("pwd")
 )) {
 
-  assertthat::assert_that(is.list(con),
-                          msg = "Provided credentials must be a list")
-
-  assertthat::assert_that(all(names(con) %in% c("username", "password")),
-                          msg = "Please provide named arguments username and password")
-
-  connection <- connect_to_etn(con$username, con$password)
-
   assertthat::assert_that(
-    methods::is(connection, "PostgreSQL"),
+    methods::is(con, "PostgreSQL"),
     msg = "Not a connection object to database."
   )
-  assertthat::assert_that(connection@info$dbname == "ETN")
+  assertthat::assert_that(con@info$dbname == "ETN")
 }
 
 #' Check input value against valid values

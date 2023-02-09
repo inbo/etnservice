@@ -54,6 +54,7 @@ Get data for acoustic detections, with options to filter results. Use
 \code{limit} to limit the number of returned records.
 }
 \examples{
+\dontrun{
 # Set default connection variable
 con <- connect_to_etn()
 
@@ -101,4 +102,5 @@ get_acoustic_detections(
   receiver_id = "VR2W-124070",
   acoustic_project_code = "demer"
 )
+}
 }

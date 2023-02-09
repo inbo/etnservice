@@ -1,4 +1,7 @@
-con <- connect_to_etn()
+con <- list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)
 
 test_that("get_acoustic_detections() returns error for incorrect connection", {
   expect_error(
