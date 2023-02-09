@@ -1,14 +1,25 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # etnservice
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-The goal of etnservice is to to serve data from the European Tracking
-Network as a restful API. \#\# About/Data Policy
+The goal of etnservice is to to serve data from the European Tracking Network as a restful API.
+## About/Data Policy
 
 Etn provides functionality to access data from the [European Tracking
 Network (ETN)](http://www.lifewatch.be/etn/) database hosted by the
@@ -29,12 +40,9 @@ is password protected. A login can be requested at
 
 ## Installation
 
-etnservice needs direct access to the [ETN](https://lifewatch.be/etn/)
-database, thus a local install will not function without a copy of this
-database.
+etnservice needs direct access to the [ETN](https://lifewatch.be/etn/) database, thus a local install will not function without a copy of this database.
 
-You can install the development version of etnservice from
-[GitHub](https://github.com/) with:
+You can install the development version of etnservice from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -45,7 +53,7 @@ devtools::install_github("inbo/etnservice")
 
 This is a basic example which shows you how adress the API directly:
 
-``` r
+```{r example, eval = FALSE}
 library(httr) # to talk to the internet
 library(magrittr) # to use pipes
 library(jsonlite) # to work with JSON files
@@ -67,15 +75,13 @@ response <-
 response %>%
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON(simplifyVector = TRUE)
+
 ```
 
-However, a fork of the [etn package](https://github.com/inbo/etn) is
-currently in development that will allow you to do this using built in
-functions.
+However, a fork of the [etn package](https://github.com/inbo/etn) is currently in development that will allow you to do this using built in functions. 
 
-Another example of the same request as above, but now using curl:
-
-``` bash
+Another example of the same request as above, but now using [curl](https://curl.se/):
+```{bash,eval = FALSE}
 #! /bin/bash
 curl --location --request POST 'https://opencpu.lifewatch.be/library/etnservice/R/list_animal_ids/json' \
 --header 'Content-Type: application/json' \
@@ -87,3 +93,4 @@ curl --location --request POST 'https://opencpu.lifewatch.be/library/etnservice/
     }
 }'
 ```
+
