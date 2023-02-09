@@ -4,7 +4,7 @@
 \alias{connect_to_etn}
 \title{Connect to the ETN database}
 \usage{
-connect_to_etn(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+connect_to_etn(username, password)
 }
 \arguments{
 \item{username}{Character. Username to use for the connection.}
