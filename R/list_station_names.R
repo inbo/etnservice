@@ -11,6 +11,7 @@ list_station_names <- function(con = list(
                                  password = Sys.getenv("pwd")
                                )) {
   connection <- connect_to_etn(con$username, con$password)
+
   query <- glue::glue_sql(
     "SELECT DISTINCT station_name FROM acoustic.deployments WHERE station_name IS NOT NULL",
     .con = connection

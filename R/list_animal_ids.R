@@ -6,10 +6,9 @@
 #'
 #' @export
 list_animal_ids <- function(con = list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
-)) {
-
+                              username = Sys.getenv("userid"),
+                              password = Sys.getenv("pwd")
+                            )) {
   stopifnot(is.list(con))
   stopifnot(any(names(con) == c("username", "password")))
 
@@ -23,6 +22,3 @@ list_animal_ids <- function(con = list(
 
   sort(data$id_pk)
 }
-
-
-
