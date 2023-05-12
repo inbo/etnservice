@@ -13,3 +13,4 @@ pm.test("returns the right animal ids", () => {
 pm.test("Response time is less than 3s", function () {
       pm.expect(pm.response.responseTime).to.be.below(3000);
   });
+
