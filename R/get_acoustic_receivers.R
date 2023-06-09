@@ -2,7 +2,7 @@
 #'
 #' Get data for acoustic receivers, with options to filter results.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param receiver_id Character (vector). One or more receiver identifiers.
 #' @param status Character. One or more statuses, e.g. `available` or `broken`.
 #'
@@ -26,9 +26,15 @@
 #'
 #' # Get a specific acoustic receiver
 #' get_acoustic_receivers(con, receiver_id = "VR2W-124070")
-get_acoustic_receivers <- function(connection = con,
+get_acoustic_receivers <- function(credentials = list(
+                                     username = Sys.getenv("userid"),
+                                     password = Sys.getenv("pwd")
+                                   ),
                                    receiver_id = NULL,
                                    status = NULL) {
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
