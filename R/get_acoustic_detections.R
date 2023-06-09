@@ -91,7 +91,7 @@ get_acoustic_detections <- function(credentials = list(
                                     limit = FALSE) {
 
 
-  # create connection object
+  # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
   # Check if we can make a connection
