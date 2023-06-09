@@ -3,10 +3,10 @@ credentials <- list(
   password = Sys.getenv("pwd")
 )
 
-test_that("get_acoustic_projects() returns error for incorrect credentialsnection", {
+test_that("get_acoustic_projects() returns error for incorrect connection", {
   expect_error(
-    get_acoustic_projects(credentials = "not_a_credentialsnection"),
-    "Not a credentialsnection object to database."
+    get_acoustic_projects(credentials = "not_a_credentials"),
+    "Not a connection object to database."
   )
 })
 
