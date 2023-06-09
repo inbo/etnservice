@@ -39,7 +39,7 @@ get_acoustic_projects <- function(credentials = list(
   } else {
     acoustic_project_code <- check_value(
       acoustic_project_code,
-      list_acoustic_project_codes(connection),
+      list_acoustic_project_codes(credentials),
       "acoustic_project_code",
       lowercase = TRUE
     )
