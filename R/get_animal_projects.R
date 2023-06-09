@@ -2,7 +2,7 @@
 #'
 #' Get data for animal projects, with options to filter results.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
 #'
@@ -21,8 +21,14 @@
 #'
 #' # Get a specific animal project
 #' get_animal_projects(con, animal_project_code = "2014_demer")
-get_animal_projects <- function(connection = con,
+get_animal_projects <- function(credentials = list(
+                                  username = Sys.getenv("userid"),
+                                  password = Sys.getenv("pwd")
+                                ),
                                 animal_project_code = NULL) {
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
