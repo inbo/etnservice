@@ -42,7 +42,7 @@ get_acoustic_receivers <- function(credentials = list(
   if (is.null(receiver_id)) {
     receiver_id_query <- "True"
   } else {
-    valid_receiver_ids <- list_receiver_ids(connection)
+    valid_receiver_ids <- list_receiver_ids(credentials)
     check_value(receiver_id, valid_receiver_ids, "receiver_id")
     receiver_id_query <- glue::glue_sql(
       "receiver.receiver IN ({receiver_id*})",
