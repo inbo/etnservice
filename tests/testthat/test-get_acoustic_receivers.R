@@ -6,7 +6,7 @@ credentials <- list(
 test_that("get_acoustic_receivers() returns error for incorrect credentials", {
   expect_error(
     get_acoustic_receivers(credentials = "not_a_credentials"),
-    "Not a credentialsnection object to database."
+    "Not a connection object to database."
   )
 })
 
