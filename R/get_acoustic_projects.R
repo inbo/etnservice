@@ -2,7 +2,7 @@
 #'
 #' Get data for acoustic projects, with options to filter results.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param acoustic_project_code Character (vector). One or more acoustic
 #'   project codes. Case-insensitive.
 #'
@@ -21,8 +21,15 @@
 #'
 #' # Get a specific acoustic project
 #' get_acoustic_projects(con, acoustic_project_code = "demer")
-get_acoustic_projects <- function(connection = con,
+get_acoustic_projects <- function(credentials = list(
+                                    username = Sys.getenv("userid"),
+                                    password = Sys.getenv("pwd")
+                                  ),
                                   acoustic_project_code = NULL) {
+  # create connection object
+  connection <-
+    connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
