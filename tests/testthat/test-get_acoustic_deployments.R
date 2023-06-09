@@ -3,10 +3,10 @@ credentials <- list(
   password = Sys.getenv("pwd")
 )
 
-test_that("get_acoustic_deployments() returns error for incorrect credentialsnection", {
+test_that("get_acoustic_deployments() returns error for incorrect connection", {
   expect_error(
-    get_acoustic_deployments(credentials = "not_a_credentialsnection"),
-    "Not a credentialsnection object to database."
+    get_acoustic_deployments(credentials = "not_a_credentials"),
+    "Not a credentials object to database."
   )
 })
 
@@ -51,7 +51,7 @@ test_that("get_acoustic_deployments() returns the expected columns", {
     "sync_date_time",
     "time_drift",
     "ar_battery_installation_date",
-    "ar_credentialsfirm",
+    "ar_confirm",
     "transmit_profile",
     "transmit_power_output",
     "log_temperature_stats_period",
