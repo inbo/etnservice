@@ -3,7 +3,7 @@
 #' Get data for deployments of acoustic receivers, with options to filter
 #' results.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param deployment_id Integer (vector). One or more deployment identifiers.
 #' @param receiver_id Character (vector). One or more receiver identifiers.
 #' @param acoustic_project_code Character (vector). One or more acoustic
@@ -40,13 +40,19 @@
 #'
 #' # Get acoustic deployments for two specific stations
 #' get_acoustic_deployments(con, station_name = c("de-9", "de-10"))
-get_acoustic_deployments <- function(connection = con,
-                                     deployment_id = NULL,
-                                     receiver_id = NULL,
-                                     acoustic_project_code = NULL,
-                                     station_name = NULL,
-                                     open_only = FALSE) {
-  # Check connection
+get_acoustic_deployments <- function(
+    credentials = list(username = Sys.getenv("userid"),
+                       password = Sys.getenv("pwd")),
+    deployment_id = NULL,
+    receiver_id = NULL,
+    acoustic_project_code = NULL,
+    station_name = NULL,
+    open_only = FALSE) {
+  # create connection object
+  connection <-
+    connect_to_etn(credentials$username, credentials$password)
+
+  # Check if we can make a connection
   check_connection(connection)
 
   # Check deployment_id
