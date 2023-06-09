@@ -48,6 +48,7 @@ get_acoustic_deployments <- function(
     acoustic_project_code = NULL,
     station_name = NULL,
     open_only = FALSE) {
+
   # create connection object
   connection <-
     connect_to_etn(credentials$username, credentials$password)
@@ -61,7 +62,7 @@ get_acoustic_deployments <- function(
   } else {
     deployment_id <- check_value(
       deployment_id,
-      list_deployment_ids(connection),
+      list_deployment_ids(credentials),
       "receiver_id"
     )
     deployment_id_query <- glue::glue_sql(
@@ -76,7 +77,7 @@ get_acoustic_deployments <- function(
   } else {
     receiver_id <- check_value(
       receiver_id,
-      list_receiver_ids(connection),
+      list_receiver_ids(credentials),
       "receiver_id"
     )
     receiver_id_query <- glue::glue_sql(
@@ -91,7 +92,7 @@ get_acoustic_deployments <- function(
   } else {
     acoustic_project_code <- check_value(
       acoustic_project_code,
-      list_acoustic_project_codes(connection),
+      list_acoustic_project_codes(credentials),
       "acoustic_project_code",
       lowercase = TRUE
     )
@@ -107,7 +108,7 @@ get_acoustic_deployments <- function(
   } else {
     station_name <- check_value(
       station_name,
-      list_station_names(connection),
+      list_station_names(credentials),
       "station_name"
     )
     station_name_query <- glue::glue_sql(
@@ -198,7 +199,7 @@ get_acoustic_deployments <- function(
     deployments %>%
     dplyr::arrange(
       .data$acoustic_project_code,
-      factor(.data$station_name, levels = list_station_names(connection)),
+      factor(.data$station_name, levels = list_station_names(credentials)),
       .data$deploy_date_time
     )
 
