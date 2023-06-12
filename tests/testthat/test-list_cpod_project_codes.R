@@ -1,7 +1,10 @@
-con <- connect_to_etn()
+credentials <- list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)
 
 test_that("list_cpod_project_codes() returns unique list of values", {
-  vector <- list_cpod_project_codes(con)
+  vector <- list_cpod_project_codes(credentials)
 
   expect_is(vector, "character")
   expect_false(any(duplicated(vector)))

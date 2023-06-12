@@ -1,12 +1,22 @@
 #' List all available cpod project codes
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #'
 #' @return A vector of all unique `project_code` of `type = "cpod"` in
 #'   `project.sql`.
 #'
 #' @export
-list_cpod_project_codes <- function(connection = con) {
+list_cpod_project_codes <- function(credentials = list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)) {
+
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
+  # Check if we can make a connection
+  check_connection(connection)
+
   project_query <- glue::glue_sql(
     readr::read_file(system.file("sql", "project.sql", package = "etn")),
     .con = connection
