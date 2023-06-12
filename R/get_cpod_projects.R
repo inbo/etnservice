@@ -72,6 +72,9 @@ get_cpod_projects <- function(credentials = list(
   projects <-
     projects %>%
     dplyr::arrange(.data$project_code)
+  # Close connection
+  DBI::dbDisconnect(connection)
 
+  # Return data
   dplyr::as_tibble(projects)
 }

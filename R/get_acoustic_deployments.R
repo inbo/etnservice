@@ -192,6 +192,9 @@ get_acoustic_deployments <- function(
     ", .con = connection)
   deployments <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Filter on open deployments
   if (open_only) {
     deployments <- filter(deployments, is.na(.data$recover_date_time))

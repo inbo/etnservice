@@ -69,6 +69,9 @@ get_acoustic_projects <- function(credentials = list(
     ", .con = connection)
   projects <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Sort data
   projects <-
     projects %>%

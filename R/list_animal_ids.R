@@ -20,5 +20,8 @@ list_animal_ids <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   sort(data$id_pk)
 }

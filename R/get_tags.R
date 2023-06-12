@@ -205,6 +205,9 @@ get_tags <- function(credentials = list(
     ", .con = connection)
   tags <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Sort data
   tags <-
     tags %>%

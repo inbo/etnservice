@@ -21,5 +21,9 @@ list_acoustic_tag_ids <- function(credentials = list(
   ", .con = connection)
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return acoustic_tag_ids
   stringr::str_sort(data$acoustic_tag_id, numeric = TRUE)
 }

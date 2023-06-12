@@ -93,6 +93,9 @@ write_dwc <- function(credentials = list(
   )
   dwc_occurrence <- DBI::dbGetQuery(connection, dwc_occurrence_sql)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Return object or write files
   return(
     list(dwc_occurrence = dplyr::as_tibble(dwc_occurrence))

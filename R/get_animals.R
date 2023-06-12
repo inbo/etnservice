@@ -243,5 +243,9 @@ get_animals <- function(credentials = list(
       factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials))
     )
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return animals
   dplyr::as_tibble(animals) # Is already a tibble, but added if code above changes
 }

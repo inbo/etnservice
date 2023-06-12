@@ -127,5 +127,9 @@ get_acoustic_receivers <- function(credentials = list(
     receivers %>%
     dplyr::arrange(.data$receiver_id)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return receivers
   dplyr::as_tibble(receivers)
 }
