@@ -13,14 +13,17 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all animal projects
-#' get_animal_projects(con)
+#' get_animal_projects(credentials)
 #'
 #' # Get a specific animal project
-#' get_animal_projects(con, animal_project_code = "2014_demer")
+#' get_animal_projects(credentials, animal_project_code = "2014_demer")
 get_animal_projects <- function(credentials = list(
                                   username = Sys.getenv("userid"),
                                   password = Sys.getenv("pwd")
