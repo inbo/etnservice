@@ -36,26 +36,29 @@ information is available in columns starting with \code{tag} and
 the information is comma-separated.
 }
 \examples{
-# Set default connection variable
-con <- connect_to_etn()
+# Set credentials
+credentials <- list(
+   username = Sys.getenv("userid"),
+   password = Sys.getenv("pwd")
+ )
 
 # Get all animals
-get_animals(con)
+get_animals(credentials)
 
 # Get specific animals
-get_animals(con, animal_id = 305) # Or string value "305"
-get_animals(con, animal_id = c(304, 305, 2827))
+get_animals(credentials, animal_id = 305) # Or string value "305"
+get_animals(credentials, animal_id = c(304, 305, 2827))
 
 # Get animals from specific animal project(s)
-get_animals(con, animal_project_code = "2014_demer")
-get_animals(con, animal_project_code = c("2014_demer", "2015_dijle"))
+get_animals(credentials, animal_project_code = "2014_demer")
+get_animals(credentials, animal_project_code = c("2014_demer", "2015_dijle"))
 
 # Get animals associated with a specific tag_serial_number
-get_animals(con, tag_serial_number = "1187450")
+get_animals(credentials, tag_serial_number = "1187450")
 
 # Get animals of specific species (across all projects)
-get_animals(con, scientific_name = c("Rutilus rutilus", "Silurus glanis"))
+get_animals(credentials, scientific_name = c("Rutilus rutilus", "Silurus glanis"))
 
 # Get animals of a specific species from a specific project
-get_animals(con, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
+get_animals(credentials, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
 }

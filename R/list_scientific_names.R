@@ -17,5 +17,8 @@ list_scientific_names <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   sort(data$scientific_name)
 }

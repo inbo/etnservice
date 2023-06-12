@@ -22,5 +22,9 @@ list_tag_serial_numbers <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return vector
   stringr::str_sort(data$serial_number, numeric = TRUE)
 }

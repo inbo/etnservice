@@ -22,5 +22,8 @@ list_animal_project_codes <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   sort(data$project_code)
 }

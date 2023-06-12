@@ -21,22 +21,25 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all tags
-#' get_tags(con)
+#' get_tags(credentials)
 #'
 #' # Get archival tags, including acoustic-archival
-#' get_tags(con, tag_type = c("archival", "acoustic-archival"))
+#' get_tags(credentials, tag_type = c("archival", "acoustic-archival"))
 #'
 #' # Get tags of specific subtype
-#' get_tags(con, tag_subtype = c("built-in", "range"))
+#' get_tags(credentials, tag_subtype = c("built-in", "range"))
 #'
 #' # Get specific tags (note that these can return multiple records)
-#' get_tags(con, tag_serial_number = "1187450")
-#' get_tags(con, acoustic_tag_id = "A69-1601-16130")
-#' get_tags(con, acoustic_tag_id = c("A69-1601-16129", "A69-1601-16130"))
+#' get_tags(credentials, tag_serial_number = "1187450")
+#' get_tags(credentials, acoustic_tag_id = "A69-1601-16130")
+#' get_tags(credentials, acoustic_tag_id = c("A69-1601-16129", "A69-1601-16130"))
 get_tags <- function(credentials = list(
                        username = Sys.getenv("userid"),
                        password = Sys.getenv("pwd")
@@ -201,6 +204,9 @@ get_tags <- function(credentials = list(
       AND {acoustic_tag_id_query}
     ", .con = connection)
   tags <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
 
   # Sort data
   tags <-

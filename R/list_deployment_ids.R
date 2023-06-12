@@ -18,5 +18,8 @@ list_deployment_ids <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   stringr::str_sort(data$id, numeric = TRUE)
 }

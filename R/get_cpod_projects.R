@@ -13,14 +13,17 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all animal projects
-#' get_cpod_projects(con)
+#' get_cpod_projects(credentials)
 #'
 #' # Get a specific animal project
-#' get_cpod_projects(con, cpod_project_code = "cpod-lifewatch")
+#' get_cpod_projects(credentials, cpod_project_code = "cpod-lifewatch")
 get_cpod_projects <- function(credentials = list(
                                 username = Sys.getenv("userid"),
                                 password = Sys.getenv("pwd")
@@ -69,6 +72,9 @@ get_cpod_projects <- function(credentials = list(
   projects <-
     projects %>%
     dplyr::arrange(.data$project_code)
+  # Close connection
+  DBI::dbDisconnect(connection)
 
+  # Return data
   dplyr::as_tibble(projects)
 }

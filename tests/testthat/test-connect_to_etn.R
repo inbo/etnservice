@@ -6,4 +6,5 @@ test_that("connect_to_etn() allows to create a connection with passed credential
   connection <- connect_to_etn(credentials$username, credentials$password)
   expect_true(check_connection(connection))
   expect_true(isClass(connection, "PostgreSQL"))
+  DBI::dbDisconnect(connection)
 })

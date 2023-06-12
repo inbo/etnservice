@@ -22,6 +22,7 @@ Imports:
     dplyr,
     glue,
     httr,
+    jsonlite,
     lubridate,
     methods,
     odbc,

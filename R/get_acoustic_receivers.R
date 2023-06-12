@@ -15,17 +15,20 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all acoustic receivers
-#' get_acoustic_receivers(con)
+#' get_acoustic_receivers(credentials)
 #'
 #' # Get lost and broken acoustic receivers
-#' get_acoustic_receivers(con, status = c("lost", "broken"))
+#' get_acoustic_receivers(credentials, status = c("lost", "broken"))
 #'
 #' # Get a specific acoustic receiver
-#' get_acoustic_receivers(con, receiver_id = "VR2W-124070")
+#' get_acoustic_receivers(credentials, receiver_id = "VR2W-124070")
 get_acoustic_receivers <- function(credentials = list(
                                      username = Sys.getenv("userid"),
                                      password = Sys.getenv("pwd")
@@ -124,5 +127,9 @@ get_acoustic_receivers <- function(credentials = list(
     receivers %>%
     dplyr::arrange(.data$receiver_id)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return receivers
   dplyr::as_tibble(receivers)
 }

@@ -272,6 +272,9 @@ get_acoustic_detections <- function(credentials = list(
       factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(credentials)),
       .data$date_time
     )
+  # Close connection
+  DBI::dbDisconnect(connection)
 
+  # Return detections
   dplyr::as_tibble(detections)
 }
