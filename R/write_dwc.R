@@ -6,20 +6,15 @@
 #' https://www.gbif.org/ipt) for publication to OBIS and/or GBIF.
 #' A `meta.xml` or `eml.xml` file are not created.
 #'
-#' @param connection Connection to the ETN database.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param animal_project_code Animal project code.
-#' @param directory Path to local directory to write file(s) to.
-#'   If `NULL`, then a list of data frames is returned instead, which can be
-#'   useful for extending/adapting the Darwin Core mapping before writing with
-#'   [readr::write_csv()].
 #' @param rights_holder Acronym of the organization owning or managing the
 #'   rights over the data.
 #' @param license Identifier of the license under which the data will be
 #'   published.
 #'   - [`CC-BY`](https://creativecommons.org/licenses/by/4.0/legalcode) (default).
 #'   - [`CC0`](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
-#' @return CSV file(s) written to disk or list of data frames when
-#'   `directory = NULL`.
+#' @return list of data frames
 #' @export
 #' @section Transformation details:
 #' Data are transformed into an
@@ -43,11 +38,18 @@
 #'   Duplicate detections (same animal, tag and timestamp) are excluded.
 #'   It is possible for a deployment to contain no detections, e.g. if the
 #'   tag malfunctioned right after deployment.
-write_dwc <- function(connection = con,
+write_dwc <- function(credentials = list(
+                        username = Sys.getenv("userid"),
+                        password = Sys.getenv("pwd")
+                      ),
                       animal_project_code,
                       directory = ".",
                       rights_holder = NULL,
                       license = "CC-BY") {
+
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
@@ -73,7 +75,7 @@ write_dwc <- function(connection = con,
   )
 
   # Get imis dataset id and title
-  project <- get_animal_projects(connection, animal_project_code)
+  project <- get_animal_projects(credentials, animal_project_code)
   imis_dataset_id <- project$imis_dataset_id
   imis_url <- "https://www.vliz.be/en/imis?module=dataset&dasid="
   imis_json <- jsonlite::read_json(paste0(imis_url, imis_dataset_id, "&show=json"))
@@ -81,7 +83,11 @@ write_dwc <- function(connection = con,
   dataset_name <- imis_json$datasetrec$StandardTitle
 
   # Query database
-  message("Reading data and transforming to Darwin Core.")
+
+  ## NOTE this message could be retained if moved to the client together with
+  ## above get_animal_projects() call
+  # message("Reading data and transforming to Darwin Core.")
+
   dwc_occurrence_sql <- glue::glue_sql(
     readr::read_file(system.file("sql/dwc_occurrence.sql", package = "etn")),
     .con = connection
@@ -89,20 +95,7 @@ write_dwc <- function(connection = con,
   dwc_occurrence <- DBI::dbGetQuery(connection, dwc_occurrence_sql)
 
   # Return object or write files
-  if (is.null(directory)) {
-    list(
-      dwc_occurrence = dplyr::as_tibble(dwc_occurrence)
-    )
-  } else {
-    dwc_occurrence_path <- file.path(directory, "dwc_occurrence.csv")
-    message(glue::glue(
-      "Writing data to:",
-      dwc_occurrence_path,
-      .sep = "\n"
-    ))
-    if (!dir.exists(directory)) {
-      dir.create(directory, recursive = TRUE)
-    }
-    readr::write_csv(dwc_occurrence, dwc_occurrence_path, na = "")
-  }
+  return(
+    list(dwc_occurrence = dplyr::as_tibble(dwc_occurrence))
+  )
 }
