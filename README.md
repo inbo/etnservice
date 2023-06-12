@@ -73,7 +73,7 @@ response %>%
     jsonlite::fromJSON(simplifyVector = TRUE)
 ```
 
-However, a fork of the [etn package](https://github.com/inbo/etn) is
+However, a branch of the [etn package](https://github.com/inbo/etn) is
 currently in development that will allow you to do this using built in
 functions.
 
