@@ -3,20 +3,6 @@ credentials <- list(
   password = Sys.getenv("pwd")
 )
 
-# test_that("write_dwc() can write csv files to a path", {
-#   out_dir <- file.path(tempdir(), "dwc")
-#   unlink(out_dir, recursive = TRUE)
-#   dir.create(out_dir)
-#   suppressMessages(
-#     write_dwc(con, animal_project_code = "2014_demer", directory = out_dir)
-#   )
-#
-#   expect_identical(
-#     list.files(out_dir, pattern = "*.csv"),
-#     "dwc_occurrence.csv"
-#   )
-# })
-
 test_that("write_dwc() can return data as list of tibbles rather than files", {
   result <- suppressMessages(
     write_dwc(credentials, animal_project_code = "2014_demer", directory = NULL)
