@@ -1,4 +1,7 @@
-con <- connect_to_etn()
+credentials <- list(
+  username = Sys.getenv("userid"),
+  password = Sys.getenv("pwd")
+)
 
 # test_that("write_dwc() can write csv files to a path", {
 #   out_dir <- file.path(tempdir(), "dwc")
@@ -16,7 +19,7 @@ con <- connect_to_etn()
 
 test_that("write_dwc() can return data as list of tibbles rather than files", {
   result <- suppressMessages(
-    write_dwc(con, animal_project_code = "2014_demer", directory = NULL)
+    write_dwc(credentials, animal_project_code = "2014_demer", directory = NULL)
   )
 
   expect_identical(names(result), "dwc_occurrence")
@@ -25,7 +28,7 @@ test_that("write_dwc() can return data as list of tibbles rather than files", {
 
 test_that("write_dwc() returns the expected Darwin Core terms as columns", {
   result <- suppressMessages(
-    write_dwc(con, animal_project_code = "2014_demer", directory = NULL)
+    write_dwc(credentials, animal_project_code = "2014_demer", directory = NULL)
   )
 
   expect_identical(
