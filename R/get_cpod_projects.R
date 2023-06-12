@@ -2,7 +2,7 @@
 #'
 #' Get data for cpod projects, with options to filter results.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param cpod_project_code Character (vector). One or more cpod project
 #'   codes. Case-insensitive.
 #'
@@ -21,8 +21,14 @@
 #'
 #' # Get a specific animal project
 #' get_cpod_projects(con, cpod_project_code = "cpod-lifewatch")
-get_cpod_projects <- function(connection = con,
+get_cpod_projects <- function(credentials = list(
+                                username = Sys.getenv("userid"),
+                                password = Sys.getenv("pwd")
+                              ),
                               cpod_project_code = NULL) {
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
@@ -32,7 +38,7 @@ get_cpod_projects <- function(connection = con,
   } else {
     cpod_project_code <- check_value(
       cpod_project_code,
-      list_cpod_project_codes(connection),
+      list_cpod_project_codes(credentials),
       "cpod_project_code",
       lowercase = TRUE
     )
