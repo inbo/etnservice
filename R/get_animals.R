@@ -5,7 +5,7 @@
 #' `acoustic_tag_id`. If multiple tags are associated with a single animal,
 #' the information is comma-separated.
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param animal_id Integer (vector). One or more animal identifiers.
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
@@ -41,11 +41,17 @@
 #'
 #' # Get animals of a specific species from a specific project
 #' get_animals(con, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
-get_animals <- function(connection = con,
+get_animals <- function(credentials = list(
+                          username = Sys.getenv("userid"),
+                          password = Sys.getenv("pwd")
+                        ),
                         animal_id = NULL,
                         tag_serial_number = NULL,
                         animal_project_code = NULL,
                         scientific_name = NULL) {
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
@@ -55,7 +61,7 @@ get_animals <- function(connection = con,
   } else {
     animal_id <- check_value(
       animal_id,
-      list_animal_ids(connection),
+      list_animal_ids(credentials),
       "animal_id"
     )
     animal_id_query <- glue::glue_sql(
@@ -71,7 +77,7 @@ get_animals <- function(connection = con,
   } else {
     animal_project_code <- check_value(
       animal_project_code,
-      list_animal_project_codes(connection),
+      list_animal_project_codes(credentials),
       "animal_project_code",
       lowercase = TRUE
     )
@@ -87,7 +93,7 @@ get_animals <- function(connection = con,
   } else {
     tag_serial_number <- check_value(
       as.character(tag_serial_number), # Cast to character
-      list_tag_serial_numbers(connection),
+      list_tag_serial_numbers(credentials),
       "tag_serial_number"
     )
     tag_serial_number_query <- glue::glue_sql(
@@ -102,7 +108,7 @@ get_animals <- function(connection = con,
   } else {
     scientific_name <- check_value(
       scientific_name,
-      list_scientific_names(connection),
+      list_scientific_names(credentials),
       "scientific_name"
     )
     scientific_name_query <- glue::glue_sql(
@@ -231,7 +237,7 @@ get_animals <- function(connection = con,
     dplyr::arrange(
       .data$animal_project_code,
       .data$release_date_time,
-      factor(.data$tag_serial_number, levels = list_tag_serial_numbers(connection))
+      factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials))
     )
 
   dplyr::as_tibble(animals) # Is already a tibble, but added if code above changes
