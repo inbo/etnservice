@@ -4,7 +4,7 @@
 #' can be multiple records (`acoustic_tag_id`) per tag device
 #' (`tag_serial_number`).
 #'
-#' @param connection A connection to the ETN database. Defaults to `con`.
+#' @param credentials A list with the username and password to connect to the ETN database.
 #' @param tag_serial_number Character (vector). One or more tag serial numbers.
 #' @param tag_type Character (vector). `acoustic` or `archival`. Some tags are
 #'   both, find those with `acoustic-archival`.
@@ -37,11 +37,18 @@
 #' get_tags(con, tag_serial_number = "1187450")
 #' get_tags(con, acoustic_tag_id = "A69-1601-16130")
 #' get_tags(con, acoustic_tag_id = c("A69-1601-16129", "A69-1601-16130"))
-get_tags <- function(connection = con,
+get_tags <- function(credentials = list(
+                       username = Sys.getenv("userid"),
+                       password = Sys.getenv("pwd")
+                     ),
                      tag_type = NULL,
                      tag_subtype = NULL,
                      tag_serial_number = NULL,
                      acoustic_tag_id = NULL) {
+
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
   # Check connection
   check_connection(connection)
 
@@ -51,7 +58,7 @@ get_tags <- function(connection = con,
   } else {
     tag_serial_number <- check_value(
       as.character(tag_serial_number), # Cast to character
-      list_tag_serial_numbers(connection),
+      list_tag_serial_numbers(credentials),
       "tag_serial_number"
     )
     tag_serial_number_query <- glue::glue_sql(
@@ -96,7 +103,7 @@ get_tags <- function(connection = con,
   } else {
     check_value(
       acoustic_tag_id,
-      list_acoustic_tag_ids(connection),
+      list_acoustic_tag_ids(credentials),
       "acoustic_tag_id"
     )
     acoustic_tag_id_query <- glue::glue_sql(
@@ -198,7 +205,7 @@ get_tags <- function(connection = con,
   # Sort data
   tags <-
     tags %>%
-    dplyr::arrange(factor(.data$tag_serial_number, levels = list_tag_serial_numbers(connection)))
+    dplyr::arrange(factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials)))
 
   dplyr::as_tibble(tags)
 }
