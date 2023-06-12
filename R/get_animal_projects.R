@@ -38,7 +38,7 @@ get_animal_projects <- function(credentials = list(
   } else {
     animal_project_code <- check_value(
       animal_project_code,
-      list_animal_project_codes(connection),
+      list_animal_project_codes(credentials),
       "animal_project_code",
       lowercase = TRUE
     )
