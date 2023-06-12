@@ -43,7 +43,6 @@ write_dwc <- function(credentials = list(
                         password = Sys.getenv("pwd")
                       ),
                       animal_project_code,
-                      directory = ".",
                       rights_holder = NULL,
                       license = "CC-BY") {
 

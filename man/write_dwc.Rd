@@ -7,7 +7,6 @@
 write_dwc(
   credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
   animal_project_code,
-  directory = ".",
   rights_holder = NULL,
   license = "CC-BY"
 )
