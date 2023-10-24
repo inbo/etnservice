@@ -3,7 +3,7 @@ pm.test("Status code is 201", function () {
   });
 
 const jsonData = pm.response.json();
-pm.test("returns the right animal ids", () => {
+pm.test("returns the right station names", () => {
       //array is not empty
       pm.expect(jsonData).to.not.be.empty;
       //ids include number of known values
