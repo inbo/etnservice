@@ -2,7 +2,7 @@
 #'
 #' Transforms and downloads data from a European Tracking Network
 #' **animal project** to [Darwin Core](https://dwc.tdwg.org/).
-#' The resulting CSV file(s) can be uploaded to an [IPT](
+#' The resulting dataframe can be saved as a CSV and be uploaded to an [IPT](
 #' https://www.gbif.org/ipt) for publication to OBIS and/or GBIF.
 #' A `meta.xml` or `eml.xml` file are not created.
 #'
@@ -14,7 +14,7 @@
 #'   published.
 #'   - [`CC-BY`](https://creativecommons.org/licenses/by/4.0/legalcode) (default).
 #'   - [`CC0`](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
-#' @return list of data frames
+#' @return list of dataframes
 #' @export
 #' @section Transformation details:
 #' Data are transformed into an
@@ -57,6 +57,8 @@ write_dwc <- function(credentials = list(
     length(animal_project_code) == 1,
     msg = "`animal_project_code` must be a single value."
   )
+  ## Set animal project code to lowercase for sql
+  animal_project_code <- stringr::str_to_lower(animal_project_code)
 
   # Check license
   licenses <- c("CC-BY", "CC0")
@@ -88,8 +90,10 @@ write_dwc <- function(credentials = list(
   # message("Reading data and transforming to Darwin Core.")
 
   dwc_occurrence_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql/dwc_occurrence.sql", package = "etn")),
-    .con = connection
+    readr::read_file(system.file("sql/dwc_occurrence.sql",
+                                 package = "etnservice")),
+    .con = connection,
+    .null = "NULL"
   )
   dwc_occurrence <- DBI::dbGetQuery(connection, dwc_occurrence_sql)
 
