@@ -2,7 +2,7 @@
 #'
 #' Transforms and downloads data from a European Tracking Network
 #' **animal project** to [Darwin Core](https://dwc.tdwg.org/).
-#' The resulting tibble can be saved as a CSV and be uploaded to an [IPT](
+#' The resulting dataframe can be saved as a CSV and be uploaded to an [IPT](
 #' https://www.gbif.org/ipt) for publication to OBIS and/or GBIF.
 #' A `meta.xml` or `eml.xml` file are not created.
 #'
@@ -14,7 +14,7 @@
 #'   published.
 #'   - [`CC-BY`](https://creativecommons.org/licenses/by/4.0/legalcode) (default).
 #'   - [`CC0`](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
-#' @return list of data frames
+#' @return list of dataframes
 #' @export
 #' @section Transformation details:
 #' Data are transformed into an
