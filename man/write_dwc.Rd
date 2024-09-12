@@ -27,12 +27,12 @@ published.
 }}
 }
 \value{
-list of data frames
+list of dataframes
 }
 \description{
 Transforms and downloads data from a European Tracking Network
 \strong{animal project} to \href{https://dwc.tdwg.org/}{Darwin Core}.
-The resulting CSV file(s) can be uploaded to an \href{https://www.gbif.org/ipt}{IPT} for publication to OBIS and/or GBIF.
+The resulting dataframe can be saved as a CSV and be uploaded to an \href{https://www.gbif.org/ipt}{IPT} for publication to OBIS and/or GBIF.
 A \code{meta.xml} or \code{eml.xml} file are not created.
 }
 \section{Transformation details}{
