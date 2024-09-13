@@ -100,7 +100,7 @@ write_dwc <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
-  # Return object or write files
+  # Return list of dataframes
   return(
     list(dwc_occurrence = dplyr::as_tibble(dwc_occurrence))
   )
