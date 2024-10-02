@@ -66,11 +66,11 @@ get_acoustic_receivers <- function(credentials = list(
   }
 
   receiver_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "receiver.sql", package = "etn")),
+    readr::read_file(system.file("sql", "receiver.sql", package = "etnservice")),
     .con = connection
   )
   acoustic_tag_id_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
+    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etnservice")),
     .con = connection
   )
 

@@ -116,7 +116,7 @@ get_tags <- function(credentials = list(
   }
 
   tag_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "tag.sql", package = "etn")),
+    readr::read_file(system.file("sql", "tag.sql", package = "etnservice")),
     .con = connection
   )
 

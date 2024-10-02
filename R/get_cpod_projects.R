@@ -52,7 +52,7 @@ get_cpod_projects <- function(credentials = list(
   }
 
   project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
 
