@@ -126,15 +126,18 @@ get_credentials <-
 check_credentials <- function(credentials) {
 
   assertthat::assert_that(
-    assertthat::has_name(credentials, "username")
+    assertthat::has_name(credentials, "username"),
+    msg = "The credentials need to contain a 'username' field."
   )
 
   assertthat::assert_that(
-    assertthat::has_name(credentials, "password")
+    assertthat::has_name(credentials, "password"),
+    msg = "The credentials need to contain a 'password' field."
   )
 
   assertthat::assert_that(
-    length(credentials) == 2
+    length(credentials) == 2,
+    msg = "The credentials object should have a length of 2."
   )
 
   assertthat::assert_that(
