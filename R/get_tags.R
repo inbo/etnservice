@@ -49,6 +49,9 @@ get_tags <- function(credentials = list(
                      tag_serial_number = NULL,
                      acoustic_tag_id = NULL) {
 
+  # Check credentials
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
