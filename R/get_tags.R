@@ -49,7 +49,7 @@ get_tags <- function(credentials = list(
                      tag_serial_number = NULL,
                      acoustic_tag_id = NULL) {
 
-  # Check credentials
+  # Check if credentials object has right shape
   check_credentials(credentials)
 
   # Create connection object
