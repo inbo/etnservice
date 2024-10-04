@@ -6,11 +6,26 @@ credentials <- list(
 test_that("get_acoustic_detections() returns error for incorrect connection", {
   expect_error(
     get_acoustic_detections(credentials = "not_a_connection"),
-    "Not a connection object to database."
+    "The credentials need to contain a 'username' field."
+  )
+  expect_error(
+    get_acoustic_detections(credentials = list(username = "username")),
+    "The credentials need to contain a 'password' field."
+  )
+  expect_error(
+    get_acoustic_detections(credentials = list(unexpected_field = 4,
+                                               username = "username",
+                                               password = "not a password")),
+    "The credentials object should have a length of 2."
+  )
+  expect_error(
+    get_acoustic_detections(credentials = list(username = "not a username",
+                                               password = "the wrong pwd")),
+    "Failed to connect to the database."
   )
 })
 
-test_that("get_acoustic_detections() returns a tibble", {
+ test_that("get_acoustic_detections() returns a tibble", {
   df <- get_acoustic_detections(credentials, limit = TRUE)
   expect_s3_class(df, "data.frame")
   expect_s3_class(df, "tbl")
