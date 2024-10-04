@@ -90,6 +90,8 @@ get_acoustic_detections <- function(credentials = list(
                                     station_name = NULL,
                                     limit = FALSE) {
 
+  # Check if credentials object has right shape
+  check_credentials(credentials)
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)

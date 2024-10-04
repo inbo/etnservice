@@ -29,6 +29,10 @@ get_cpod_projects <- function(credentials = list(
                                 password = Sys.getenv("pwd")
                               ),
                               cpod_project_code = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
