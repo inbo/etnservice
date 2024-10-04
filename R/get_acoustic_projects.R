@@ -29,6 +29,10 @@ get_acoustic_projects <- function(credentials = list(
                                     password = Sys.getenv("pwd")
                                   ),
                                   acoustic_project_code = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # create connection object
   connection <-
     connect_to_etn(credentials$username, credentials$password)
