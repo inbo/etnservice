@@ -6,7 +6,13 @@ credentials <- list(
 test_that("get_acoustic_deployments() returns error for incorrect connection", {
   expect_error(
     get_acoustic_deployments(credentials = "not_a_credentials"),
-    "Not a credentials object to database."
+    "The credentials need to contain a 'username' field",
+    fixed = TRUE
+  )
+  expect_error(
+    get_acoustic_deployments(credentials = list(username = "not a username",
+                                                password = "the wrong password")),
+    "Failed to connect to the database."
   )
 })
 

@@ -52,6 +52,10 @@ get_animals <- function(credentials = list(
                         tag_serial_number = NULL,
                         animal_project_code = NULL,
                         scientific_name = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
@@ -121,7 +125,7 @@ get_animals <- function(credentials = list(
   }
 
   tag_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "tag.sql", package = "etn")),
+    readr::read_file(system.file("sql", "tag.sql", package = "etnservice")),
     .con = connection
   )
 

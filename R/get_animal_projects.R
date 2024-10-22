@@ -29,6 +29,10 @@ get_animal_projects <- function(credentials = list(
                                   password = Sys.getenv("pwd")
                                 ),
                                 animal_project_code = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
@@ -52,7 +56,7 @@ get_animal_projects <- function(credentials = list(
   }
 
   project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
 

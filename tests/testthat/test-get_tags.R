@@ -5,8 +5,9 @@ credentials <- list(
 
 test_that("get_tags() returns error for incorrect connection", {
   expect_error(
-    get_tags(credentials = "not_a_connection"),
-    "Not a connection object to database."
+    get_tags(credentials = list(username = "not a username",
+                                password = "not a password")),
+    "Failed to connect to the database."
   )
 })
 

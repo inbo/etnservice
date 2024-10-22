@@ -11,6 +11,9 @@ list_cpod_project_codes <- function(credentials = list(
   password = Sys.getenv("pwd")
 )) {
 
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
@@ -18,7 +21,7 @@ list_cpod_project_codes <- function(credentials = list(
   check_connection(connection)
 
   project_query <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
   query <- glue::glue_sql(

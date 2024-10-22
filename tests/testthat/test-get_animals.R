@@ -6,7 +6,12 @@ credentials <- list(
 test_that("get_animals() returns error for incorrect connection", {
   expect_error(
     get_animals(credentials = "not_a_connection"),
-    "Not a connection object to database."
+    "The credentials need to contain a 'username' field."
+  )
+  expect_error(
+    get_animals(credentials = list(username = "not a username",
+                                   password = "the wrong pwd")),
+    "Failed to connect to the database."
   )
 })
 
