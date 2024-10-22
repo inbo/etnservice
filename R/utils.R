@@ -120,9 +120,11 @@ get_credentials <-
 #' @return TRUE if the credentials are valid, an error otherwise
 #'
 #' @examples
+#' \dontrun{
 #' credentials <- list(username = "john_doe", password = "password123")
 #' check_credentials(credentials)
 #' #> [1] TRUE
+#' }
 check_credentials <- function(credentials) {
 
   assertthat::assert_that(
