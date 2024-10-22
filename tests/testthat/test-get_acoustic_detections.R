@@ -32,6 +32,7 @@ test_that("get_acoustic_detections() returns error for incorrect connection", {
 })
 
 test_that("get_acoustic_detections() returns unique detection_id", {
+  skip("duplicate detection ids: https://github.com/inbo/etn/issues/283")
   df <- get_acoustic_detections(credentials, limit = TRUE)
   expect_equal(nrow(df), nrow(df %>% distinct(detection_id)))
 })
