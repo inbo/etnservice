@@ -110,6 +110,49 @@ get_credentials <-
     stringr::str_glue('list(username = "{username}", password = "{password}")')
   }
 
+#' Check if the provided credentials are valid.
+#'
+#' This function checks if the provided credentials contain a "username" and "password" field,
+#' and if both fields are of type character. It also verifies that the credentials object has a length of 2.
+#'
+#' @param credentials A list or data frame containing the credentials to be checked.
+#'
+#' @return TRUE if the credentials are valid, an error otherwise
+#'
+#' @examples
+#' \dontrun{
+#' credentials <- list(username = "john_doe", password = "password123")
+#' check_credentials(credentials)
+#' #> [1] TRUE
+#' }
+check_credentials <- function(credentials) {
+
+  assertthat::assert_that(
+    assertthat::has_name(credentials, "username"),
+    msg = "The credentials need to contain a 'username' field."
+  )
+
+  assertthat::assert_that(
+    assertthat::has_name(credentials, "password"),
+    msg = "The credentials need to contain a 'password' field."
+  )
+
+  assertthat::assert_that(
+    length(credentials) == 2,
+    msg = "The credentials object should have a length of 2."
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(credentials$username)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(credentials$password)
+  )
+
+  return(TRUE)
+}
+
 #' Extract the OCPU temp key from a response object
 #'
 #' When posting a request to the opencpu api service without the json flag, a

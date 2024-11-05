@@ -52,6 +52,9 @@ get_acoustic_deployments <- function(
     station_name = NULL,
     open_only = FALSE) {
 
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # create connection object
   connection <-
     connect_to_etn(credentials$username, credentials$password)

@@ -6,7 +6,12 @@ credentials <- list(
 test_that("get_cpod_projects() returns error for incorrect connection", {
   expect_error(
     get_cpod_projects(credentials = "not_a_connection"),
-    "Not a connection object to database."
+    "The credentials need to contain a 'username' field."
+  )
+  expect_error(
+    get_cpod_projects(credentials = list(username = "not a username",
+                                               password = "the wrong pwd")),
+    "Failed to connect to the database."
   )
 })
 
