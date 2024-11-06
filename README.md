@@ -7,6 +7,10 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![R-CMD-check](https://github.com/inbo/etnservice/actions/workflows/R-CMD-check-lite.yaml/badge.svg)](https://github.com/inbo/etnservice/actions/workflows/R-CMD-check-lite.yaml)
 <!-- badges: end -->
 
 The goal of etnservice is to to serve data from the European Tracking
@@ -21,10 +25,10 @@ LifeWatch. ETN data is subject to the [ETN data
 policy](http://www.lifewatch.be/etn/assets/docs/ETN-DataPolicy.pdf) and
 can be:
 
-  - restricted: under moratorium and only accessible to logged-in data
-    owners/collaborators
-  - unrestricted: publicly accessible without login and routinely
-    published to international biodiversity facilities
+- restricted: under moratorium and only accessible to logged-in data
+  owners/collaborators
+- unrestricted: publicly accessible without login and routinely
+  published to international biodiversity facilities
 
 The ETN infrastructure currently requires the package to be run within
 the [LifeWatch.be RStudio server](http://rstudio.lifewatch.be/), which
@@ -73,7 +77,7 @@ response %>%
     jsonlite::fromJSON(simplifyVector = TRUE)
 ```
 
-However, a branch of the [etn package](https://github.com/inbo/etn) is
+However, a fork of the [etn package](https://github.com/inbo/etn) is
 currently in development that will allow you to do this using built in
 functions.
 
