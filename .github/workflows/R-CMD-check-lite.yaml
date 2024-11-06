@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [main, master]
 
-name: R-CMD-check-lite.yaml
+name: R-CMD-check-lite.yaml NO TESTS NO EXAMPLES
 
 permissions: read-all
 
