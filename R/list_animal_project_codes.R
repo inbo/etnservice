@@ -13,7 +13,7 @@ list_animal_project_codes <- function(credentials = list(
   connection <- connect_to_etn(credentials$username, credentials$password)
 
   project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
   query <- glue::glue_sql(
@@ -21,6 +21,9 @@ list_animal_project_codes <- function(credentials = list(
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
 
   sort(data$project_code)
 }

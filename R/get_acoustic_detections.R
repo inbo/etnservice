@@ -90,6 +90,8 @@ get_acoustic_detections <- function(credentials = list(
                                     station_name = NULL,
                                     limit = FALSE) {
 
+  # Check if credentials object has right shape
+  check_credentials(credentials)
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
@@ -215,7 +217,7 @@ get_acoustic_detections <- function(credentials = list(
   }
 
   acoustic_tag_id_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
+    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etnservice")),
     .con = connection
   )
 
@@ -272,6 +274,9 @@ get_acoustic_detections <- function(credentials = list(
       factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(credentials)),
       .data$date_time
     )
+  # Close connection
+  DBI::dbDisconnect(connection)
 
+  # Return detections
   dplyr::as_tibble(detections)
 }

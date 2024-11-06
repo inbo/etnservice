@@ -16,5 +16,9 @@ list_receiver_ids <- function(credentials = list(
   )
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return receiver_ids
   stringr::str_sort(data$receiver, numeric = TRUE)
 }

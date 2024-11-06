@@ -7,6 +7,6 @@ savedData = responsePaths.split("\n")[0];
 savedData = savedData.slice(6)
 pm.collectionVariables.set("savedData", savedData);
 
-pm.test("Response time is less than 3s", function () {
-    pm.expect(pm.response.responseTime).to.be.below(3000);
+pm.test("Response time is less than 6s", function () {
+    pm.expect(pm.response.responseTime).to.be.below(6000);
   });

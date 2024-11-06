@@ -11,7 +11,7 @@ list_acoustic_tag_ids <- function(credentials = list(
 )) {
   connection <- connect_to_etn(credentials$username, credentials$password)
   acoustic_tag_id_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etn")),
+    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etnservice")),
     .con = connection
   )
   query <- glue::glue_sql("
@@ -21,5 +21,9 @@ list_acoustic_tag_ids <- function(credentials = list(
   ", .con = connection)
   data <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return acoustic_tag_ids
   stringr::str_sort(data$acoustic_tag_id, numeric = TRUE)
 }

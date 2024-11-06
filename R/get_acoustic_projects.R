@@ -13,19 +13,26 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all acoustic projects
-#' get_acoustic_projects(con)
+#' get_acoustic_projects(credentials)
 #'
 #' # Get a specific acoustic project
-#' get_acoustic_projects(con, acoustic_project_code = "demer")
+#' get_acoustic_projects(credentials, acoustic_project_code = "demer")
 get_acoustic_projects <- function(credentials = list(
                                     username = Sys.getenv("userid"),
                                     password = Sys.getenv("pwd")
                                   ),
                                   acoustic_project_code = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # create connection object
   connection <-
     connect_to_etn(credentials$username, credentials$password)
@@ -50,7 +57,7 @@ get_acoustic_projects <- function(credentials = list(
   }
 
   project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
 
@@ -65,6 +72,9 @@ get_acoustic_projects <- function(credentials = list(
       AND {acoustic_project_code_query}
     ", .con = connection)
   projects <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
 
   # Sort data
   projects <-

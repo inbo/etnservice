@@ -24,12 +24,15 @@ also
 Get data for acoustic projects, with options to filter results.
 }
 \examples{
-# Set default connection variable
-con <- connect_to_etn()
+# Set credentials
+credentials <- list(
+   username = Sys.getenv("userid"),
+   password = Sys.getenv("pwd")
+ )
 
 # Get all acoustic projects
-get_acoustic_projects(con)
+get_acoustic_projects(credentials)
 
 # Get a specific acoustic project
-get_acoustic_projects(con, acoustic_project_code = "demer")
+get_acoustic_projects(credentials, acoustic_project_code = "demer")
 }

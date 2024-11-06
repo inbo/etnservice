@@ -10,12 +10,15 @@ list_scientific_names <- function(credentials = list(
                                     username = Sys.getenv("userid"),
                                     password = Sys.getenv("pwd")
                                   )) {
-  connection <- connection <- connect_to_etn(credentials$username, credentials$password)
+  connection <- connect_to_etn(credentials$username, credentials$password)
   query <- glue::glue_sql(
     "SELECT DISTINCT scientific_name FROM common.animal_release",
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
 
   sort(data$scientific_name)
 }

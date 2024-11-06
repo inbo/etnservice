@@ -13,19 +13,26 @@
 #' @export
 #'
 #' @examples
-#' # Set default connection variable
-#' con <- connect_to_etn()
+#' # Set credentials
+#' credentials <- list(
+#'    username = Sys.getenv("userid"),
+#'    password = Sys.getenv("pwd")
+#'  )
 #'
 #' # Get all animal projects
-#' get_animal_projects(con)
+#' get_animal_projects(credentials)
 #'
 #' # Get a specific animal project
-#' get_animal_projects(con, animal_project_code = "2014_demer")
+#' get_animal_projects(credentials, animal_project_code = "2014_demer")
 get_animal_projects <- function(credentials = list(
                                   username = Sys.getenv("userid"),
                                   password = Sys.getenv("pwd")
                                 ),
                                 animal_project_code = NULL) {
+
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
@@ -38,7 +45,7 @@ get_animal_projects <- function(credentials = list(
   } else {
     animal_project_code <- check_value(
       animal_project_code,
-      list_animal_project_codes(connection),
+      list_animal_project_codes(credentials),
       "animal_project_code",
       lowercase = TRUE
     )
@@ -49,7 +56,7 @@ get_animal_projects <- function(credentials = list(
   }
 
   project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etn")),
+    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
     .con = connection
   )
 
@@ -64,6 +71,9 @@ get_animal_projects <- function(credentials = list(
       AND {animal_project_code_query}
     ", .con = connection)
   projects <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
 
   # Sort data
   projects <-
