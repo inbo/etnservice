@@ -50,5 +50,7 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v2
         with:
-          upload-snapshots: true
-          build_args: 'c("--no-tests", "--no-examples", "--no-manual","--compact-vignettes=gs+qpdf")'
+          upload-snapshots: false
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          args: 'c("--no-tests", "--no-examples")'
+          error-on: '"warning"'
