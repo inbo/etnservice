@@ -1,5 +1,6 @@
 # etnservice (development version)
-
+- Added badges to the readme
+- Improvements to CI, note that tests and examples are not checked on github. These still need to be checked on a machine that has access to the ETN database.
 # etnservice v0.1.0
 
 - This is the first version of etnservice used in the beta of etn v2.3.0.
