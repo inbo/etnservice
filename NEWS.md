@@ -1,5 +1,5 @@
 # etnservice 0.1.2
-- Updated integration tests (javascript) -> for postman monitor
+- Updated integration tests (JavaScript) for postman monitor
 - Updated broken readme example to work and use `httr2`
 
 # etnservice 0.1.1
