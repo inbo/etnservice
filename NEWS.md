@@ -1,3 +1,5 @@
+# etnservice 0.1.2
+
 # etnservice 0.1.1
 - Added badges to the readme
 - Improvements to CI, note that tests and examples are not checked on github. These still need to be checked on a machine that has access to the ETN database.
