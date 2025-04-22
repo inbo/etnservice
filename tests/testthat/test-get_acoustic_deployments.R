@@ -203,7 +203,7 @@ test_that("get_acoustic_deployments() allows selecting on multiple parameters", 
 })
 
 test_that("get_acoustic_deployments() does not return cpod deployments", {
-  # POD-3330 is a cpod receiver
-  df <- get_acoustic_deployments(credentials, receiver_id = "POD-3330")
+  # POD-3610 is a cpod receiver
+  df <- get_acoustic_deployments(credentials, receiver_id = "POD-3610")
   expect_equal(nrow(df), 0)
 })
