@@ -1,3 +1,7 @@
+# etnservice (development version)
+
+- Fixed bug in `write_dwc()` where providing no value for `rights_holder` would result in the function failing to output a data.frame (#69).
+
 # etnservice 0.1.2
 
 - Updated integration tests (JavaScript) for postman monitor (#62).
