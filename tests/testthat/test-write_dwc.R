@@ -57,12 +57,12 @@ test_that("write_dwc() allows setting of rights_holder", {
   result <- suppressMessages(
     write_dwc(credentials,
               animal_project_code = "2014_demer",
-              rights_holder = "< my rightholder value>")
+              rights_holder = "my_rightholder")
   )
 
   expect_identical(
     unique(result$dwc_occurrence$rightsHolder),
-    "< my rightholder value>"
+    "my_rightholder"
   )
 })
 
