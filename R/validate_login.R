@@ -10,10 +10,8 @@
 #'   successful, `FALSE` if authentication fails.
 #'
 #' @examples
-#' \dontrun{
 #' # Check if credentials are valid
-#' is_valid <- check_credentials("my_username", "my_password")
-#' }
+#'  validate_login("invalid_username", "invalid_password")
 #' @export
 validate_login <- function(username, password) {
   assertthat::assert_that(!missing(username),
