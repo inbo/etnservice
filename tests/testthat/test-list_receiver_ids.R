@@ -3,21 +3,23 @@ credentials <- list(
   password = Sys.getenv("pwd")
 )
 
-vector <- list_receiver_ids(credentials)
-
 test_that("list_receiver_ids() returns unique list of values", {
-  expect_false(any(duplicated(vector)))
+  receiver_ids <- list_receiver_ids(credentials)
+  expect_false(any(duplicated(receiver_ids)))
 })
 
 test_that("list_receiver_ids() returns a character vector", {
-  expect_is(vector, "character")
+  receiver_ids <- list_receiver_ids(credentials)
+  expect_type(receiver_ids, "character")
 })
 
 test_that("list_receiver_ids() does not return NA values", {
   skip("Empty receiver value in acoustic.receivers, ISSUE https://github.com/inbo/etn/issues/333")
-  expect_true(all(!is.na(vector)))
+  receiver_ids <- list_receiver_ids(credentials)
+  expect_true(all(!is.na(receiver_ids)))
 })
 
 test_that("list_receiver_ids() returns known value", {
-  expect_true("VR2W-124070" %in% vector)
+  receiver_ids <- list_receiver_ids(credentials)
+  expect_true("VR2W-124070" %in% receiver_ids)
 })
