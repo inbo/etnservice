@@ -54,27 +54,28 @@ devtools::install_github("inbo/etnservice")
 This is a basic example which shows you how adress the API directly:
 
 ``` r
-library(httr) # to talk to the internet
+library(httr2) # to talk to the internet
 library(magrittr) # to use pipes
-library(jsonlite) # to work with JSON files
 library(askpass) # to safly enter a password in R
 
 # To access the ETN database, we need a login (username + password). We'll ask
 # for the password dynamically because that's safer than storing it as an object
-username <- "<your username here!>"
+username <- "<your-username-here>"
 # All functions can be adressed directly in the URL
-endpoint <- "https://opencpu.lifewatch.be/library/etn/R/list_animal_ids"
+endpoint <- "https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"
 # Request the result of the function to be a json, and put in a request
 response <-
-    httr::POST(paste(endpoint, "json", sep = "/"),
-      body = list(
-        credentials = glue::glue('list(username = "{username}", password = "{askpass::askpass()}")')
-      )
-    )
+    httr2::request(endpoint) %>% 
+    ## In this case we'll request the data in JSON format and parse it
+    httr2::req_url_path_append("json") %>%
+    httr2::req_body_json(
+      list(credentials = list(username = username,
+                              password = askpass::askpass()))
+    ) %>% 
+    httr2::req_perform()
 # Take the response of the server, and convert it into an R object we can use
 response %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON(simplifyVector = TRUE)
+    httr2::resp_body_json(simplifyVector = TRUE)
 ```
 
 However, a fork of the [etn package](https://github.com/inbo/etn) is
@@ -86,13 +87,12 @@ Another example of the same request as above, but now using
 
 ``` bash
 #! /bin/bash
-curl --location --request POST 'https://opencpu.lifewatch.be/library/etnservice/R/list_animal_ids/json' \
+curl --location 'https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names/json' \
 --header 'Content-Type: application/json' \
---header 'Cookie: vliz_webc=vliz_webc2' \
 --data-raw '{
     "credentials": {
-        "username": "<your username>",
-        "password": "<your password>"
+        "username": "<your-username-here>",
+        "password": "<your-password-here>"
     }
 }'
 ```
