@@ -3,11 +3,11 @@
 #' Validates user credentials for the ETN database by attempting to establish
 #' a connection. Returns TRUE if the credentials are valid and FALSE otherwise.
 #'
-#' @param username character string containing the ETN database username
-#' @param password character string containing the ETN database password
+#' @param username Character string containing the ETN database username.
+#' @param password Character string containing the ETN database password.
 #'
-#' @return logical; TRUE if credentials are valid and connection successful,
-#'         FALSE if authentication fails
+#' @return Logical `TRUE` if credentials are valid and the connection is
+#'   successful, `FALSE` if authentication fails.
 #'
 #' @examples
 #' \dontrun{
