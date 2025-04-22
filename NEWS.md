@@ -1,6 +1,6 @@
 # etnservice 0.2.0
 
-- Add new function `validate_login()` to check if the provided credentials grant access to ETN. (#59)
+- Add new function `validate_login()` to check if the provided credentials grant access to ETN (#59).
 
 # etnservice 0.1.2
 
