@@ -7,21 +7,19 @@
 validate_login(username, password)
 }
 \arguments{
-\item{username}{character string containing the ETN database username}
+\item{username}{Character string containing the ETN database username.}
 
-\item{password}{character string containing the ETN database password}
+\item{password}{Character string containing the ETN database password.}
 }
 \value{
-logical; TRUE if credentials are valid and connection successful,
-FALSE if authentication fails
+Logical \code{TRUE} if credentials are valid and the connection is
+successful, \code{FALSE} if authentication fails.
 }
 \description{
 Validates user credentials for the ETN database by attempting to establish
 a connection. Returns TRUE if the credentials are valid and FALSE otherwise.
 }
 \examples{
-\dontrun{
 # Check if credentials are valid
-is_valid <- check_credentials("my_username", "my_password")
-}
+ validate_login("invalid_username", "invalid_password")
 }
