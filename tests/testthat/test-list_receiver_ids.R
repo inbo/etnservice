@@ -18,7 +18,6 @@ test_that("list_receiver_ids() returns a character vector", {
 })
 
 test_that("list_receiver_ids() does not return NA values", {
-  skip("Empty receiver value in acoustic.receivers, ISSUE https://github.com/inbo/etn/issues/333")
   if (!exists("receiver_ids")) {
     receiver_ids <- list_receiver_ids(credentials)
   }
