@@ -1,6 +1,7 @@
 # etnservice 0.2.0
 
 - Add new function `validate_login()` to check if the provided credentials grant access to ETN (#59).
+- Fixed bug in `write_dwc()` where providing no value for `rights_holder` would result in the function failing to output a data.frame (#69).
 
 # etnservice 0.1.2
 

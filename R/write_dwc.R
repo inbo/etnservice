@@ -60,6 +60,12 @@ write_dwc <- function(credentials = list(
   ## Set animal project code to lowercase for sql
   animal_project_code <- stringr::str_to_lower(animal_project_code)
 
+  # Check rightsholder
+
+  if (is.null(rights_holder)) {
+    rights_holder <- NA_character_
+  }
+
   # Check license
   licenses <- c("CC-BY", "CC0")
   assertthat::assert_that(
