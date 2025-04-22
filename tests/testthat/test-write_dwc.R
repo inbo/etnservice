@@ -52,3 +52,28 @@ test_that("write_dwc() returns the expected Darwin Core terms as columns", {
     )
   )
 })
+
+test_that("write_dwc() allows setting of rights_holder", {
+  result <- suppressMessages(
+    write_dwc(credentials,
+              animal_project_code = "2014_demer",
+              rights_holder = "< my rightholder value>")
+  )
+
+  expect_identical(
+    unique(result$dwc_occurrence$rightsHolder),
+    "< my rightholder value>"
+  )
+})
+
+test_that("write_dwc() returns an empty column for rights holder by default", {
+  result <- suppressMessages(
+    write_dwc(credentials,
+              animal_project_code = "2014_demer")
+  )
+
+  expect_identical(
+    unique(result$dwc_occurrence$rightsHolder),
+    NA_character_
+  )
+})
