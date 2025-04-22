@@ -17,7 +17,7 @@ test_that("validate_login() returns error on missing arguments", {
   )
 })
 
-test_that("validate_login() returns TRUE on a unsuccesful login attempt", {
+test_that("validate_login() returns FALSE on a unsuccesful login attempt", {
   expect_false(
     validate_login("username",
                    "the wrong password")
