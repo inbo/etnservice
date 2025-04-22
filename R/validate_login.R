@@ -9,10 +9,11 @@
 #' @return Logical `TRUE` if credentials are valid and the connection is
 #'   successful, `FALSE` if authentication fails.
 #'
+#' @export
 #' @examples
 #' # Check if credentials are valid
 #'  validate_login("invalid_username", "invalid_password")
-#' @export
+
 validate_login <- function(username, password) {
   assertthat::assert_that(!missing(username),
                           msg = "No username provided.")
