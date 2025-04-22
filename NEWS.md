@@ -1,6 +1,8 @@
 
 # etnservice (development version)
 
+- Add new function `validate_login()` to check if the provided credentials grant access to ETN. (#59)
+
 # etnservice 0.1.2
 
 - Updated integration tests (JavaScript) for postman monitor (#62).
