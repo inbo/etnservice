@@ -9,7 +9,7 @@ library(httr2)
 
 # set function to test ----------------------------------------------------
 
-fn_to_test <- "list_acoustic_tag_ids"
+fn_to_test <- "list_receiver_ids"
 
 
 # get reponse -------------------------------------------------------------
