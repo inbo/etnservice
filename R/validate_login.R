@@ -1,7 +1,7 @@
 #' Check ETN Database Credentials
 #'
 #' Validates user credentials for the ETN database by attempting to establish
-#' a connection. Returns TRUE if the credentials are valid and FALSE otherwise.
+#' a connection. Returns `TRUE` if the credentials are valid and `FALSE` otherwise.
 #'
 #' @param username Character string containing the ETN database username.
 #' @param password Character string containing the ETN database password.
