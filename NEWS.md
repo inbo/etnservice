@@ -1,6 +1,6 @@
 # etnservice 0.3.0
 
-- Added `depth_in_meters` field to `get_acoustic_detections()` to achieve feature parity with the etn package. (#72) See also [inbo/etn#274](https://github.com/inbo/etn/pull/274).
+- Added `depth_in_meters` field to `get_acoustic_detections()` to achieve feature parity with the etn package (#72, [inbo/etn#274](https://github.com/inbo/etn/pull/274)).
 
 # etnservice 0.2.0
 
