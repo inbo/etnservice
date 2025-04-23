@@ -52,6 +52,7 @@ test_that("get_acoustic_detections() returns the expected columns", {
     "station_name",
     "deploy_latitude",
     "deploy_longitude",
+    "depth_in_meters",
     "sensor_value",
     "sensor_unit",
     "sensor2_value",
