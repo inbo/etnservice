@@ -26,7 +26,8 @@ Imports:
     odbc,
     readr,
     rlang,
-    stringr
+    stringr,
+    utils
 Suggests: 
     purrr,
     testthat (>= 3.0.0)

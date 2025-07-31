@@ -20,7 +20,7 @@ get_version <- function() {
   # Check if purrr is installed, only used for this function.
   rlang::check_installed("purrr")
   # Get all funtions from etnservice and their code
-  fn_names <- ls(envir = getNamespace("etnservice"))
+  fn_names <- ls(envir = utils::getNamespace("etnservice"))
   fn_code <- purrr::map(fn_names,
                             ~ get(.x, envir = getNamespace("etnservice"))) %>%
     purrr::map(deparse) %>%
