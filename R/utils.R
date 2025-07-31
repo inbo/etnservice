@@ -243,10 +243,13 @@ md5sum <- function(str) {
 #' @examples
 #' get_most_recent_task_id()
 get_most_recent_task_id <- function() {
+  # Check if required packages are installed.
+  rlang::check_installed(c("gh", "purrr"))
   # Get the most recent delivery id from the etnservice to VLIZ deployment
   # webhook.
   most_recent_delivery_id <-
-    gh::gh("/repos/inbo/etnservice/hooks/518163094/deliveries",
+    gh::gh("/repos/inbo/etnservice/hooks/{webhook_id}/deliveries",
+           webhook_id = 518163094, # etnservice to VLIZ deployment webhook
            .token = gh::gh_token()
     ) |>
     purrr::map_dfr(~.x) |>
@@ -282,10 +285,14 @@ get_most_recent_task_id <- function() {
 #'
 #' @examples
 get_deploy_status <- function(task_id = get_most_recent_task_id()) {
+  # Check if required packages are installed.
+  rlang::check_installed("httr2")
+  # Fetch the most recent install output.
   httr2::request("https://opencpu-test.lifewatch.be/webhook/") |>
     httr2::req_url_path_append(task_id) |>
     httr2::req_perform() |>
     httr2::resp_body_string() |>
+    # Replace the newline characters with actual newlines
     stringr::str_replace_all(stringr::fixed("\\n"), "\n") |>
     message()
 }
