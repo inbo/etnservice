@@ -1,6 +1,6 @@
 Package: etnservice
 Title: Serve Data from the European Tracking Network
-Version: 0.3.0.9000
+Version: 0.3.0.9003
 Authors@R: c(
     person("Pieter", "Huybrechts", , "pieter.huybrechts@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6658-6062")),
@@ -25,8 +25,11 @@ Imports:
     methods,
     odbc,
     readr,
-    stringr
+    rlang,
+    stringr,
+    utils
 Suggests: 
+    purrr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
