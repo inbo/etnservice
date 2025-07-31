@@ -215,7 +215,7 @@ get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
 #' This function calculates the MD5 checksum of a given string by writing it to a
 #' temporary file and then using the `tools::md5sum` function to compute the checksum.
 #'
-#' It's results are different than via digest::digest()
+#' Its results are different than via digest::digest()
 #'
 #' @param str A character string for which the MD5 checksum is to be calculated.
 #'
