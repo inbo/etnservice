@@ -238,7 +238,6 @@ md5sum <- function(str) {
 
 #' Get the most recent task ID from the etnservice webhook
 #'
-#'
 #' @return The most recent task ID from the etnservice webhook.
 #'
 #' @examples
