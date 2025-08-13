@@ -4,7 +4,11 @@
 #' optimized page wise detections querying to the database as no offset needs to
 #' be included.
 #'
-#' @param next_id_pk The next primary key to fetch.
+#' @inheritParams get_acoustic_detections
+#' @param next_id_pk The next primary key to fetch. All detections have a
+#'   sequential id, this key allows us to read the view top to bottom, but
+#'   filter out any records before the one we've already fetched. By default,
+#'   start reading at the first detection.
 #' @param page_size The number of records to retrieve.
 #' @param start_date_query A query to filter by start date, defaults to "True".
 #' @param end_date_query A query to filter by end date, defaults to "True".
@@ -20,7 +24,14 @@
 #'   "True".
 #' @param station_name_query A query to filter by station name, defaults to
 #'   "True".
-get_acoustic_detections_page <- function(next_id_pk = 0,
+#'
+#' @family helper functions
+#' @noRd
+get_acoustic_detections_page <- function(credentials = list(
+                                          username = Sys.getenv("userid"),
+                                          password = Sys.getenv("pwd")
+                                         ),
+                                         next_id_pk = 0,
                                          page_size = 1000000,
                                          start_date_query = "True",
                                          end_date_query = "True",
@@ -42,7 +53,7 @@ get_acoustic_detections_page <- function(next_id_pk = 0,
   # Build the query to fetch the next page
   query <- glue::glue_sql("
     SELECT
-      det.detection_id_pk FROM acoustic.detections_animal AS det
+      * FROM acoustic.detections_animal AS det
     WHERE
       {start_date_query}
       AND {end_date_query}
@@ -55,4 +66,14 @@ get_acoustic_detections_page <- function(next_id_pk = 0,
       AND det.detection_id_pk > {next_id_pk}
     LIMIT {page_size}
     ", .con = connection)
+
+  # Execute query
+  returned_page <- DBI::dbGetQuery(connection, query)
+
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Return returned page
+  return(returned_page)
+
 }
