@@ -23,7 +23,8 @@ get_acoustic_detections_page <- function(next_id_pk = 0,
   query <- glue::glue_sql("
     SELECT
       det.detection_id_pk FROM acoustic.detections_animal AS det
-    WHERE {start_date_query}
+    WHERE 
+      {start_date_query}
       AND {end_date_query}
       AND {acoustic_tag_id_query}
       AND {animal_project_code_query}
