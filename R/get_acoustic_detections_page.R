@@ -34,14 +34,14 @@ get_acoustic_detections_page <- function(credentials = list(
                                          ),
                                          next_id_pk = 0,
                                          page_size = 1000000,
-                                         start_date_query = "True",
-                                         end_date_query = "True",
-                                         acoustic_tag_id_query = "True",
-                                         animal_project_code_query = "True",
-                                         scientific_name_query = "True",
-                                         acoustic_project_code_query = "True",
-                                         receiver_id_query = "True",
-                                         station_name_query = "True") {
+                                         start_date = NULL,
+                                         end_date = NULL,
+                                         acoustic_tag_id = NULL,
+                                         animal_project_code = NULL,
+                                         scientific_name = NULL,
+                                         acoustic_project_code = NULL,
+                                         receiver_id = NULL,
+                                         station_name = NULL,) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
