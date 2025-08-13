@@ -25,8 +25,8 @@
 #' @param station_name_query A query to filter by station name, defaults to
 #'   "True".
 #'
-#' @family helper functions
-#' @noRd
+#' @export
+#'
 get_acoustic_detections_page <- function(credentials = list(
                                           username = Sys.getenv("userid"),
                                           password = Sys.getenv("pwd")
