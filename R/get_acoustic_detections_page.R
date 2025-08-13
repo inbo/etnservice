@@ -1,7 +1,15 @@
 #' Getting a single page of a multi page acoustic detections query
 #'
 get_acoustic_detections_page <- function(next_id_pk = 0,
-                                         page_size = 1000000) {
+                                         page_size = 1000000,
+                                         start_date_query = "True",
+                                         end_date_query = "True",
+                                         acoustic_tag_id_query = "True",
+                                         animal_project_code_query = "True",
+                                         scientific_name_query = "True",
+                                         acoustic_project_code_query = "True",
+                                         receiver_id_query = "True",
+                                         station_name_query = "True") {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
