@@ -1,7 +1,7 @@
 #' Getting a single page of a multi page acoustic detections query
 #'
-#' @param next_id_pk
-#' @param page_size
+#' @param next_id_pk The next primary key to fetch
+#' @param page_size The number of records to retreive
 #' @param start_date_query
 #' @param end_date_query
 #' @param acoustic_tag_id_query
