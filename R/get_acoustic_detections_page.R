@@ -1,5 +1,15 @@
 #' Getting a single page of a multi page acoustic detections query
 #'
+#' @param next_id_pk
+#' @param page_size
+#' @param start_date_query
+#' @param end_date_query
+#' @param acoustic_tag_id_query
+#' @param animal_project_code_query
+#' @param scientific_name_query
+#' @param acoustic_project_code_query
+#' @param receiver_id_query
+#' @param station_name_query
 get_acoustic_detections_page <- function(next_id_pk = 0,
                                          page_size = 1000000,
                                          start_date_query = "True",
@@ -23,7 +33,7 @@ get_acoustic_detections_page <- function(next_id_pk = 0,
   query <- glue::glue_sql("
     SELECT
       det.detection_id_pk FROM acoustic.detections_animal AS det
-    WHERE 
+    WHERE
       {start_date_query}
       AND {end_date_query}
       AND {acoustic_tag_id_query}
