@@ -23,7 +23,7 @@
 #' @param receiver_id Character (vector). One or more receiver identifiers.
 #' @param station_name Character (vector). One or more deployment station
 #'   names.
-#' 
+#'
 #' @return A tibble with acoustic detections data, with length `page_size` or smaller.
 #'  Including a column with the primary key of the next detection.
 #'
@@ -41,7 +41,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                          scientific_name = NULL,
                                          acoustic_project_code = NULL,
                                          receiver_id = NULL,
-                                         station_name = NULL,) {
+                                         station_name = NULL) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
