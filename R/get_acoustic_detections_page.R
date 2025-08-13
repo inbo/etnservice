@@ -1,15 +1,25 @@
 #' Getting a single page of a multi page acoustic detections query
 #'
-#' @param next_id_pk The next primary key to fetch
-#' @param page_size The number of records to retreive
-#' @param start_date_query
-#' @param end_date_query
-#' @param acoustic_tag_id_query
-#' @param animal_project_code_query
-#' @param scientific_name_query
-#' @param acoustic_project_code_query
-#' @param receiver_id_query
-#' @param station_name_query
+#' A view was implemented that returns the next primary key id, this allows for
+#' optimized page wise detections querying to the database as no offset needs to
+#' be included.
+#'
+#' @param next_id_pk The next primary key to fetch.
+#' @param page_size The number of records to retrieve.
+#' @param start_date_query A query to filter by start date, defaults to "True".
+#' @param end_date_query A query to filter by end date, defaults to "True".
+#' @param acoustic_tag_id_query A query to filter by acoustic tag ID, defaults
+#'   to "True".
+#' @param animal_project_code_query A query to filter by animal project code,
+#'   defaults to "True".
+#' @param scientific_name_query A query to filter by scientific name, defaults
+#'   to "True".
+#' @param acoustic_project_code_query A query to filter by acoustic project
+#'   code, defaults to "True".
+#' @param receiver_id_query A query to filter by receiver ID, defaults to
+#'   "True".
+#' @param station_name_query A query to filter by station name, defaults to
+#'   "True".
 get_acoustic_detections_page <- function(next_id_pk = 0,
                                          page_size = 1000000,
                                          start_date_query = "True",
