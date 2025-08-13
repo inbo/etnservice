@@ -4,7 +4,8 @@
 #' optimized page wise detections querying to the database as no offset needs to
 #' be included.
 #'
-#' @param credentials A list with the username and password to connect to the ETN database.
+#' @param credentials A list with the username and password to connect to the
+#'   ETN database.
 #' @param next_id_pk The next primary key to fetch. All detections have a
 #'   sequential id, this key allows us to read the view top to bottom, but
 #'   filter out any records before the one we've already fetched. By default,
@@ -18,14 +19,16 @@
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
 #' @param scientific_name Character (vector). One or more scientific names.
-#' @param acoustic_project_code Character (vector). One or more acoustic
-#'   project codes. Case-insensitive.
+#' @param acoustic_project_code Character (vector). One or more acoustic project
+#'   codes. Case-insensitive.
 #' @param receiver_id Character (vector). One or more receiver identifiers.
-#' @param station_name Character (vector). One or more deployment station
-#'   names.
+#' @param station_name Character (vector). One or more deployment station names.
+#' @param count Logical. If set to `TRUE` a data.frame is returned with a single
+#'   column: the count of the number of records returned by the query.
+#'   `page_size` is ignored.
 #'
-#' @return A tibble with acoustic detections data, with length `page_size` or smaller.
-#'  Including a column with the primary key of the next detection.
+#' @return A tibble with acoustic detections data, with length `page_size` or
+#'   smaller. Including a column with the primary key of the next detection.
 #'
 #' @export
 get_acoustic_detections_page <- function(credentials = list(
@@ -41,7 +44,8 @@ get_acoustic_detections_page <- function(credentials = list(
                                          scientific_name = NULL,
                                          acoustic_project_code = NULL,
                                          receiver_id = NULL,
-                                         station_name = NULL) {
+                                         station_name = NULL,
+                                         count = FALSE) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
@@ -161,11 +165,22 @@ get_acoustic_detections_page <- function(credentials = list(
     )
   }
 
+  # Check limit: page_sie
+  assertthat::assert_that(assertthat::is.count(page_size))
+  assertthat::assert_that(assertthat::is.flag(count))
+  if (count) {
+    limit_query <- glue::glue_sql("LIMIT ALL", .con = connection)
+  } else {
+    limit_query <- glue::glue_sql("LIMIT {page_size}", .con = connection)
+  }
+
   # Query creation and execution -----
   # Build the query to fetch the next page
-  query <- glue::glue_sql("
-    SELECT
-      * FROM acoustic.detections_animal AS det
+  query <- glue::glue_sql(
+    "SELECT",
+    ifelse(count, " COUNT(*)", " *"),
+    "
+    FROM acoustic.detections_animal AS det
     WHERE
       {start_date_query}
       AND {end_date_query}
@@ -176,8 +191,10 @@ get_acoustic_detections_page <- function(credentials = list(
       AND {receiver_id_query}
       AND {station_name_query}
       AND det.detection_id_pk > {next_id_pk}
-    LIMIT {page_size}
-    ", .con = connection)
+    {limit_query}
+    ", .con = connection,
+    page_size_query = ifelse(count, "ALL", page_size)
+    )
 
   # Execute query
   returned_page <- DBI::dbGetQuery(connection, query)
