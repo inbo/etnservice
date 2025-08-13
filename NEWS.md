@@ -1,3 +1,7 @@
+# etnservice (development version)
+- Added `get_version()` which allows users to easily compare their locally installed version of `etnservice` with the one deployed on the OpenCPU API. (#81)
+- Added `get_acoustic_detections_page()` which fetches a single page from the new detections view. This function allows paginated access and is to be called by the etn package function `get_acoustic_detections()` to make fetching large numbers of detections more efficient. (#85)
+
 # etnservice 0.3.0
 
 - Added `depth_in_meters` field to `get_acoustic_detections()` to achieve feature parity with the etn package (#72, [inbo/etn#274](https://github.com/inbo/etn/pull/274)).
