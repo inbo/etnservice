@@ -7,7 +7,7 @@
 get_acoustic_detections_page(
   credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
   next_id_pk = 0,
-  page_size = 1e+06,
+  page_size = 1e+05,
   start_date = NULL,
   end_date = NULL,
   acoustic_tag_id = NULL,
