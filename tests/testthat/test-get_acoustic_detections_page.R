@@ -84,4 +84,33 @@ test_that("get_acoustic_detections_page() allows setting of page_size", {
   )
 })
 
-
+test_that("get_acoustic_detections_page() returns the expected columns", {
+  df <- get_acoustic_detections_page(page_size = 50)
+  expected_col_names <- c(
+    "detection_id",
+    "date_time",
+    "tag_serial_number",
+    "acoustic_tag_id",
+    "animal_project_code",
+    "animal_id",
+    "scientific_name",
+    "acoustic_project_code",
+    "receiver_id",
+    "station_name",
+    "deploy_latitude",
+    "deploy_longitude",
+    "sensor_value",
+    "sensor_unit",
+    "sensor2_value",
+    "sensor2_unit",
+    "signal_to_noise_ratio",
+    "source_file",
+    "qc_flag",
+    "deployment_id"
+  )
+  expect_equal(names(df), expected_col_names)
+  expect_named(
+    get_acoustic_detections_page(acoustic_project_code = "2024_bovenschelde",
+                                 count = TRUE),
+    "count")
+})
