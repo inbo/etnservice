@@ -28,10 +28,14 @@ test_that("get_acoustic_detections_page() returns a tibble", {
 
 test_that("get_acoustic_detections_page() can return a count", {
   df <-
-    get_acoustic_detections_page(animal_project_code = "Delfzijl", count = TRUE)
+    get_acoustic_detections_page(animal_project_code = "2021_Gudena", count = TRUE)
   expect_s3_class(df, "data.frame")
   expect_s3_class(df, "tbl")
   expect_named(df, "count")
+  expect_identical(
+    as.integer(df$count),
+    nrow(get_acoustic_detections_page(animal_project_code = "2021_Gudena"))
+  )
 })
 
 test_that("get_acoustic_detections_page() starts query at next_id_pk", {
