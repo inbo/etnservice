@@ -18,7 +18,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Research Institute for Nature and Forest (INBO) (https://www.vlaanderen.be/inbo/en-gb/) [copyright holder]
+  \item Research Institute for Nature and Forest (INBO) (00j54wy13) [copyright holder]
   \item LifeWatch Belgium (https://lifewatch.be) [funder]
 }
 

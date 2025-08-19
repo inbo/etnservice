@@ -7,7 +7,7 @@ Authors@R: c(
     person("Peter", "Desmet", , "peter.desmet@inbo.be", role = "aut",
            comment = c(ORCID = "0000-0002-8442-8025")),
     person("Research Institute for Nature and Forest (INBO)", role = "cph",
-           comment = "https://www.vlaanderen.be/inbo/en-gb/"),
+           comment = c(ROR = "00j54wy13")),
     person("LifeWatch Belgium", role = "fnd",
            comment = "https://lifewatch.be")
   )
