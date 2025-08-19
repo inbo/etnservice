@@ -63,7 +63,8 @@ get_acoustic_detections_page <- function(credentials = list(
     start_date_query <- "True"
   } else {
     start_date <- check_date_time(start_date, "start_date")
-    start_date_query <- glue::glue_sql("det.datetime >= {start_date}", .con = connection)
+    start_date_query <- glue::glue_sql("det.datetime >= {start_date}",
+                                       .con = connection)
   }
 
   # Check end_date
@@ -71,7 +72,8 @@ get_acoustic_detections_page <- function(credentials = list(
     end_date_query <- "True"
   } else {
     end_date <- check_date_time(end_date, "end_date")
-    end_date_query <- glue::glue_sql("det.datetime < {end_date}", .con = connection)
+    end_date_query <- glue::glue_sql("det.datetime < {end_date}",
+                                     .con = connection)
   }
 
   # Check detection_id
@@ -203,12 +205,11 @@ get_acoustic_detections_page <- function(credentials = list(
                           "acoustic.detections_network",
                           "acoustic.detections_animal")
   ## Build query -----
-
-  query <- glue::glue_sql(
-    "SELECT",
-    ifelse(count, " COUNT(*)", " *"),
-    " FROM ", view_to_query ," AS det",
-    "
+query <- glue::glue_sql(
+  "SELECT",
+  ifelse(count, " COUNT(*)", " *"),
+  " FROM ", view_to_query, " AS det",
+  "
     WHERE
       {start_date_query}
       AND {end_date_query}
@@ -221,9 +222,10 @@ get_acoustic_detections_page <- function(credentials = list(
       AND {station_name_query}
       AND det.detection_id_pk > {next_id_pk}
     {limit_query}
-    ", .con = connection,
-    page_size_query = ifelse(count, "ALL", page_size)
-    )
+    ",
+  .con = connection,
+  page_size_query = ifelse(count, "ALL", page_size)
+)
 
   # Execute query -----
   returned_page <- DBI::dbGetQuery(connection, query)
