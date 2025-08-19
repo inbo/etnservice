@@ -234,26 +234,26 @@ get_acoustic_detections_page <- function(credentials = list(
   # Apply mapping -----
   mapped_page <- returned_page %>%
     dplyr::transmute(
-    detection_id = detection_id_pk,
-    date_time = datetime,
-    tag_serial_number,
-    acoustic_tag_id = transmitter,
-    animal_project_code,
-    animal_id = animal_id_pk,
-    scientific_name = animal_scientific_name,
-    acoustic_project_code = network_project_code,
-    receiver_id = receiver,
-    station_name = deployment_station_name,
-    deploy_latitude = deployment_latitude,
-    deploy_longitude = deployment_longitude,
-    sensor_value,
-    sensor_unit,
-    sensor2_value,
-    sensor2_unit,
-    signal_to_noise_ratio,
-    source_file = file,
-    qc_flag,
-    deployment_id = deployment_fk
+    detection_id = .data$detection_id_pk,
+    date_time = .data$datetime,
+    .data$tag_serial_number,
+    acoustic_tag_id = .data$transmitter,
+    .data$animal_project_code,
+    animal_id = .data$animal_id_pk,
+    scientific_name = .data$animal_scientific_name,
+    acoustic_project_code = .data$network_project_code,
+    receiver_id = .data$receiver,
+    station_name = .data$deployment_station_name,
+    deploy_latitude = .data$deployment_latitude,
+    deploy_longitude = .data$deployment_longitude,
+    .data$sensor_value,
+    .data$sensor_unit,
+    .data$sensor2_value,
+    .data$sensor2_unit,
+    .data$signal_to_noise_ratio,
+    source_file = .data$file,
+    .data$qc_flag,
+    deployment_id = .data$deployment_fk
   )
 
   # Return mapped page
