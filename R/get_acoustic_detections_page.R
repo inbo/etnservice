@@ -36,7 +36,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                           password = Sys.getenv("pwd")
                                          ),
                                          next_id_pk = 0,
-                                         page_size = 1000000,
+                                         page_size = 100000,
                                          start_date = NULL,
                                          end_date = NULL,
                                          acoustic_tag_id = NULL,
