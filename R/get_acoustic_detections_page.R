@@ -233,8 +233,7 @@ get_acoustic_detections_page <- function(credentials = list(
 
   # Apply mapping -----
   mapped_page <- returned_page %>%
-    dplyr::mutate(
-    .keep = "none", # drop unmapped fields
+    dplyr::transmute(
     detection_id = detection_id_pk,
     date_time = datetime,
     tag_serial_number,
