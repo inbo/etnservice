@@ -10,6 +10,7 @@ get_acoustic_detections_page(
   page_size = 1e+05,
   start_date = NULL,
   end_date = NULL,
+  detection_id = NULL,
   acoustic_tag_id = NULL,
   animal_project_code = NULL,
   scientific_name = NULL,
@@ -35,6 +36,8 @@ start reading at the first detection.}
 
 \item{end_date}{Character. End date (exclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
+
+\item{detection_id}{Integer (vector). One or more detection ids.}
 
 \item{acoustic_tag_id}{Character (vector). One or more acoustic tag ids.}
 
