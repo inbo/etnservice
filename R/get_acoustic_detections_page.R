@@ -178,11 +178,22 @@ get_acoustic_detections_page <- function(credentials = list(
 
   # Query creation and execution -----
   # Build the query to fetch the next page
+
+  ## Select what view to query from -----
+
+  # If we have animal information, use acoustic.detections_animal view,
+  # otherwise use the acoustic.detections_network view.
+
+  view_to_query <- ifelse(is.null(animal_project_code),
+                          "acoustic.detections_network",
+                          "acoustic.detections_animal")
+  ## Build query -----
+
   query <- glue::glue_sql(
     "SELECT",
     ifelse(count, " COUNT(*)", " *"),
+    " FROM ", view_to_query ," AS det",
     "
-    FROM acoustic.detections_animal AS det
     WHERE
       {start_date_query}
       AND {end_date_query}
