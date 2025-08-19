@@ -216,7 +216,8 @@ get_acoustic_detections_page <- function(credentials = list(
   DBI::dbDisconnect(connection)
 
   # Apply mapping -----
-  dplyr::mutate(
+  mapped_page <- returned_page %>%
+    dplyr::mutate(
     .keep = "none", # drop unmapped fields
     detection_id = detection_id_pk,
     date_time = datetime,
@@ -235,7 +236,10 @@ get_acoustic_detections_page <- function(credentials = list(
     sensor_unit,
     sensor2_value,
     sensor2_unit,
-
+    signal_to_noise_ratio,
+    source_file = file,
+    qc_flag,
+    deployment_id = deployment_fk
   )
 
   # Return mapped page
