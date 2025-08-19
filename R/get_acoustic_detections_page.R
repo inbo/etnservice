@@ -203,8 +203,8 @@ get_acoustic_detections_page <- function(credentials = list(
 
   view_to_query <- ifelse(is.null(animal_project_code) ||
                             is.null(scientific_name) ,
-                          "acoustic.detections_network",
-                          "acoustic.detections_animal")
+                          "acoustic.detections_animal",
+                          "acoustic.detections_network")
   ## Build query -----
 query <- glue::glue_sql(
   "SELECT",
