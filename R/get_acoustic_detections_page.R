@@ -102,7 +102,6 @@ get_acoustic_detections_page <- function(credentials = list(
       "det.transmitter IN ({acoustic_tag_id*})",
       .con = connection
     )
-    include_ref_tags <- TRUE
   }
 
   # Check animal_project_code
