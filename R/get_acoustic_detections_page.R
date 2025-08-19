@@ -171,7 +171,9 @@ get_acoustic_detections_page <- function(credentials = list(
   if (count) {
     limit_query <- glue::glue_sql("LIMIT ALL", .con = connection)
   } else {
-    limit_query <- glue::glue_sql("LIMIT {page_size}", .con = connection)
+    limit_query <- glue::glue_sql("LIMIT ",
+                                  format(page_size, scientific = FALSE),
+                                  .con = connection)
   }
 
   # Query creation and execution -----
