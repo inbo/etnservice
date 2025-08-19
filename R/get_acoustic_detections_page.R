@@ -235,7 +235,9 @@ query <- glue::glue_sql(
   DBI::dbDisconnect(connection)
 
   # Apply mapping -----
-  mapped_page <- returned_page %>%
+  if(!count){
+    # No need to apply mapping if we're only returng the number of records
+  returned_page <- returned_page %>%
     dplyr::transmute(
     detection_id = .data$detection_id_pk,
     date_time = .data$datetime,
@@ -257,9 +259,9 @@ query <- glue::glue_sql(
     source_file = .data$file,
     .data$qc_flag,
     deployment_id = .data$deployment_fk
-  )
+  )}
 
-  # Return mapped page
-  return(mapped_page)
+  # Return query result (mapped or not)
+  return(dplyr::as_tibble(returned_page))
 
 }
