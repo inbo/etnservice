@@ -234,7 +234,7 @@ get_acoustic_detections_page <- function(credentials = list(
   DBI::dbDisconnect(connection)
 
   # Apply mapping -----
-  if(!count){
+  if (!count) {
     # No need to apply mapping if we're only returng the number of records
   returned_page <- returned_page %>%
     dplyr::transmute(
