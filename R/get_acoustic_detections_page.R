@@ -206,11 +206,11 @@ get_acoustic_detections_page <- function(credentials = list(
                           "acoustic.detections_animal",
                           "acoustic.detections_network")
   ## Build query -----
-query <- glue::glue_sql(
-  "SELECT",
-  ifelse(count, " COUNT(*)", " *"),
-  " FROM ", view_to_query, " AS det",
-  "
+  query <- glue::glue_sql(
+    "SELECT",
+    ifelse(count, " COUNT(*)", " *"),
+    " FROM ", view_to_query, " AS det",
+    "
     WHERE
       {start_date_query}
       AND {end_date_query}
@@ -224,9 +224,9 @@ query <- glue::glue_sql(
       AND det.detection_id_pk > {next_id_pk}
     {limit_query}
     ",
-  .con = connection,
-  page_size_query = ifelse(count, "ALL", page_size)
-)
+    .con = connection,
+    page_size_query = ifelse(count, "ALL", page_size)
+  )
 
   # Execute query -----
   returned_page <- DBI::dbGetQuery(connection, query)
