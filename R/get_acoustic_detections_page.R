@@ -39,6 +39,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                          page_size = 100000,
                                          start_date = NULL,
                                          end_date = NULL,
+                                         detection_id = NULL,
                                          acoustic_tag_id = NULL,
                                          animal_project_code = NULL,
                                          scientific_name = NULL,
@@ -70,6 +71,18 @@ get_acoustic_detections_page <- function(credentials = list(
   } else {
     end_date <- check_date_time(end_date, "end_date")
     end_date_query <- glue::glue_sql("det.datetime < {end_date}", .con = connection)
+  }
+
+  # Check detection_id
+  if (is.null(detection_id)) {
+    detection_id_query <- "True"
+  } else {
+    assertthat::assert_that(assertthat::is.count(detection_id))
+
+    detection_id_query <- glue::glue_sql(
+      "detection_id_pk IN ({detection_id*})",
+      .con = connection
+    )
   }
 
   # Check acoustic_tag_id
@@ -198,6 +211,7 @@ get_acoustic_detections_page <- function(credentials = list(
     WHERE
       {start_date_query}
       AND {end_date_query}
+      AND {detection_id_query}
       AND {acoustic_tag_id_query}
       AND {animal_project_code_query}
       AND {scientific_name_query}
