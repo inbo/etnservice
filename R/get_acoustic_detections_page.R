@@ -184,7 +184,8 @@ get_acoustic_detections_page <- function(credentials = list(
   # If we have animal information, use acoustic.detections_animal view,
   # otherwise use the acoustic.detections_network view.
 
-  view_to_query <- ifelse(is.null(animal_project_code),
+  view_to_query <- ifelse(is.null(animal_project_code) ||
+                            is.null(scientific_name) ,
                           "acoustic.detections_network",
                           "acoustic.detections_animal")
   ## Build query -----
