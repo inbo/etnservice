@@ -209,13 +209,36 @@ get_acoustic_detections_page <- function(credentials = list(
     page_size_query = ifelse(count, "ALL", page_size)
     )
 
-  # Execute query
+  # Execute query -----
   returned_page <- DBI::dbGetQuery(connection, query)
 
-  # Close connection
+  # Close connection -----
   DBI::dbDisconnect(connection)
 
-  # Return returned page
-  return(returned_page)
+  # Apply mapping -----
+  dplyr::mutate(
+    .keep = "none", # drop unmapped fields
+    detection_id = detection_id_pk,
+    date_time = datetime,
+    tag_serial_number,
+    acoustic_tag_id = transmitter,
+    animal_project_code,
+    animal_id = animal_id_pk,
+    scientific_name = animal_scientific_name,
+    acoustic_project_code = network_project_code,
+    receiver_id = receiver,
+    station_name = deployment_station_name,
+    deploy_latitude = deployment_latitude,
+    deploy_longitude = deployment_longitude,
+    # depth_in_meters,
+    sensor_value,
+    sensor_unit,
+    sensor2_value,
+    sensor2_unit,
+
+  )
+
+  # Return mapped page
+  return(mapped_page)
 
 }
