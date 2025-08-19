@@ -54,4 +54,34 @@ test_that("get_acoustic_detections_page() starts query at next_id_pk", {
   )
 })
 
+test_that("get_acoustic_detections_page() allows setting of page_size", {
+  # Length of returned df should correspond with page size
+  expect_identical(nrow(get_acoustic_detections_page(page_size = 5)), 5L)
+  # page_size should be a positive integer
+  expect_error(
+    get_acoustic_detections_page(page_size = NULL),
+    regexp = "page_size is not a count (a single positive integer)",
+    fixed = TRUE
+  )
+  # page_size can be bigger than the returned object
+  n_detections_from_single_day <-
+    get_acoustic_detections_page(
+      animal_project_code = "2011_rivierprik",
+      start_date = "2012-01-10",
+      end_date = "2012-01-11"
+    ) %>%
+    nrow()
+  expect_identical(
+    nrow(
+      get_acoustic_detections_page(
+        animal_project_code = "2011_rivierprik",
+        start_date = "2012-01-10",
+        end_date = "2012-01-11",
+        page_size = n_detections_from_single_day + 1000
+      )
+    ),
+    n_detections_from_single_day
+  )
+})
+
 
