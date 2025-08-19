@@ -247,7 +247,6 @@ get_acoustic_detections_page <- function(credentials = list(
     station_name = deployment_station_name,
     deploy_latitude = deployment_latitude,
     deploy_longitude = deployment_longitude,
-    # depth_in_meters,
     sensor_value,
     sensor_unit,
     sensor2_value,
