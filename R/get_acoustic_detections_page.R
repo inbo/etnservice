@@ -34,8 +34,8 @@
 #'
 #' @export
 get_acoustic_detections_page <- function(credentials = list(
-                                          username = Sys.getenv("userid"),
-                                          password = Sys.getenv("pwd")
+                                           username = Sys.getenv("userid"),
+                                           password = Sys.getenv("pwd")
                                          ),
                                          next_id_pk = 0,
                                          page_size = 100000,
@@ -200,7 +200,7 @@ get_acoustic_detections_page <- function(credentials = list(
   # If we have animal information, use acoustic.detections_animal view,
   # otherwise use the acoustic.detections_network view.
 
-  if(!is.null(animal_project_code) || !is.null(scientific_name)) {
+  if (!is.null(animal_project_code) || !is.null(scientific_name)) {
     # If either animal_project_code or scientific_name are provided, use the
     # animal view
     view_to_query <- "acoustic.detections_animal"
@@ -240,31 +240,31 @@ get_acoustic_detections_page <- function(credentials = list(
   # Apply mapping -----
   if (!count) {
     # No need to apply mapping if we're only returning the number of records
-  returned_page <- returned_page %>%
-    dplyr::transmute(
-    detection_id = .data$detection_id_pk,
-    date_time = .data$datetime,
-    .data$tag_serial_number,
-    acoustic_tag_id = .data$transmitter,
-    .data$animal_project_code,
-    animal_id = .data$animal_id_pk,
-    scientific_name = .data$animal_scientific_name,
-    acoustic_project_code = .data$network_project_code,
-    receiver_id = .data$receiver,
-    station_name = .data$deployment_station_name,
-    deploy_latitude = .data$deployment_latitude,
-    deploy_longitude = .data$deployment_longitude,
-    .data$sensor_value,
-    .data$sensor_unit,
-    .data$sensor2_value,
-    .data$sensor2_unit,
-    .data$signal_to_noise_ratio,
-    source_file = .data$file,
-    .data$qc_flag,
-    deployment_id = .data$deployment_fk
-  )}
+    returned_page <- returned_page %>%
+      dplyr::transmute(
+        detection_id = .data$detection_id_pk,
+        date_time = .data$datetime,
+        .data$tag_serial_number,
+        acoustic_tag_id = .data$transmitter,
+        .data$animal_project_code,
+        animal_id = .data$animal_id_pk,
+        scientific_name = .data$animal_scientific_name,
+        acoustic_project_code = .data$network_project_code,
+        receiver_id = .data$receiver,
+        station_name = .data$deployment_station_name,
+        deploy_latitude = .data$deployment_latitude,
+        deploy_longitude = .data$deployment_longitude,
+        .data$sensor_value,
+        .data$sensor_unit,
+        .data$sensor2_value,
+        .data$sensor2_unit,
+        .data$signal_to_noise_ratio,
+        source_file = .data$file,
+        .data$qc_flag,
+        deployment_id = .data$deployment_fk
+      )
+  }
 
   # Return query result (mapped or not)
   return(dplyr::as_tibble(returned_page))
-
 }
