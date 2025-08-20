@@ -8,9 +8,9 @@
 #'   ETN database.
 #' @param next_id_pk The next primary key to fetch. All detections have a
 #'   sequential id, this key allows us to read the view top to bottom, but
-#'   filter out any records before the one we've already fetched. By default,
-#'   start reading at the first detection. Returned records have a detection_id
-#'   higher than next_id_pk.
+#'   filter out any records with lower detection_ids the one we've already
+#'   fetched. By default, start reading at the first detection. Returned records
+#'   have a detection_id higher than next_id_pk.
 #' @param page_size The number of records to retrieve.
 #' @param start_date Character. Start date (inclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
@@ -181,7 +181,7 @@ get_acoustic_detections_page <- function(credentials = list(
     )
   }
 
-  # Check limit: page_sie
+  # Check limit: page_size
   assertthat::assert_that(assertthat::is.count(page_size))
   assertthat::assert_that(assertthat::is.flag(count))
   if (count) {
@@ -239,7 +239,7 @@ get_acoustic_detections_page <- function(credentials = list(
 
   # Apply mapping -----
   if (!count) {
-    # No need to apply mapping if we're only returng the number of records
+    # No need to apply mapping if we're only returning the number of records
   returned_page <- returned_page %>%
     dplyr::transmute(
     detection_id = .data$detection_id_pk,
