@@ -13,7 +13,7 @@ test_that("get_version() returns installed etnservice version", {
   )
 })
 
-test_that("get_version() both the version number and hashes of function code", {
+test_that("get_version() returns both the version number and hashes of function code", {
   expect_named(
     get_version(),
     c("fn_checksums", "version")
