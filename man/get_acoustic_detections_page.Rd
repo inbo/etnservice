@@ -26,8 +26,9 @@ ETN database.}
 
 \item{next_id_pk}{The next primary key to fetch. All detections have a
 sequential id, this key allows us to read the view top to bottom, but
-filter out any records before the one we've already fetched. By default,
-start reading at the first detection.}
+filter out any records with lower detection_ids the one we've already
+fetched. By default, start reading at the first detection. Returned records
+have a detection_id higher than next_id_pk.}
 
 \item{page_size}{The number of records to retrieve.}
 
