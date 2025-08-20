@@ -81,7 +81,7 @@ get_acoustic_detections_page <- function(credentials = list(
   if (is.null(detection_id)) {
     detection_id_query <- "True"
   } else {
-    assertthat::assert_that(assertthat::is.count(detection_id))
+    assertthat::assert_that(is.integer(detection_id))
 
     detection_id_query <- glue::glue_sql(
       "detection_id_pk IN ({detection_id*})",
