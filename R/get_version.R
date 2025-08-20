@@ -28,7 +28,7 @@ get_version <- function() {
   # Calculate hashes for the functions, report on the installed version of
   # etnservice
   list(
-    fn_checksums = purrr::map(fn_code, md5sum),
+    fn_checksums = purrr::map(fn_code, rlang::hash),
     version = utils::packageVersion("etnservice")
   )
 }

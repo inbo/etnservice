@@ -209,28 +209,3 @@ get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
     gzcon() %>%
     readRDS()
 }
-
-#' Calculate the MD5 checksum of a string
-#'
-#' This function calculates the MD5 checksum of a given string by writing it to a
-#' temporary file and then using the `tools::md5sum` function to compute the checksum.
-#'
-#' Its results are different than via digest::digest()
-#'
-#' @param str A character string for which the MD5 checksum is to be calculated.
-#'
-#' @return A character string representing the MD5 checksum of the input string.
-#' @family helper functions
-#' @noRd
-#' @examples
-#' md5sum("Hello, World!")
-md5sum <- function(str) {
-  # Set path for tempfile
-  temp_file <- tempfile()
-  # Delete when done
-  on.exit(unlink(temp_file))
-  # Write string to tempfile
-  readr::write_lines(str, temp_file)
-  # Checksum
-  unname(tools::md5sum(temp_file))
-}
