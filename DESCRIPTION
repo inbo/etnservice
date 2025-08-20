@@ -1,13 +1,13 @@
 Package: etnservice
 Title: Serve Data from the European Tracking Network
-Version: 0.3.0.9003
+Version: 0.3.0.9004
 Authors@R: c(
     person("Pieter", "Huybrechts", , "pieter.huybrechts@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6658-6062")),
     person("Peter", "Desmet", , "peter.desmet@inbo.be", role = "aut",
            comment = c(ORCID = "0000-0002-8442-8025")),
     person("Research Institute for Nature and Forest (INBO)", role = "cph",
-           comment = "https://www.vlaanderen.be/inbo/en-gb/"),
+           comment = c(ROR = "00j54wy13")),
     person("LifeWatch Belgium", role = "fnd",
            comment = "https://lifewatch.be")
   )
