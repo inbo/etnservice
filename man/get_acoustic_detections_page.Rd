@@ -38,8 +38,6 @@ have a detection_id higher than next_id_pk.}
 \item{end_date}{Character. End date (exclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
 
-\item{detection_id}{Integer (vector). One or more detection ids.}
-
 \item{acoustic_tag_id}{Character (vector). One or more acoustic tag ids.}
 
 \item{animal_project_code}{Character (vector). One or more animal project

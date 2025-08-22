@@ -16,7 +16,6 @@
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
 #' @param end_date Character. End date (exclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
-#' @param detection_id Integer (vector). One or more detection ids.
 #' @param acoustic_tag_id Character (vector). One or more acoustic tag ids.
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
@@ -75,18 +74,6 @@ get_acoustic_detections_page <- function(credentials = list(
     end_date <- check_date_time(end_date, "end_date")
     end_date_query <- glue::glue_sql("det.datetime < {end_date}",
                                      .con = connection)
-  }
-
-  # Check detection_id
-  if (is.null(detection_id)) {
-    detection_id_query <- "True"
-  } else {
-    assertthat::assert_that(is.integer(detection_id))
-
-    detection_id_query <- glue::glue_sql(
-      "detection_id_pk IN ({detection_id*})",
-      .con = connection
-    )
   }
 
   # Check acoustic_tag_id
@@ -217,7 +204,6 @@ get_acoustic_detections_page <- function(credentials = list(
     WHERE
       {start_date_query}
       AND {end_date_query}
-      AND {detection_id_query}
       AND {acoustic_tag_id_query}
       AND {animal_project_code_query}
       AND {scientific_name_query}
