@@ -17,7 +17,8 @@ get_acoustic_detections_page(
   deployment_id = NULL,
   receiver_id = NULL,
   station_name = NULL,
-  count = FALSE
+  count = FALSE,
+  ...
 )
 }
 \arguments{
@@ -57,6 +58,9 @@ codes. Case-insensitive.}
 \item{count}{Logical. If set to \code{TRUE} a data.frame is returned with a single
 column: the count of the number of records returned by the query.
 \code{page_size} is ignored.}
+
+\item{...}{Additional arguments passed to the function. Not used. Handy if
+extra arguments are passed as a side effect of \code{do.call()}}
 }
 \value{
 A tibble with acoustic detections data, with length \code{page_size} or
