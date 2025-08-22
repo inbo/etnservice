@@ -16,13 +16,13 @@
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
 #' @param end_date Character. End date (exclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
-#' @param detection_id Integer (vector). One or more detection ids.
 #' @param acoustic_tag_id Character (vector). One or more acoustic tag ids.
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
 #' @param scientific_name Character (vector). One or more scientific names.
 #' @param acoustic_project_code Character (vector). One or more acoustic project
 #'   codes. Case-insensitive.
+#' @param deployment_id Character (vector). One or more deployment ids.
 #' @param receiver_id Character (vector). One or more receiver identifiers.
 #' @param station_name Character (vector). One or more deployment station names.
 #' @param count Logical. If set to `TRUE` a data.frame is returned with a single
@@ -46,6 +46,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                          animal_project_code = NULL,
                                          scientific_name = NULL,
                                          acoustic_project_code = NULL,
+                                         deployment_id = NULL,
                                          receiver_id = NULL,
                                          station_name = NULL,
                                          count = FALSE) {
@@ -75,18 +76,6 @@ get_acoustic_detections_page <- function(credentials = list(
     end_date <- check_date_time(end_date, "end_date")
     end_date_query <- glue::glue_sql("det.datetime < {end_date}",
                                      .con = connection)
-  }
-
-  # Check detection_id
-  if (is.null(detection_id)) {
-    detection_id_query <- "True"
-  } else {
-    assertthat::assert_that(is.integer(detection_id))
-
-    detection_id_query <- glue::glue_sql(
-      "detection_id_pk IN ({detection_id*})",
-      .con = connection
-    )
   }
 
   # Check acoustic_tag_id
@@ -147,6 +136,21 @@ get_acoustic_detections_page <- function(credentials = list(
     )
     acoustic_project_code_query <- glue::glue_sql(
       "LOWER(network_project_code) IN ({acoustic_project_code*})",
+      .con = connection
+    )
+  }
+
+  # Check deployment id
+  if (is.null(deployment_id)) {
+    deployment_id_query <- "True"
+  } else {
+    deployment_id <- check_value(
+      deployment_id,
+      list_deployment_ids(credentials),
+      "deployment_id"
+    )
+    deployment_id_query <- glue::glue_sql(
+      "det.deployment_fk IN ({deployment_id*})",
       .con = connection
     )
   }
@@ -217,11 +221,11 @@ get_acoustic_detections_page <- function(credentials = list(
     WHERE
       {start_date_query}
       AND {end_date_query}
-      AND {detection_id_query}
       AND {acoustic_tag_id_query}
       AND {animal_project_code_query}
       AND {scientific_name_query}
       AND {acoustic_project_code_query}
+      AND {deployment_id_query}
       AND {receiver_id_query}
       AND {station_name_query}
       AND det.detection_id_pk > {next_id_pk}
