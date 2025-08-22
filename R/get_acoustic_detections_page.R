@@ -22,6 +22,7 @@
 #' @param scientific_name Character (vector). One or more scientific names.
 #' @param acoustic_project_code Character (vector). One or more acoustic project
 #'   codes. Case-insensitive.
+#' @param deployment_id
 #' @param receiver_id Character (vector). One or more receiver identifiers.
 #' @param station_name Character (vector). One or more deployment station names.
 #' @param count Logical. If set to `TRUE` a data.frame is returned with a single
@@ -45,6 +46,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                          animal_project_code = NULL,
                                          scientific_name = NULL,
                                          acoustic_project_code = NULL,
+                                         deployment_id = NULL,
                                          receiver_id = NULL,
                                          station_name = NULL,
                                          count = FALSE) {
@@ -138,6 +140,9 @@ get_acoustic_detections_page <- function(credentials = list(
     )
   }
 
+  # Check deployment id
+
+
   # Check receiver_id
   if (is.null(receiver_id)) {
     receiver_id_query <- "True"
@@ -208,6 +213,7 @@ get_acoustic_detections_page <- function(credentials = list(
       AND {animal_project_code_query}
       AND {scientific_name_query}
       AND {acoustic_project_code_query}
+      AND {deployment_id_query}
       AND {receiver_id_query}
       AND {station_name_query}
       AND det.detection_id_pk > {next_id_pk}
