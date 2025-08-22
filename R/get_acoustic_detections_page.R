@@ -141,7 +141,19 @@ get_acoustic_detections_page <- function(credentials = list(
   }
 
   # Check deployment id
-
+  if (is.null(deployment_id)) {
+    deployment_id_query <- "True"
+  } else {
+    deployment_id <- check_value(
+      deployment_id,
+      list_deployment_ids(credentials),
+      "deployment_id"
+    )
+    deployment_id_query <- glue::glue_sql(
+      "det.deployment_fk IN ({deployment_id*})",
+      .con = connection
+    )
+  }
 
   # Check receiver_id
   if (is.null(receiver_id)) {
