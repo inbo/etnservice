@@ -41,7 +41,6 @@ get_acoustic_detections_page <- function(credentials = list(
                                          page_size = 100000,
                                          start_date = NULL,
                                          end_date = NULL,
-                                         detection_id = NULL,
                                          acoustic_tag_id = NULL,
                                          animal_project_code = NULL,
                                          scientific_name = NULL,

@@ -10,7 +10,6 @@ get_acoustic_detections_page(
   page_size = 1e+05,
   start_date = NULL,
   end_date = NULL,
-  detection_id = NULL,
   acoustic_tag_id = NULL,
   animal_project_code = NULL,
   scientific_name = NULL,
