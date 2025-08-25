@@ -1,4 +1,5 @@
 # etnservice 0.4.1
+- Fix spelling mistake 
 
 # etnservice 0.4.0
 - Added `get_version()` which allows users to easily compare their locally installed version of `etnservice` with the one deployed on the OpenCPU API. (#81)
