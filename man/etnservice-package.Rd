@@ -8,6 +8,14 @@
 \description{
 Provides API endpoints to the European Tracking Network. Designed to be used with OpenCPU and the 'etn' package.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/inbo/etnservice}
+  \item Report bugs at \url{https://github.com/inbo/etnservice/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Pieter Huybrechts \email{pieter.huybrechts@inbo.be} (\href{https://orcid.org/0000-0002-6658-6062}{ORCID})
 
