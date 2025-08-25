@@ -1,4 +1,4 @@
-# etnservice (development version)
+# etnservice 0.4.0
 - Added `get_version()` which allows users to easily compare their locally installed version of `etnservice` with the one deployed on the OpenCPU API. (#81)
 - Added `get_acoustic_detections_page()` which fetches a single page from the new detections view. This function allows paginated access and is to be called by the etn package function `get_acoustic_detections()` to make fetching large numbers of detections more efficient. (#85)
 - The `depth_in_meters` field is not returned as part of `get_acoustic_detections_page()`, this was a calculated field that has proved unreliable. It was also causing performance issues in the database. As an alternative depth can (sometimes) be retrieved via `sensor_value` and `sensor_unit`, which will be more dependable than a calculation based on slope.
