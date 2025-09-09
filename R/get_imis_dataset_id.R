@@ -25,6 +25,7 @@ get_imis_dataset_id <- function(credentials = list(
   }
 
 
+  # Build query -----
   query <- glue::glue_sql(
     "
   SELECT
@@ -56,6 +57,8 @@ get_imis_dataset_id <- function(credentials = list(
     .con = connection
   )
 
+
+  # Execute query -----
   data <- DBI::dbGetQuery(connection, query)
 
   # Close connection
