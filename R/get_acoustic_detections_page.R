@@ -28,6 +28,8 @@
 #' @param count Logical. If set to `TRUE` a data.frame is returned with a single
 #'   column: the count of the number of records returned by the query.
 #'   `page_size` is ignored.
+#' @param ... Additional arguments passed to the function. Not used. Handy if
+#'   extra arguments are passed as a side effect of `do.call()`
 #'
 #' @return A tibble with acoustic detections data, with length `page_size` or
 #'   smaller. Including a column with the primary key of the next detection.
@@ -48,7 +50,8 @@ get_acoustic_detections_page <- function(credentials = list(
                                          deployment_id = NULL,
                                          receiver_id = NULL,
                                          station_name = NULL,
-                                         count = FALSE) {
+                                         count = FALSE,
+                                         ...) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
