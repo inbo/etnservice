@@ -27,7 +27,8 @@ Imports:
     readr,
     rlang,
     stringr,
-    utils
+    utils,
+    arrow
 Suggests: 
     purrr,
     testthat (>= 3.0.0)
