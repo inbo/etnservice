@@ -1,4 +1,4 @@
-# etnservice (development version)
+# etnservice 0.4.2
 - Minor change to `get_acoustic_detections_page()` to now support ellipsis `...` to be passed (unused). This is useful when the function is being called via `do.call()` and extra arguments are passed.
 
 # etnservice 0.4.1
