@@ -29,6 +29,6 @@ get_version <- function() {
   # etnservice
   list(
     fn_checksums = purrr::map(fn_code, rlang::hash),
-    version = as.character(utils::packageVersion("etnservice"))
+    version = utils::packageVersion("etnservice")
   )
 }

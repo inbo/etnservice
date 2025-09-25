@@ -1,11 +1,10 @@
-test_that("get_version() returns a version object as character", {
-  expect_type(get_version()$version,
-                  "character")
+test_that("get_version() returns a version object as `package_version`", {
+  expect_s3_class(get_version()$version, "package_version")
 })
 
 test_that("get_version() returns installed etnservice version", {
   expect_identical(
-    get_version()$version,
+    as.character(get_version()$version),
     installed.packages(noCache = TRUE) %>%
       dplyr::as_tibble() %>%
       dplyr::filter(Package == "etnservice") %>%
