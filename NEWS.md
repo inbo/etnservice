@@ -1,4 +1,4 @@
-# etnservice (development version)
+# etnservice 0.4.3
 - `get_version()` now returns the package version as a `package_version`, `numeric_version` object instead of as a character string. This allows for easy comparison by the `etn` package. (#109)
 
 # etnservice 0.4.2
