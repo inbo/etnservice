@@ -108,6 +108,7 @@ test_that("get_acoustic_detections_page() returns the expected columns", {
     "qc_flag",
     "deployment_id"
   )
+  expect_length(names(df), length(expected_col_names))
   expect_equal(names(df), expected_col_names)
   expect_named(df, expected_col_names)
 })
