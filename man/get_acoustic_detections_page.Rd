@@ -10,6 +10,7 @@ get_acoustic_detections_page(
   page_size = 1e+05,
   start_date = NULL,
   end_date = NULL,
+  tag_serial_number = NULL,
   acoustic_tag_id = NULL,
   animal_project_code = NULL,
   scientific_name = NULL,
@@ -38,6 +39,8 @@ have a detection_id higher than next_id_pk.}
 
 \item{end_date}{Character. End date (exclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
+
+\item{tag_serial_number}{Character (vector). One or more tag serial numbers.}
 
 \item{acoustic_tag_id}{Character (vector). One or more acoustic tag ids.}
 
