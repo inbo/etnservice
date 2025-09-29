@@ -1,4 +1,5 @@
 # etnservice (development version)
+- Added `tag_serial_number` to `get_acoustic_detections_page()`. This argument is a better option as `acoustic_tag_id`. Thank you @lottepohl for the suggestion. (#112, inbo/etn#386, #102)
 
 # etnservice 0.4.3
 - `get_version()` now returns the package version as a `package_version`, `numeric_version` object instead of as a character string. This allows for easy comparison by the `etn` package. (#109)

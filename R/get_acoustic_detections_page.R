@@ -16,6 +16,7 @@
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
 #' @param end_date Character. End date (exclusive) in ISO 8601 format (
 #'   `yyyy-mm-dd`, `yyyy-mm` or `yyyy`).
+#' @param tag_serial_number Character (vector). One or more tag serial numbers.
 #' @param acoustic_tag_id Character (vector). One or more acoustic tag ids.
 #' @param animal_project_code Character (vector). One or more animal project
 #'   codes. Case-insensitive.
@@ -43,6 +44,7 @@ get_acoustic_detections_page <- function(credentials = list(
                                          page_size = 100000,
                                          start_date = NULL,
                                          end_date = NULL,
+                                         tag_serial_number = NULL,
                                          acoustic_tag_id = NULL,
                                          animal_project_code = NULL,
                                          scientific_name = NULL,
@@ -78,6 +80,21 @@ get_acoustic_detections_page <- function(credentials = list(
     end_date <- check_date_time(end_date, "end_date")
     end_date_query <- glue::glue_sql("det.datetime < {end_date}",
                                      .con = connection)
+  }
+
+  # Check tag_serial_number
+  if (is.null(tag_serial_number)) {
+    tag_serial_number_query <- "True"
+  } else {
+    tag_serial_number <- check_value(
+      tag_serial_number,
+      list_tag_serial_numbers(credentials),
+      "tag_serial_number"
+    )
+    tag_serial_number_query <- glue::glue_sql(
+      "det.tag_serial_number IN ({tag_serial_number*})",
+      .con = connection
+    )
   }
 
   # Check acoustic_tag_id
@@ -223,6 +240,7 @@ get_acoustic_detections_page <- function(credentials = list(
     WHERE
       {start_date_query}
       AND {end_date_query}
+      AND {tag_serial_number_query}
       AND {acoustic_tag_id_query}
       AND {animal_project_code_query}
       AND {scientific_name_query}

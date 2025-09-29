@@ -108,9 +108,28 @@ test_that("get_acoustic_detections_page() returns the expected columns", {
     "qc_flag",
     "deployment_id"
   )
+  expect_length(names(df), length(expected_col_names))
   expect_equal(names(df), expected_col_names)
+  expect_named(df, expected_col_names)
+})
+
+test_that("get_acoustic_detections_page() returns only count column on count", {
   expect_named(
     get_acoustic_detections_page(acoustic_project_code = "2024_bovenschelde",
                                  count = TRUE),
     "count")
+})
+
+test_that("pagination via next_id_pk returns non-overlapping pages", {
+  first_page <- get_acoustic_detections_page(page_size = 300)
+  expect_true(nrow(first_page) > 0)
+  max_id_first_page <- max(first_page$detection_id)
+
+  second_page <- get_acoustic_detections_page(
+    page_size = 300,
+    next_id_pk = max_id_first_page
+  )
+
+  expect_true(all(second_page$detection_id > max_id_first_page))
+  expect_length(intersect(first_page$detection_id, second_page$detection_id), 0)
 })
