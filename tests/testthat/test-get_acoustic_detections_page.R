@@ -109,6 +109,10 @@ test_that("get_acoustic_detections_page() returns the expected columns", {
     "deployment_id"
   )
   expect_equal(names(df), expected_col_names)
+  expect_named(df, expected_col_names)
+})
+
+test_that("get_acoustic_detections_page() returns only count column on count", {
   expect_named(
     get_acoustic_detections_page(acoustic_project_code = "2024_bovenschelde",
                                  count = TRUE),
