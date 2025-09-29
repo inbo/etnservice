@@ -270,7 +270,6 @@ get_acoustic_detections_page <- function(credentials = list(
         date_time = .data$datetime,
         .data$tag_serial_number,
         acoustic_tag_id = .data$transmitter,
-        .data$tag_serial_number,
         .data$animal_project_code,
         animal_id = .data$animal_id_pk,
         scientific_name = .data$animal_scientific_name,
