@@ -1,6 +1,6 @@
 Package: etnservice
 Title: Serve Data from the European Tracking Network
-Version: 0.4.3
+Version: 0.4.3.9003
 Authors@R: c(
     person("Pieter", "Huybrechts", , "pieter.huybrechts@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6658-6062")),
