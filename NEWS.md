@@ -1,3 +1,5 @@
+# etnservice (development version)
+
 # etnservice 0.5.0
 - Added `tag_serial_number` to `get_acoustic_detections_page()`. This argument is a better option as `acoustic_tag_id`. Thank you @lottepohl for the suggestion. (#112, inbo/etn#386, #102)
 
