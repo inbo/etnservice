@@ -1,4 +1,5 @@
 # etnservice (development version)
+- Made sure `list_acoustic_project_codes()`, `list_animal_project_codes()`, `list_cpod_project_codes()` and `list_scientific_names()` always return values in the same order, regardless of the locale of the computer R is running on. (#116)
 
 # etnservice 0.5.0
 - Added `tag_serial_number` to `get_acoustic_detections_page()`. This argument is a better option as `acoustic_tag_id`. Thank you @lottepohl for the suggestion. (#112, inbo/etn#386, #102)
