@@ -33,5 +33,5 @@ list_cpod_project_codes <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
-  sort(data$project_code)
+  stringr::str_sort(data$project_code)
 }
