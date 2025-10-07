@@ -26,5 +26,5 @@ list_acoustic_project_codes <- function(credentials = list(
   DBI::dbDisconnect(connection)
 
   # Return acoustic_project_codes
-  sort(data$project_code)
+  stringr::str_sort(data$project_code)
 }
