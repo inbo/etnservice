@@ -1,3 +1,5 @@
+# etnservice (development version)
+
 # etnservice 0.5.1
 - Made sure `list_acoustic_project_codes()`, `list_animal_project_codes()`, `list_cpod_project_codes()` and `list_scientific_names()` always return values in the same order, regardless of the locale of the computer R is running on. (#116)
 
