@@ -37,19 +37,6 @@ response <-
   req_method("POST") %>%
   req_perform()
 
-request <- request %>%
-  req_headers(
-    "Content-Type" = "application/json",
-    "Cookie" = "vliz_webc=vliz_webc2"
-  ) %>%
-  req_body_json(list(
-    credentials = list(
-      username = "pieter.huybrechts@inbo.be",
-      password = askpass::askpass("Please provide ETN db pwd")
-    )
-  )) %>%
-  req_method("POST")
-
 # check against expectation -----------------------------------------------
 
 # Make sure we didn't get a HTTP error
