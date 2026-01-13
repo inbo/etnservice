@@ -22,10 +22,7 @@ request <-
     glue::glue(
       "https://opencpu.lifewatch.be/library/etnservice/R/{fn_to_test}/json"
     )
-  )
-
-response <-
-  request %>%
+  ) |>
   req_headers(
     "Content-Type" = "application/json",
     "Cookie" = "vliz_webc=vliz_webc2"
@@ -34,8 +31,9 @@ response <-
     username = Sys.getenv("ETN_USER"),
     password = Sys.getenv("ETN_PWD")
   ))) %>%
-  req_method("POST") %>%
-  req_perform()
+  req_method("POST")
+
+response <- req_perform(request)
 
 # check against expectation -----------------------------------------------
 
