@@ -22,11 +22,11 @@ request <-
   req_headers(
     "Content-Type" = "application/json",
     "Cookie" = "vliz_webc=vliz_webc2"
-  ) %>%
+  ) |>
   req_body_json(list(credentials = list(
     username = Sys.getenv("ETN_USER"),
     password = Sys.getenv("ETN_PWD")
-  ))) %>%
+  ))) |>
   req_method("POST")
 
 response <- req_perform(request)
@@ -44,21 +44,22 @@ expectation <- readr::read_lines(
   grep("pm.expect(jsonData).to.include.members(",
        .,
        fixed = TRUE,
-       value = TRUE) %>%
-  stringr::str_extract_all('(?<=")[^,]*?(?=\\")') %>%
+       value = TRUE) |>
+  stringr::str_extract_all('(?<=")[^,]*?(?=\\")') |>
   unlist()
 
 
 ## extract response --------------------------------------------------------
 
-api_response_values <- httr2::resp_body_json(response) %>% unlist()
+api_response_values <- httr2::resp_body_json(response) |> unlist()
 
 # report mismatch ---------------------------------------------------------
 
-# values that are in the response, but not in the expected (test values):
+# values from the response that are not expected (test values), this may be
+# useful if the intent is to test all values
 api_response_values[!expectation %in% api_response_values]
 
-# Values from expectation that are not in the values the api responded
+# Values from expectation that are not in the response values
 expectation[!expectation %in% api_response_values]
 
 # Values from the api response that are in the values from the expectation
