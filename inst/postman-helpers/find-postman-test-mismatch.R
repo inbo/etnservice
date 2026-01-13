@@ -1,19 +1,15 @@
-# check mismatch between js test and api response for list_acoustic_project_codes
-
+# check mismatch between js test and api response for a given function
 
 # load libraries ----------------------------------------------------------
 
 library(httr2)
-
-
 
 # set function to test ----------------------------------------------------
 
 fn_to_test <- "list_acoustic_project_codes"
 
 
-# get reponse -------------------------------------------------------------
-
+# get response ------------------------------------------------------------
 
 ## build request ----------------------------------------------------------
 
@@ -60,8 +56,7 @@ api_response_values <- httr2::resp_body_json(response) %>% unlist()
 # report mismatch ---------------------------------------------------------
 
 # values that are in the response, but not in the expected (test values):
-api_response_values[
-  !expectation %in% api_response_values]
+api_response_values[!expectation %in% api_response_values]
 
 # Values from expectation that are not in the values the api responded
 expectation[!expectation %in% api_response_values]
