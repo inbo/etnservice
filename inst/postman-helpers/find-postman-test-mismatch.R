@@ -61,7 +61,7 @@ api_response_values <- httr2::resp_body_json(response) %>% unlist()
 
 # report mismatch ---------------------------------------------------------
 
-# missing expected project codes:
+# values that are in the response, but not in the expected (test values):
 api_response_values[
   !expectation %in% api_response_values]
 
