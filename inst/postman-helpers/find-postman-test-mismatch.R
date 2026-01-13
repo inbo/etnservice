@@ -72,10 +72,10 @@ expectation[!expectation %in% api_response_values]
 api_response_values[api_response_values %in% expectation]
 
 # check if the response is always the same --------------------------------
-library(furrr)
-plan("multisession", workers = 10)
-furrr::future_map(rep(list(request), 100), ~resp_body_json(req_perform(.x))) %>%
-  purrr::map(digest::digest) %>%
-  unlist %>%
-  unique %>%
-  length(.) == 1
+# library(furrr)
+# plan("multisession", workers = 10)
+# furrr::future_map(rep(list(request), 100), ~resp_body_json(req_perform(.x))) %>%
+#   purrr::map(digest::digest) %>%
+#   unlist %>%
+#   unique %>%
+#   length(.) == 1
