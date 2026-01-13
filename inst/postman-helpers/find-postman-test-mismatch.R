@@ -68,7 +68,7 @@ api_response_values[
 # Values from expectation that are not in the values the api responded
 expectation[!expectation %in% api_response_values]
 
-# Values from the api response that are in the values form the expectation
+# Values from the api response that are in the values from the expectation
 api_response_values[api_response_values %in% expectation]
 
 # check if the response is always the same --------------------------------
