@@ -31,11 +31,8 @@ response <-
     "Cookie" = "vliz_webc=vliz_webc2"
   ) %>%
   req_body_json(list(credentials = list(
-    username = Sys.getenv("ETN_USER", unset = readline("ETN username:")),
-    password = Sys.getenv(
-      "ETN_PWD",
-      unset = askpass::askpass(prompt = "Please enter your ETN password")
-    )
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
   ))) %>%
   req_method("POST") %>%
   req_perform()
