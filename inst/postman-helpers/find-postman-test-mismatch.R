@@ -9,7 +9,7 @@ library(httr2)
 
 # set function to test ----------------------------------------------------
 
-fn_to_test <- "list_scientific_names"
+fn_to_test <- "list_acoustic_project_codes"
 
 
 # get reponse -------------------------------------------------------------
