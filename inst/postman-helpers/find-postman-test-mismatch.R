@@ -70,10 +70,18 @@ expectation[!expectation %in% api_response_values]
 api_response_values[api_response_values %in% expectation]
 
 # check if the response is always the same --------------------------------
-# library(furrr)
-# plan("multisession", workers = 10)
-# furrr::future_map(rep(list(request), 100), ~resp_body_json(req_perform(.x))) %>%
-#   purrr::map(digest::digest) %>%
-#   unlist %>%
-#   unique %>%
-#   length(.) == 1
+
+# number of requests to check
+iterations <- 20
+xxhash <- digest::getVDigest("xxhash64")
+
+number_of_unique_responses <-
+  httr2::req_perform_sequential(
+    rep(list(request), iterations)
+  ) |>
+  purrr::map(httr2::resp_body_json) |>
+  xxhash() |>
+  unique() |>
+  length()
+
+assertthat::assert_that(number_of_unique_responses == 1)
