@@ -11,5 +11,5 @@ pm.test("returns the right deployment ids", () => {
       //array is not empty
       pm.expect(jsonData).to.not.be.empty;
       //ids include number of known values
-      pm.expect(jsonData).to.include.members(["54672", "28703", "26058", "10009", "8770", "27578", "4788", "6214", "56698", "1716", "65055", "55006", "3240", "1543", "12836"]);
+      pm.expect(jsonData).to.include.members([54672, 28703, 26058, 10009, 8770, 27578, 4788, 6214, 56698, 1716, 65055, 55006, 3240, 1543, 12836]);
   });
