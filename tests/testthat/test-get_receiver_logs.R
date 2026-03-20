@@ -71,7 +71,7 @@ test_that("get_receiver_logs() can filter on end_date", {
 test_that("get_receiver_logs() can return a limited subset", {
   # This test assumes that there are more than 100 logs for the test deployment
   expect_length(
-    get_receiver_logs(test_deployment_id, limit = TRUE)[1],
+    get_receiver_logs(deployment_id = test_deployment_id, limit = TRUE)[1],
     100L
   )
 })
