@@ -6,7 +6,7 @@
 \usage{
 get_receiver_logs(
   credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
-  deployment_id = NULL,
+  deployment_id,
   start_date = NULL,
   end_date = NULL,
   receiver_id = NULL,
