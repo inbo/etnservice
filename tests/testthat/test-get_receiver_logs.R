@@ -25,7 +25,7 @@ test_that("get_receiver_logs() returns the expected columns", {
 })
 
 test_that("get_receiver_logs() returns the expected column classes", {
-  expected_column_classes <- c(
+  expected_column_classes <- list(
     "deployment_id" = "integer",
     "receiver_id" = "character",
     "datetime" = c("POSIXct", "POSIXt"),
