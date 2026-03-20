@@ -34,7 +34,7 @@ get_receiver_logs <- function(credentials = list(
     # If the deployment ID is present:
     deployment_id <- check_value(
       deployment_id,
-      list_deployment_ids(connection),
+      list_deployment_ids(credentials),
       "deployment_id"
     )
     deployment_id_query <- glue::glue_sql(
