@@ -53,6 +53,8 @@ test_that("get_receiver_logs() returns a 0-row tibble if no receiver logs found"
 })
 
 test_that("get_receiver_logs() returns error on missing deployment_id", {
+  # Fetching data for all deployments will return too big an object and crash
+  # either the query or the client.
   expect_error(
     get_receiver_logs(),
     class = "etn_no_dep_id_supplied"
