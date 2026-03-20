@@ -1,6 +1,11 @@
 # Test on a known deployment.
 test_deployment_id <- 53790
 
+test_that("get_receiver_logs() returns a tibble", {
+  expect_s3_class(
+    get_receiver_logs(deployment_id = test_deployment_id, limit = TRUE),
+    "tbl_df"
+  )
 })
 
 test_that("get_receiver_logs() returns the expected columns", {
