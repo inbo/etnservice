@@ -18,4 +18,5 @@ get_receiver_logs <- function(credentials = list(
                               receiver_id = NULL,
                               limit = FALSE) {
 
+  NULL
 }
