@@ -5,7 +5,7 @@
 \title{Retrieve log files/diagnostic information for acoustic receivers.}
 \usage{
 get_receiver_logs(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   deployment_id,
   start_date = NULL,
   end_date = NULL,
@@ -16,7 +16,8 @@ get_receiver_logs(
 \arguments{
 \item{credentials}{A list with the username and password to connect to the ETN database.}
 
-\item{deployment_id}{Integer (number). One and only one deployment identifier.}
+\item{deployment_id}{Integer (number). One and only one deployment
+identifier.}
 
 \item{start_date}{Character. Start date (inclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
@@ -30,7 +31,8 @@ get_receiver_logs(
 for testing purposes). Defaults to \code{FALSE}.}
 }
 \value{
-A tibble with receiver diagnostics data.
+A tibble with receiver diagnostics data. The data is embedded in a
+\code{log_data} column that is JSON formatted.
 }
 \description{
 Retrieve log files/diagnostic information for acoustic receivers.
