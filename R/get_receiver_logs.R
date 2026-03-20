@@ -1,11 +1,13 @@
 #' Retrieve log files/diagnostic information for acoustic receivers.
 #'
-#' @param deployment_id Integer (number). One and only one deployment identifier.
+#' @param deployment_id Integer (number). One and only one deployment
+#'   identifier.
 #' @inheritParams get_acoustic_detections
 #' @inheritParams get_acoustic_deployments
 #' @inheritParams list_animal_ids
 #'
-#' @returns A tibble with receiver diagnostics data.
+#' @returns A tibble with receiver diagnostics data. The data is embedded in a
+#'   `log_data` column that is JSON formatted.
 #' @export
 #'
 #' @examples
