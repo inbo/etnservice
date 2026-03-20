@@ -116,9 +116,9 @@ get_receiver_logs <- function(credentials = list(
   # Sort data
   receiver_logs <-
     receiver_logs %>%
-    dplyr::arrange(dplyr::arrange(factor(
+    dplyr::arrange(factor(
       .data$deployment_id, levels = list_deployment_ids(credentials)
-    )))
+    ))
 
   dplyr::as_tibble(receiver_logs)
 }
