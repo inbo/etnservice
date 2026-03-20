@@ -1,4 +1,5 @@
-test_that("get_receiver_logs() returns a tibble", {
+# Test on a known deployment.
+test_deployment_id <- 53790
 
 })
 
