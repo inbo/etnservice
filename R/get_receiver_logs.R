@@ -28,6 +28,8 @@ get_receiver_logs <- function(credentials = list(
   check_connection(connection)
 
   # Check deployment_id
+  assertthat::assert_that(!missing(deployment_id))
+  assertthat::assert_that(assertthat::is.number(deployment_id))
   if(assertthat::validate_that(!missing(deployment_id))){
     # If the deployment ID is present:
     deployment_id <- check_value(
