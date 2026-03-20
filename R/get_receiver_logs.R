@@ -13,8 +13,8 @@
 #' @examples
 #' get_receiver_logs(deployment_id = 6028)
 get_receiver_logs <- function(credentials = list(
-                                username = Sys.getenv("userid"),
-                                password = Sys.getenv("pwd")),
+                                username = Sys.getenv("ETN_USER"),
+                                password = Sys.getenv("ETN_PWD")),
                               deployment_id,
                               start_date = NULL,
                               end_date = NULL,
