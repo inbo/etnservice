@@ -17,8 +17,8 @@
 #' @examples
 #' # Set credentials
 #' credentials <- list(
-#'    username = Sys.getenv("userid"),
-#'    password = Sys.getenv("pwd")
+#'    username = Sys.getenv("ETN_USER"),
+#'    password = Sys.getenv("ETN_PWD")
 #'  )
 #'
 #' # Get all acoustic receivers
@@ -30,8 +30,8 @@
 #' # Get a specific acoustic receiver
 #' get_acoustic_receivers(credentials, receiver_id = "VR2W-124070")
 get_acoustic_receivers <- function(credentials = list(
-                                     username = Sys.getenv("userid"),
-                                     password = Sys.getenv("pwd")
+                                     username = Sys.getenv("ETN_USER"),
+                                     password = Sys.getenv("ETN_PWD")
                                    ),
                                    receiver_id = NULL,
                                    status = NULL) {

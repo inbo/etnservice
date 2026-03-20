@@ -26,7 +26,7 @@ test_that("validate_login() returns FALSE on a unsuccesful login attempt", {
 
 test_that("validate_login() returns TRUE on a succesful login attempt", {
   expect_true(
-    validate_login(Sys.getenv("userid"),
-                   Sys.getenv("pwd"))
+    validate_login(Sys.getenv("ETN_USER"),
+                   Sys.getenv("ETN_PWD"))
   )
 })

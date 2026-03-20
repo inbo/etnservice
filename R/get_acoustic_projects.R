@@ -15,8 +15,8 @@
 #' @examples
 #' # Set credentials
 #' credentials <- list(
-#'    username = Sys.getenv("userid"),
-#'    password = Sys.getenv("pwd")
+#'    username = Sys.getenv("ETN_USER"),
+#'    password = Sys.getenv("ETN_PWD")
 #'  )
 #'
 #' # Get all acoustic projects
@@ -25,8 +25,8 @@
 #' # Get a specific acoustic project
 #' get_acoustic_projects(credentials, acoustic_project_code = "demer")
 get_acoustic_projects <- function(credentials = list(
-                                    username = Sys.getenv("userid"),
-                                    password = Sys.getenv("pwd")
+                                    username = Sys.getenv("ETN_USER"),
+                                    password = Sys.getenv("ETN_PWD")
                                   ),
                                   acoustic_project_code = NULL) {
 

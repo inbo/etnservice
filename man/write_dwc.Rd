@@ -5,7 +5,7 @@
 \title{Transform ETN data to Darwin Core}
 \usage{
 write_dwc(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   animal_project_code,
   rights_holder = NULL,
   license = "CC-BY"

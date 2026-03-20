@@ -7,8 +7,8 @@
 #'
 #' @export
 list_tag_serial_numbers <- function(credentials = list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
+  username = Sys.getenv("ETN_USER"),
+  password = Sys.getenv("ETN_PWD")
 )) {
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)

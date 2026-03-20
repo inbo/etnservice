@@ -5,7 +5,7 @@
 \title{List all available tag serial numbers}
 \usage{
 list_tag_serial_numbers(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD"))
 )
 }
 \arguments{

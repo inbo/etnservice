@@ -5,7 +5,7 @@
 \title{Get acoustic project data}
 \usage{
 get_acoustic_projects(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   acoustic_project_code = NULL
 )
 }
@@ -26,8 +26,8 @@ Get data for acoustic projects, with options to filter results.
 \examples{
 # Set credentials
 credentials <- list(
-   username = Sys.getenv("userid"),
-   password = Sys.getenv("pwd")
+   username = Sys.getenv("ETN_USER"),
+   password = Sys.getenv("ETN_PWD")
  )
 
 # Get all acoustic projects

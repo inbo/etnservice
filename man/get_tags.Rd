@@ -5,7 +5,7 @@
 \title{Get tag data}
 \usage{
 get_tags(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   tag_type = NULL,
   tag_subtype = NULL,
   tag_serial_number = NULL,
@@ -40,8 +40,8 @@ can be multiple records (\code{acoustic_tag_id}) per tag device
 \examples{
 # Set credentials
 credentials <- list(
-   username = Sys.getenv("userid"),
-   password = Sys.getenv("pwd")
+   username = Sys.getenv("ETN_USER"),
+   password = Sys.getenv("ETN_PWD")
  )
 
 # Get all tags
