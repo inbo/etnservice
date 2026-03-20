@@ -16,7 +16,7 @@ get_receiver_logs(
 \arguments{
 \item{credentials}{A list with the username and password to connect to the ETN database.}
 
-\item{deployment_id}{Integer (vector). One or more deployment identifiers.}
+\item{deployment_id}{Integer (number). One and only one deployment identifier.}
 
 \item{start_date}{Character. Start date (inclusive) in ISO 8601 format (
 \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}).}
