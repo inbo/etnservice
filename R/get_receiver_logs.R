@@ -83,5 +83,42 @@ get_receiver_logs <- function(credentials = list(
     limit_query <- glue::glue_sql("LIMIT ALL}", .con = connection)
   }
 
-  NULL
+  # Build query
+  query <-
+    glue::glue_sql(
+    "SELECT DISTINCT
+      log.deployment_fk AS deployment_id,
+      receiver.receiver AS receiver_id,
+      log.datetime AS datetime,
+      log.record_type,
+      log.log_data
+    FROM
+      acoustic.receiver_logs_data AS log
+      LEFT JOIN acoustic.deployments AS dep
+        ON log.deployment_fk = dep.id_pk
+      LEFT JOIN acoustic.receivers AS receiver
+        ON dep.receiver_fk = receiver.id_pk
+    WHERE
+      {start_date_query}
+      AND {end_date_query}
+      AND {deployment_id_query}
+      AND {receiver_id_query}
+    {limit_query}",
+    .con = connection,
+    .null = "NULL"
+    )
+
+  ## Query database
+  receiver_logs <- DBI::dbGetQuery(connection, query)
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Sort data
+  receiver_logs <-
+    receiver_logs %>%
+    dplyr::arrange(dplyr::arrange(factor(
+      .data$deployment_id, levels = list_deployment_ids(credentials)
+    )))
+
+  dplyr::as_tibble(receiver_logs)
 }
