@@ -25,7 +25,20 @@ test_that("get_receiver_logs() returns the expected columns", {
 })
 
 test_that("get_receiver_logs() returns the expected column classes", {
+  expected_column_classes <- c(
+    "deployment_id" = "integer",
+    "receiver_id" = "character",
+    "datetime" = c("POSIXct", "POSIXt"),
+    "record_type" = "character",
+    "log_data" = "character"
+  )
 
+  expect_identical(
+    purrr::map(get_receiver_logs(deployment_id = test_deployment_id,
+                            limit = TRUE),
+           class),
+    expected_column_classes
+  )
 })
 
 test_that("get_receiver_logs() returns no duplicate rows", {
