@@ -67,7 +67,7 @@ get_receiver_logs <- function(credentials = list(
   } else {
     receiver_id <- check_value(
       receiver_id,
-      list_receiver_ids(connection),
+      list_receiver_ids(credentials),
       name = "receiver_id"
     )
     receiver_id_query <- glue::glue_sql(
