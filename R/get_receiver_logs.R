@@ -56,7 +56,7 @@ get_receiver_logs <- function(credentials = list(
     start_date_query <- "True"
   } else {
     start_date <- check_date_time(start_date, "start_date")
-    start_date_query <- glue::glue_sql("det.datetime >= {start_date}", .con = connection)
+    start_date_query <- glue::glue_sql("log.datetime >= {start_date}", .con = connection)
   }
 
   # Check end_date
@@ -64,7 +64,7 @@ get_receiver_logs <- function(credentials = list(
     end_date_query <- "True"
   } else {
     end_date <- check_date_time(end_date, "end_date")
-    end_date_query <- glue::glue_sql("det.datetime < {end_date}", .con = connection)
+    end_date_query <- glue::glue_sql("log.datetime < {end_date}", .con = connection)
   }
 
   # Check receiver_id
