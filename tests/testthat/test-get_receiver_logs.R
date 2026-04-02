@@ -81,7 +81,28 @@ test_that("get_receiver_logs() can filter on deployment_id", {
 })
 
 test_that("get_receiver_logs() can filter on receiver_id", {
+  # I can not locate a deployment with multiple receivers. Thus I'm testing by
+  # requesting multiple deployments.
 
+  # Filtering on a single receiver_id
+  single_receiver_df <- get_receiver_logs(deployment_id = c(test_deployment_id,
+                                                            68401),
+                                          # receiver id from test deployment
+                                        receiver_id = "VR2W-136740")
+  expect_setequal(
+    dplyr::pull(single_receiver_df, "receiver_id") |> unique(),
+    "VR2W-136740"
+  )
+
+  # Filtering on multiple receiver_ids
+  multi_receiver_df <- get_receiver_logs(deployment_id = c(test_deployment_id,
+                                                           68401,
+                                                           93619),
+                                       receiver_id = c("VR2W-131795", "VR2W-110978"))
+  expect_setequal(
+    dplyr::pull(multi_receiver_df, "receiver_id") |> unique(),
+    c("VR2W-131795", "VR2W-110978")
+  )
 })
 
 test_that("get_receiver_logs() can filter on start_date", {
