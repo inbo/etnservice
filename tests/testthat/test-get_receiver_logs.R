@@ -109,27 +109,27 @@ test_that("get_receiver_logs() can filter on end_date", {
 
 test_that("get_receiver_logs() can filter on both start and end date", {
   # Test querying between two dates.
-  between_year_df <- get_receiver_logs(start_date = "2015",
-                                       end_date = "2016",
+  between_year_df <- get_receiver_logs(start_date = "2020",
+                                       end_date = "2021",
                                        deployment_id = test_deployment_id)
-  expect_lte(as.POSIXct("2015-01-01", tz = "UTC"),
-             min(between_year_df$date_time))
-  expect_gt(as.POSIXct("2016-01-01", tz = "UTC"),
-            max(between_year_df$date_time))
-  between_month_df <- get_receiver_logs(start_date = "2015-04",
-                                        end_date = "2015-05",
+  expect_lte(as.POSIXct("2020-01-01", tz = "UTC"),
+             min(between_year_df$datetime))
+  expect_gt(as.POSIXct("2021-01-01", tz = "UTC"),
+            max(between_year_df$datetime))
+  between_month_df <- get_receiver_logs(start_date = "2020-09",
+                                        end_date = "2020-11",
                                         deployment_id = test_deployment_id)
-  expect_lte(as.POSIXct("2015-04-01", tz = "UTC"),
-             min(between_month_df$date_time))
-  expect_gt(as.POSIXct("2015-05-01", tz = "UTC"),
-            max(between_month_df$date_time))
-  between_day_df <- get_receiver_logs(start_date = "2015-04-24",
-                                      end_date = "2015-04-25",
+  expect_lte(as.POSIXct("2020-09-01", tz = "UTC"),
+             min(between_month_df$datetime))
+  expect_gt(as.POSIXct("2020-11-01", tz = "UTC"),
+            max(between_month_df$datetime))
+  between_day_df <- get_receiver_logs(start_date = "2021-04-24",
+                                      end_date = "2021-04-25",
                                       deployment_id = test_deployment_id)
-  expect_lte(as.POSIXct("2015-04-24", tz = "UTC"),
-             min(between_day_df$date_time))
-  expect_gt(as.POSIXct("2015-04-25", tz = "UTC"),
-            max(between_day_df$date_time))
+  expect_lte(as.POSIXct("2021-04-24", tz = "UTC"),
+             min(between_day_df$datetime))
+  expect_gt(as.POSIXct("2021-04-25", tz = "UTC"),
+            max(between_day_df$datetime))
 })
 
 test_that("get_receiver_logs() can return a limited subset", {
