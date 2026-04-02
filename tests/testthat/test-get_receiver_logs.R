@@ -62,7 +62,22 @@ test_that("get_receiver_logs() returns error on missing deployment_id", {
 })
 
 test_that("get_receiver_logs() can filter on deployment_id", {
+  expect_setequal(
+    dplyr::pull(
+      get_receiver_logs(deployment_id = test_deployment_id),
+      "deployment_id"
+    ) |>
+      unique(),
+    test_deployment_id
+  )
 
+  expect_setequal(
+    dplyr::pull(get_receiver_logs(
+      deployment_id = c(test_deployment_id, 74535)
+    ), "deployment_id") |>
+      unique(),
+    c(test_deployment_id, 74535)
+  )
 })
 
 test_that("get_receiver_logs() can filter on receiver_id", {
