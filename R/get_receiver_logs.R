@@ -35,8 +35,6 @@ get_receiver_logs <- function(credentials = list(
       message = "Please provide at least one `deployment_id`",
       class = "etn_no_dep_id_supplied"
     )
-
-
   } else {
     # If the deployment ID is present:
     deployment_id <- check_value(
