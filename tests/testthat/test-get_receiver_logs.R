@@ -87,12 +87,12 @@ test_that("get_receiver_logs() can filter on start_date", {
   expect_lte(as.POSIXct("2020-10-12", tz = "UTC"), min(start_day_df$datetime))
 
   # End date (exclusive) > max(date_time)
-  end_year_df <- get_receiver_logs(end_date = "2020",
+  end_year_df <- get_receiver_logs(end_date = "2021",
                                    deployment_id = test_deployment_id)
-  expect_gt(as.POSIXct("2020-01-01", tz = "UTC"), max(end_year_df$datetime))
-  end_month_df <- get_receiver_logs(end_date = "2020-05",
+  expect_gt(as.POSIXct("2021-01-01", tz = "UTC"), max(end_year_df$datetime))
+  end_month_df <- get_receiver_logs(end_date = "2020-09",
                                     deployment_id = test_deployment_id)
-  expect_gt(as.POSIXct("2020-05-01", tz = "UTC"), max(end_month_df$datetime))
+  expect_gt(as.POSIXct("2020-09-01", tz = "UTC"), max(end_month_df$datetime))
   end_day_df <- get_receiver_logs(end_date = "2021-02-10",
                                   deployment_id = test_deployment_id)
   expect_gt(as.POSIXct("2021-02-10", tz = "UTC"), max(end_day_df$datetime))
