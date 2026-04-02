@@ -1,4 +1,4 @@
-# Test on a known deployment.
+# Test on a known deployment that has log_data.
 test_deployment_id <- 53790
 
 test_that("get_receiver_logs() returns a tibble", {
