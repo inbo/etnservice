@@ -30,9 +30,15 @@ get_receiver_logs <- function(credentials = list(
   check_connection(connection)
 
   # Check deployment_id
-  assertthat::assert_that(!missing(deployment_id))
-  assertthat::assert_that(assertthat::is.number(deployment_id))
-  if(assertthat::validate_that(!missing(deployment_id))){
+  if(missing(deployment_id)){
+    rlang::abort(
+      message = "Please provide at least one `deployment_id`",
+      class = "etn_no_dep_id_supplied"
+    )
+
+
+  } else {
+    assertthat::assert_that(assertthat::is.number(deployment_id))
     # If the deployment ID is present:
     deployment_id <- check_value(
       deployment_id,
