@@ -38,7 +38,6 @@ get_receiver_logs <- function(credentials = list(
 
 
   } else {
-    assertthat::assert_that(assertthat::is.number(deployment_id))
     # If the deployment ID is present:
     deployment_id <- check_value(
       deployment_id,
