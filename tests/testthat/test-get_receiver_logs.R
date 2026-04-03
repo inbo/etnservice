@@ -12,6 +12,7 @@ test_that("get_receiver_logs() returns the expected columns", {
   expected_column_names <- c(
     "deployment_id",
     "receiver_id",
+    "station_name",
     "datetime",
     "record_type",
     "log_data"
@@ -28,6 +29,7 @@ test_that("get_receiver_logs() returns the expected column classes", {
   expected_column_classes <- list(
     "deployment_id" = "integer",
     "receiver_id" = "character",
+    "station_name" = "character",
     "datetime" = c("POSIXct", "POSIXt"),
     "record_type" = "character",
     "log_data" = "character"
