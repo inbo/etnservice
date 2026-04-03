@@ -109,6 +109,12 @@ test_that("get_receiver_logs() can filter on receiver_id", {
   )
 })
 
+test_that("get_receiver_logs() can filter on station_name", {
+  # Errors
+  expect_error(get_receiver_logs(station_name = "not_a_station_name"))
+  expect_error(get_receiver_logs(station_name = c("de-9", "not_a_station_name")))
+})
+
 test_that("get_receiver_logs() can filter on start_date", {
   expect_error(
     get_receiver_logs(deployment_id = test_deployment_id,
