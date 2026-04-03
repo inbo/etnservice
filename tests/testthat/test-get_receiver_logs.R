@@ -49,7 +49,11 @@ test_that("get_receiver_logs() returns no duplicate rows", {
 })
 
 test_that("get_receiver_logs() returns a 0-row tibble if no receiver logs found", {
-
+  # 1758 is a deployment_id with no receiver_logs
+  expect_length(
+    dplyr::pull(get_receiver_logs(deployment_id = 1758), "log_data"),
+    0L
+  )
 })
 
 test_that("get_receiver_logs() returns error on missing deployment_id", {
