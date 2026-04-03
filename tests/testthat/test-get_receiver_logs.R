@@ -12,6 +12,7 @@ test_that("get_receiver_logs() returns the expected columns", {
   expected_column_names <- c(
     "deployment_id",
     "receiver_id",
+    "station_name",
     "datetime",
     "record_type",
     "log_data"
@@ -28,6 +29,7 @@ test_that("get_receiver_logs() returns the expected column classes", {
   expected_column_classes <- list(
     "deployment_id" = "integer",
     "receiver_id" = "character",
+    "station_name" = "character",
     "datetime" = c("POSIXct", "POSIXt"),
     "record_type" = "character",
     "log_data" = "character"
@@ -49,7 +51,11 @@ test_that("get_receiver_logs() returns no duplicate rows", {
 })
 
 test_that("get_receiver_logs() returns a 0-row tibble if no receiver logs found", {
-
+  # 1758 is a deployment_id with no receiver_logs
+  expect_length(
+    dplyr::pull(get_receiver_logs(deployment_id = 1758), "log_data"),
+    0L
+  )
 })
 
 test_that("get_receiver_logs() returns error on missing deployment_id", {
@@ -103,6 +109,38 @@ test_that("get_receiver_logs() can filter on receiver_id", {
     dplyr::pull(multi_receiver_df, "receiver_id") |> unique(),
     c("VR2W-131795", "VR2W-110978")
   )
+})
+
+test_that("get_receiver_logs() can filter on station_name", {
+  # Errors
+  expect_error(
+    get_receiver_logs(deployment_id = test_deployment_id, station_name = "not_a_station_name")
+  )
+  expect_error(get_receiver_logs(
+    deployment_id = test_deployment_id,
+    station_name = c("G09", "not_a_station_name")
+  ))
+
+  # Select single value
+  single_select <- "G09" # From deployment_id = 53790
+  single_select_df <- get_receiver_logs(deployment_id = test_deployment_id, station_name = single_select)
+  expect_equal(
+    single_select_df %>% distinct(station_name) %>% pull(),
+    c(single_select)
+  )
+  expect_gt(nrow(single_select_df), 0)
+
+  # Select multiple values
+  multi_select <- c("G09", "ws-VH8")
+  multi_select_df <- get_receiver_logs(
+    deployment_id = c(test_deployment_id, 64321),
+    station_name = multi_select
+  )
+  expect_equal(
+    multi_select_df %>% distinct(station_name) %>% pull() %>% sort(),
+    c(multi_select)
+  )
+  expect_gt(nrow(multi_select_df), nrow(single_select_df))
 })
 
 test_that("get_receiver_logs() can filter on start_date", {
