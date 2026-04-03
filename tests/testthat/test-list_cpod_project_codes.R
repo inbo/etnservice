@@ -6,7 +6,7 @@ credentials <- list(
 test_that("list_cpod_project_codes() returns unique list of values", {
   vector <- list_cpod_project_codes(credentials)
 
-  expect_is(vector, "character")
+  expect_type(vector, "character")
   expect_false(any(duplicated(vector)))
   expect_true(all(!is.na(vector)))
 

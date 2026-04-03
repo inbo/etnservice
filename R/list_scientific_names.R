@@ -20,5 +20,5 @@ list_scientific_names <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
-  sort(data$scientific_name)
+  stringr::str_sort(data$scientific_name)
 }

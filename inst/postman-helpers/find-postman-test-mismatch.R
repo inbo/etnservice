@@ -1,19 +1,15 @@
-# check mismatch between js test and api response for list_acoustic_project_codes
-
+# check mismatch between js test and api response for a given function
 
 # load libraries ----------------------------------------------------------
 
 library(httr2)
 
-
-
 # set function to test ----------------------------------------------------
 
-fn_to_test <- "list_receiver_ids"
+fn_to_test <- "list_acoustic_project_codes"
 
 
-# get reponse -------------------------------------------------------------
-
+# get response ------------------------------------------------------------
 
 ## build request ----------------------------------------------------------
 
@@ -22,35 +18,18 @@ request <-
     glue::glue(
       "https://opencpu.lifewatch.be/library/etnservice/R/{fn_to_test}/json"
     )
-  )
-
-response <-
-  request %>%
+  ) |>
   req_headers(
     "Content-Type" = "application/json",
     "Cookie" = "vliz_webc=vliz_webc2"
-  ) %>%
-  req_body_json(list(
-    credentials = list(
-      username = "pieter.huybrechts@inbo.be",
-      password = askpass::askpass("Please provide ETN db pwd")
-    )
-  )) %>%
-  req_method("POST") %>%
-  req_perform()
-
-request <- request %>%
-  req_headers(
-    "Content-Type" = "application/json",
-    "Cookie" = "vliz_webc=vliz_webc2"
-  ) %>%
-  req_body_json(list(
-    credentials = list(
-      username = "pieter.huybrechts@inbo.be",
-      password = askpass::askpass("Please provide ETN db pwd")
-    )
-  )) %>%
+  ) |>
+  req_body_json(list(credentials = list(
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
+  ))) |>
   req_method("POST")
+
+response <- req_perform(request)
 
 # check against expectation -----------------------------------------------
 
@@ -65,32 +44,40 @@ expectation <- readr::read_lines(
   grep("pm.expect(jsonData).to.include.members(",
        .,
        fixed = TRUE,
-       value = TRUE) %>%
-  stringr::str_extract_all('(?<=")[^,]*?(?=\\")') %>%
+       value = TRUE) |>
+  stringr::str_extract_all('(?<=")[^,]*?(?=\\")') |>
   unlist()
 
 
 ## extract response --------------------------------------------------------
 
-api_response_values <- httr2::resp_body_json(response) %>% unlist()
+api_response_values <- httr2::resp_body_json(response) |> unlist()
 
 # report mismatch ---------------------------------------------------------
 
-# missing expected project codes:
-api_response_values[
-  !expectation %in% api_response_values]
+# values from the response that are not expected (test values), this may be
+# useful if the intent is to test all values
+api_response_values[!expectation %in% api_response_values]
 
-# Values from expectation that are not in the values the api responded
+# Values from expectation that are not in the response values
 expectation[!expectation %in% api_response_values]
 
-# Values from the api response that are in the values form the expectation
+# Values from the api response that are in the values from the expectation
 api_response_values[api_response_values %in% expectation]
 
 # check if the response is always the same --------------------------------
-library(furrr)
-plan("multisession", workers = 10)
-furrr::future_map(rep(list(request), 100), ~resp_body_json(req_perform(.x))) %>%
-  purrr::map(digest::digest) %>%
-  unlist %>%
-  unique %>%
-  length(.) == 1
+
+# number of requests to check
+iterations <- 20
+xxhash <- digest::getVDigest("xxhash64")
+
+number_of_unique_responses <-
+  httr2::req_perform_sequential(
+    rep(list(request), iterations)
+  ) |>
+  purrr::map(httr2::resp_body_json) |>
+  xxhash() |>
+  unique() |>
+  length()
+
+assertthat::assert_that(number_of_unique_responses == 1)
