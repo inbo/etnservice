@@ -16,9 +16,10 @@ get_receiver_logs <- function(credentials = list(
                                 username = Sys.getenv("ETN_USER"),
                                 password = Sys.getenv("ETN_PWD")),
                               deployment_id,
+                              receiver_id = NULL,
+                              station_name = NULL,
                               start_date = NULL,
                               end_date = NULL,
-                              receiver_id = NULL,
                               limit = FALSE) {
   # Check if credentials object has right shape
   check_credentials(credentials)
@@ -79,6 +80,21 @@ get_receiver_logs <- function(credentials = list(
     )
   }
 
+  # Check station_name
+  if (is.null(station_name)) {
+    station_name_query <- "True"
+  } else {
+    station_name <- check_value(
+      station_name,
+      list_station_names(credentials),
+      "station_name"
+    )
+    station_name_query <- glue::glue_sql(
+      "dep.station_name IN ({station_name*})",
+      .con = connection
+    )
+  }
+
   # Check limit
   assertthat::assert_that(is.logical(limit),
                           msg = "limit must be a logical: TRUE/FALSE.")
@@ -94,6 +110,7 @@ get_receiver_logs <- function(credentials = list(
     "SELECT DISTINCT
       log.deployment_fk AS deployment_id,
       receiver.receiver AS receiver_id,
+      dep.station_name AS station_name,
       log.datetime AS datetime,
       log.record_type,
       log.log_data
@@ -108,6 +125,7 @@ get_receiver_logs <- function(credentials = list(
       AND {end_date_query}
       AND {deployment_id_query}
       AND {receiver_id_query}
+      AND {station_name_query}
     {limit_query}",
     .con = connection,
     .null = "NULL"
