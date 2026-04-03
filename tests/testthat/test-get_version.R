@@ -8,7 +8,8 @@ test_that("get_version() returns installed etnservice version", {
     installed.packages(noCache = TRUE) %>%
       dplyr::as_tibble() %>%
       dplyr::filter(Package == "etnservice") %>%
-      dplyr::pull("Version")
+      dplyr::pull("Version") %>%
+      unique()
   )
 })
 

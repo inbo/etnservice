@@ -5,7 +5,7 @@
 \title{List all available animal project codes}
 \usage{
 list_animal_project_codes(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD"))
 )
 }
 \arguments{

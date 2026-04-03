@@ -105,8 +105,8 @@ check_date_time <- function(date_time, date_name = "start_date") {
 #' @noRd
 
 get_credentials <-
-  function(username = Sys.getenv("userid"),
-           password = Sys.getenv("pwd")) {
+  function(username = Sys.getenv("ETN_USER"),
+           password = Sys.getenv("ETN_PWD")) {
     stringr::str_glue('list(username = "{username}", password = "{password}")')
   }
 

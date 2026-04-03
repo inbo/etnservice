@@ -39,8 +39,8 @@
 #'   It is possible for a deployment to contain no detections, e.g. if the
 #'   tag malfunctioned right after deployment.
 write_dwc <- function(credentials = list(
-                        username = Sys.getenv("userid"),
-                        password = Sys.getenv("pwd")
+                        username = Sys.getenv("ETN_USER"),
+                        password = Sys.getenv("ETN_PWD")
                       ),
                       animal_project_code,
                       rights_holder = NULL,

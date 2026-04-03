@@ -5,7 +5,7 @@
 \title{List all available scientific names}
 \usage{
 list_scientific_names(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd"))
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD"))
 )
 }
 \arguments{
