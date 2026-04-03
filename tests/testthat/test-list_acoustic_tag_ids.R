@@ -1,6 +1,6 @@
 credentials <- list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
+  username = Sys.getenv("ETN_USER"),
+  password = Sys.getenv("ETN_PWD")
 )
 
 test_that("list_acoustic_tag_ids() returns unique list of values", {
