@@ -209,3 +209,90 @@ get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
     gzcon() %>%
     readRDS()
 }
+
+#' Calculate the MD5 checksum of a string
+#'
+#' This function calculates the MD5 checksum of a given string by writing it to a
+#' temporary file and then using the `tools::md5sum` function to compute the checksum.
+#'
+#' Its results are different than via digest::digest()
+#'
+#' @param str A character string for which the MD5 checksum is to be calculated.
+#'
+#' @return A character string representing the MD5 checksum of the input string.
+#' @family helper functions
+#' @noRd
+#' @examples
+#' md5sum("Hello, World!")
+md5sum <- function(str) {
+  # Set path for tempfile
+  temp_file <- tempfile()
+  # Delete when done
+  on.exit(unlink(temp_file))
+  # Write string to tempfile
+  readr::write_lines(str, temp_file)
+  # Checksum
+  unname(tools::md5sum(temp_file))
+}
+
+
+#' Get the most recent task ID from the etnservice webhook
+#'
+#' @return The most recent task ID from the etnservice webhook.
+#'
+#' @examples
+#' get_most_recent_task_id()
+get_most_recent_task_id <- function() {
+  # Check if required packages are installed.
+  rlang::check_installed(c("gh", "purrr"))
+  # Get the most recent delivery id from the etnservice to VLIZ deployment
+  # webhook.
+  most_recent_delivery_id <-
+    gh::gh("/repos/inbo/etnservice/hooks/{webhook_id}/deliveries",
+           webhook_id = 518163094, # etnservice to VLIZ deployment webhook
+           .token = gh::gh_token()
+    ) |>
+    purrr::map_dfr(~.x) |>
+    dplyr::slice_head(n = 1) |>
+    dplyr::pull(id)
+
+  # Get the task id from the most recent delivery.
+  task_id <- gh::gh("/repos/inbo/etnservice/hooks/518163094/deliveries/{delivery_id}",
+                    delivery_id = most_recent_delivery_id
+  ) |>
+    purrr::chuck("response", "payload") |>
+    jsonlite::fromJSON() |>
+    purrr::chuck("id")
+
+  return(task_id)
+}
+
+#' Get the status of a deployment task
+#'
+#' This function retrieves the status of a deployment task by its task ID from
+#' the webhook endpoint. The status is printed to the console.
+#'
+#' Deployments are triggered by tag creation, and are installed from the
+#' live-test branch.
+#'
+#' This function requires a Github Personal Access Token to be set via
+#' gitcreds::gitcreds_set(), organisation and personal read access to webhooks
+#' is required, but can be limited to the inbo/etnservice repo.
+#'
+#' @param task_id The ID of the deployment task to check the status for.
+#'
+#' @return The status of the deployment task is printed to the console.
+#'
+#' @examples
+get_deploy_status <- function(task_id = get_most_recent_task_id()) {
+  # Check if required packages are installed.
+  rlang::check_installed("httr2")
+  # Fetch the most recent install output.
+  httr2::request("https://opencpu-test.lifewatch.be/webhook/") |>
+    httr2::req_url_path_append(task_id) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string() |>
+    # Replace the newline characters with actual newlines
+    stringr::str_replace_all(stringr::fixed("\\n"), "\n") |>
+    message()
+}
