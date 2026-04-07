@@ -44,9 +44,10 @@ test_that("get_receiver_logs() returns the expected column classes", {
 })
 
 test_that("get_receiver_logs() returns no duplicate rows", {
+  log_df <- get_receiver_logs(deployment_id = test_deployment_id)
   expect_identical(
-    get_receiver_logs(deployment_id = test_deployment_id),
-    dplyr::distinct(get_receiver_logs(deployment_id = test_deployment_id))
+    test_df,
+    dplyr::distinct(test_df)
   )
 })
 
