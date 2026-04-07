@@ -4,3 +4,4 @@
 ^README\.Rmd$
 [.]js$
 ^\.github$
+^CITATION\.cff$
