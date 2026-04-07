@@ -1,4 +1,6 @@
 # etnservice (development version)
+
+# etnservice 0.6.0
 - Added `get_receiver_logs()` to fetch receiver logs from the database. The data is returned as a tibble with a column with logs in JSON format. (#117)
 
 # etnservice 0.5.1
