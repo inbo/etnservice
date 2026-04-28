@@ -38,6 +38,16 @@ get_archival_data_uuid <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
+  # Repair names
+  sensor_reading <-
+    dplyr::as_tibble(sensor_reading, .name_repair = "universal")
+
+  # Add tag serial number
+  sensor_reading <-
+    sensor_reading |>
+    dplyr::mutate(tag_serial_number =
+                    stringr::str_extract(reading_value, ".+(?=_)"))
+
   # Sort data
   sensor_reading <- sensor_reading |>
     dplyr::arrange(factor(.data$tag_serial_number,
