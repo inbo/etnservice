@@ -1,5 +1,5 @@
 # etnservice (development version)
-
+- The `jsonlite` package is no longer a direct dependency, it is only used by a maintenance script. (#144)
 # etnservice 0.6.0
 - Added `get_receiver_logs()` to fetch receiver logs from the database. The data is returned as a tibble with a column with logs in JSON format. (#117)
 
