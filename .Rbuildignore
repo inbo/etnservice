@@ -5,3 +5,5 @@
 [.]js$
 ^\.github$
 ^CITATION\.cff$
+^\.positai$
+^\.claude$
