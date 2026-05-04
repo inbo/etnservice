@@ -77,8 +77,8 @@
 #' )
 #' }
 get_acoustic_detections <- function(credentials = list(
-                                      username = Sys.getenv("userid"),
-                                      password = Sys.getenv("pwd")
+                                      username = Sys.getenv("ETN_USER"),
+                                      password = Sys.getenv("ETN_PWD")
                                     ),
                                     start_date = NULL,
                                     end_date = NULL,

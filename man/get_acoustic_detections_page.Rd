@@ -5,7 +5,7 @@
 \title{Getting a single page of a multi page acoustic detections query}
 \usage{
 get_acoustic_detections_page(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   next_id_pk = 0,
   page_size = 1e+05,
   start_date = NULL,

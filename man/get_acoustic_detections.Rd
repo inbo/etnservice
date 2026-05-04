@@ -5,7 +5,7 @@
 \title{Get acoustic detections data}
 \usage{
 get_acoustic_detections(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   start_date = NULL,
   end_date = NULL,
   acoustic_tag_id = NULL,

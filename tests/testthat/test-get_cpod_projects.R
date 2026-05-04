@@ -1,6 +1,6 @@
 credentials <- list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
+  username = Sys.getenv("ETN_USER"),
+  password = Sys.getenv("ETN_PWD")
 )
 
 test_that("get_cpod_projects() returns error for incorrect connection", {

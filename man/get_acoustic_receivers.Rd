@@ -5,7 +5,7 @@
 \title{Get acoustic receiver data}
 \usage{
 get_acoustic_receivers(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   receiver_id = NULL,
   status = NULL
 )
@@ -30,8 +30,8 @@ Get data for acoustic receivers, with options to filter results.
 \examples{
 # Set credentials
 credentials <- list(
-   username = Sys.getenv("userid"),
-   password = Sys.getenv("pwd")
+   username = Sys.getenv("ETN_USER"),
+   password = Sys.getenv("ETN_PWD")
  )
 
 # Get all acoustic receivers

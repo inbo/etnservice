@@ -5,7 +5,7 @@
 \title{Get animal data}
 \usage{
 get_animals(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   animal_id = NULL,
   tag_serial_number = NULL,
   animal_project_code = NULL,
@@ -38,8 +38,8 @@ the information is comma-separated.
 \examples{
 # Set credentials
 credentials <- list(
-   username = Sys.getenv("userid"),
-   password = Sys.getenv("pwd")
+   username = Sys.getenv("ETN_USER"),
+   password = Sys.getenv("ETN_PWD")
  )
 
 # Get all animals

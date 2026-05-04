@@ -21,8 +21,8 @@
 #' @examples
 #' # Set credentials
 #' credentials <- list(
-#'    username = Sys.getenv("userid"),
-#'    password = Sys.getenv("pwd")
+#'    username = Sys.getenv("ETN_USER"),
+#'    password = Sys.getenv("ETN_PWD")
 #'  )
 #'
 #' # Get all animals
@@ -45,8 +45,8 @@
 #' # Get animals of a specific species from a specific project
 #' get_animals(credentials, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
 get_animals <- function(credentials = list(
-                          username = Sys.getenv("userid"),
-                          password = Sys.getenv("pwd")
+                          username = Sys.getenv("ETN_USER"),
+                          password = Sys.getenv("ETN_PWD")
                         ),
                         animal_id = NULL,
                         tag_serial_number = NULL,

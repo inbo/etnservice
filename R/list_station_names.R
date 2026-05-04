@@ -7,8 +7,8 @@
 #'
 #' @export
 list_station_names <- function(credentials = list(
-                                 username = Sys.getenv("userid"),
-                                 password = Sys.getenv("pwd")
+                                 username = Sys.getenv("ETN_USER"),
+                                 password = Sys.getenv("ETN_PWD")
                                )) {
   connection <- connect_to_etn(credentials$username, credentials$password)
 

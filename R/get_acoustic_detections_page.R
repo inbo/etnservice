@@ -37,8 +37,8 @@
 #'
 #' @export
 get_acoustic_detections_page <- function(credentials = list(
-                                           username = Sys.getenv("userid"),
-                                           password = Sys.getenv("pwd")
+                                           username = Sys.getenv("ETN_USER"),
+                                           password = Sys.getenv("ETN_PWD")
                                          ),
                                          next_id_pk = 0,
                                          page_size = 100000,
