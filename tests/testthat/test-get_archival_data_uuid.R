@@ -1,7 +1,8 @@
-test_that("get_archival_data_uuid() returns a data.frame", {
+test_that("get_archival_data_uuid() returns a tibble", {
   df <- get_archival_data_uuid()
 
   expect_s3_class(df, "data.frame")
+  expect_s3_class(df, "tbl")
 })
 
 test_that("get_archival_data_uuid() returns expected columns", {

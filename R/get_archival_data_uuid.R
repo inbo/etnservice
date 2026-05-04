@@ -70,13 +70,13 @@ get_archival_data_uuid <- function(credentials = list(
 
        ", .con = connection
   )
-  sensor_reading <- DBI::dbGetQuery(connection, query)
+  uuid_tbl <- DBI::dbGetQuery(connection, query)
 
   # Close connection
   DBI::dbDisconnect(connection)
 
   # Sort data
-  sensor_reading <- sensor_reading |>
+  uuid_tbl <- uuid_tbl |>
     dplyr::arrange(factor(.data$tag_serial_number,
       levels = list_tag_serial_numbers(credentials)
    ))
@@ -95,5 +95,6 @@ get_archival_data_uuid <- function(credentials = list(
   #   httr2::req_get_url() |>
   #   readr::read_csv()
 
-  sensor_reading
+  # Return uuids
+  dplyr::as_tibble(uuid_tbl)
 }
