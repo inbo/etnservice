@@ -26,6 +26,36 @@ get_archival_data_uuid <- function(credentials = list(
     )
   }
 
+  # Check animal_project_code
+  if (is.null(animal_project_code)) {
+    animal_project_code_query <- "True"
+  } else {
+    animal_project_code <- check_value(
+      as.character(animal_project_code), # Cast to character
+      list_animal_project_codes(credentials),
+      "animal_project_code"
+    )
+    animal_project_code_query <- glue::glue_sql(
+      "animal.animal_project_code IN ({animal_project_code*})",
+      .con = connection
+    )
+  }
+
+  # Check animal_id
+  if (is.null(animal_id)) {
+    animal_id_query <- "True"
+  } else {
+    animal_id <- check_value(
+      as.character(animal_id), # Cast to character
+      list_animal_ids(credentials),
+      "animal_id"
+    )
+    animal_id_query <- glue::glue_sql(
+      "animal.animal_id IN ({animal_id*})",
+      .con = connection
+    )
+  }
+
   # Build Query
   query <- glue::glue_sql("
     SELECT *
