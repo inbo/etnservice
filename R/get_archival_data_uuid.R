@@ -51,10 +51,11 @@ get_archival_data_uuid <- function(credentials = list(
     animal_project_code <- check_value(
       as.character(animal_project_code), # Cast to character
       list_animal_project_codes(credentials),
-      "animal_project_code"
+      name = "animal_project_code",
+      lowercase = TRUE
     )
     animal_project_code_query <- glue::glue_sql(
-      "af.animal_project_code IN ({animal_project_code*})",
+      "LOWER(af.animal_project_code) IN ({animal_project_code*})",
       .con = connection
     )
   }
