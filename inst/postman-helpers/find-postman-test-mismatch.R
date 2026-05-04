@@ -40,7 +40,7 @@ assertthat::assert_that(!httr2::resp_is_error(response))
 ## extract current expectation --------------------------------------------
 expectation <- readr::read_lines(
   glue::glue("tests/postman/test-{fn_to_test}.js")
-) %>%
+) |>
   grep("pm.expect(jsonData).to.include.members(",
        .,
        fixed = TRUE,

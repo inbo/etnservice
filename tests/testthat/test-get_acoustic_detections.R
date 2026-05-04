@@ -34,7 +34,7 @@ test_that("get_acoustic_detections() returns error for incorrect connection", {
 test_that("get_acoustic_detections() returns unique detection_id", {
   skip("duplicate detection ids: https://github.com/inbo/etn/issues/283")
   df <- get_acoustic_detections(credentials, limit = TRUE)
-  expect_equal(nrow(df), nrow(df %>% distinct(detection_id)))
+  expect_equal(nrow(df), nrow(df |> distinct(detection_id)))
 })
 
 test_that("get_acoustic_detections() returns the expected columns", {
@@ -109,7 +109,7 @@ test_that("get_acoustic_detections() allows selecting on acoustic_tag_id", {
   single_select <- "A69-1601-16130" # From 2014_demer
   single_select_df <- get_acoustic_detections(credentials, acoustic_tag_id = single_select)
   expect_equal(
-    single_select_df %>% distinct(acoustic_tag_id) %>% pull(),
+    single_select_df |> distinct(acoustic_tag_id) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -118,7 +118,7 @@ test_that("get_acoustic_detections() allows selecting on acoustic_tag_id", {
   multi_select <- c("A69-1601-16129", "A69-1601-16130")
   multi_select_df <- get_acoustic_detections(credentials, acoustic_tag_id = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(acoustic_tag_id) %>% pull() %>% sort(),
+    multi_select_df |> distinct(acoustic_tag_id) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -133,7 +133,7 @@ test_that("get_acoustic_detections() allows selecting on animal_project_code", {
   single_select <- "2014_demer"
   single_select_df <- get_acoustic_detections(credentials, animal_project_code = single_select)
   expect_equal(
-    single_select_df %>% distinct(animal_project_code) %>% pull(),
+    single_select_df |> distinct(animal_project_code) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -148,7 +148,7 @@ test_that("get_acoustic_detections() allows selecting on animal_project_code", {
   multi_select <- c("2014_demer", "2015_dijle")
   multi_select_df <- get_acoustic_detections(credentials, animal_project_code = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(animal_project_code) %>% pull() %>% sort(),
+    multi_select_df |> distinct(animal_project_code) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -164,7 +164,7 @@ test_that("get_acoustic_detections() allows selecting on scientific_name", {
   single_select <- "Rutilus rutilus"
   single_select_df <- get_acoustic_detections(credentials, scientific_name = single_select)
   expect_equal(
-    single_select_df %>% distinct(scientific_name) %>% pull(),
+    single_select_df |> distinct(scientific_name) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -173,7 +173,7 @@ test_that("get_acoustic_detections() allows selecting on scientific_name", {
   multi_select <- c("Rutilus rutilus", "Silurus glanis")
   multi_select_df <- get_acoustic_detections(credentials, scientific_name = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(scientific_name) %>% pull() %>% sort(),
+    multi_select_df |> distinct(scientific_name) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -188,7 +188,7 @@ test_that("get_acoustic_detections() allows selecting on acoustic_project_code",
   single_select <- "demer"
   single_select_df <- get_acoustic_detections(credentials, acoustic_project_code = single_select)
   expect_equal(
-    single_select_df %>% distinct(acoustic_project_code) %>% pull(),
+    single_select_df |> distinct(acoustic_project_code) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -203,7 +203,7 @@ test_that("get_acoustic_detections() allows selecting on acoustic_project_code",
   multi_select <- c("demer", "dijle")
   multi_select_df <- get_acoustic_detections(credentials, acoustic_project_code = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(acoustic_project_code) %>% pull() %>% sort(),
+    multi_select_df |> distinct(acoustic_project_code) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -218,7 +218,7 @@ test_that("get_acoustic_detections() allows selecting on receiver_id", {
   single_select <- "VR2W-124070" # From demer
   single_select_df <- get_acoustic_detections(credentials, receiver_id = single_select)
   expect_equal(
-    single_select_df %>% distinct(receiver_id) %>% pull(),
+    single_select_df |> distinct(receiver_id) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -227,7 +227,7 @@ test_that("get_acoustic_detections() allows selecting on receiver_id", {
   multi_select <- c("VR2W-124070", "VR2W-124078")
   multi_select_df <- get_acoustic_detections(credentials, receiver_id = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(receiver_id) %>% pull() %>% sort(),
+    multi_select_df |> distinct(receiver_id) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -242,7 +242,7 @@ test_that("get_acoustic_detections() allows selecting on station_name", {
   single_select <- "de-9" # From demer
   single_select_df <- get_acoustic_detections(credentials, station_name = single_select)
   expect_equal(
-    single_select_df %>% distinct(station_name) %>% pull(),
+    single_select_df |> distinct(station_name) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -251,7 +251,7 @@ test_that("get_acoustic_detections() allows selecting on station_name", {
   multi_select <- c("de-10", "de-9") # Note that sort() will put de-10 before de-9
   multi_select_df <- get_acoustic_detections(credentials, station_name = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(station_name) %>% pull() %>% sort(),
+    multi_select_df |> distinct(station_name) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -292,7 +292,7 @@ test_that("get_acoustic_detections() returns acoustic and acoustic-archival tags
   acoustic_archival_df <- get_acoustic_detections(credentials, acoustic_tag_id = c("A69-9006-11100", "A69-9006-11099"))
   expect_gt(nrow(acoustic_archival_df), 0)
   expect_equal(
-    acoustic_archival_df %>% distinct(tag_serial_number) %>% pull(),
+    acoustic_archival_df |> distinct(tag_serial_number) |> pull(),
     "1400185"
   )
 })
@@ -323,7 +323,7 @@ test_that("get_acoustic_detections() does not return duplicate detections across
   # Expect no duplicates
   df <- get_acoustic_detections(credentials, acoustic_tag_id = "A69-1105-100")
   skip("TODO: https://github.com/inbo/etn/issues/216")
-  expect_equal(nrow(df), nrow(df %>% distinct(detection_id))) # TODO: https://github.com/inbo/etn/issues/216
+  expect_equal(nrow(df), nrow(df |> distinct(detection_id))) # TODO: https://github.com/inbo/etn/issues/216
 })
 
 test_that("get_acoustic_detections() does not return duplicate detections when tags are reused", {
@@ -337,11 +337,11 @@ test_that("get_acoustic_detections() does not return duplicate detections when t
   df_394 <- get_acoustic_detections(credentials, acoustic_tag_id = "A69-1601-29925", start_date = "2012-12-14")
 
   # Expect no duplicates
-  expect_equal(nrow(df_both), nrow(df_both %>% distinct(detection_id)))
+  expect_equal(nrow(df_both), nrow(df_both |> distinct(detection_id)))
 
   # Return correct animal within range
-  expect_equal(df_393 %>% distinct(animal_id) %>% pull(), 393)
-  expect_equal(df_394 %>% distinct(animal_id) %>% pull(), 394)
+  expect_equal(df_393 |> distinct(animal_id) |> pull(), 393)
+  expect_equal(df_394 |> distinct(animal_id) |> pull(), 394)
 })
 
 test_that("get_acoustic_detections() does not return detections out of date range when tag is associated with animal", {

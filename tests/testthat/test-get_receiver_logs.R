@@ -47,7 +47,7 @@ test_that("get_receiver_logs() returns no duplicate rows", {
   log_df <- get_receiver_logs(deployment_id = test_deployment_id)
   expect_identical(
     log_df,
-    dplyr::distinct(test_df)
+    dplyr::distinct(log_df)
   )
 })
 
@@ -126,7 +126,7 @@ test_that("get_receiver_logs() can filter on station_name", {
   single_select <- "G09" # From deployment_id = 53790
   single_select_df <- get_receiver_logs(deployment_id = test_deployment_id, station_name = single_select)
   expect_equal(
-    single_select_df %>% distinct(station_name) %>% pull(),
+    single_select_df |> distinct(station_name) |> pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -138,7 +138,7 @@ test_that("get_receiver_logs() can filter on station_name", {
     station_name = multi_select
   )
   expect_equal(
-    multi_select_df %>% distinct(station_name) %>% pull() %>% sort(),
+    multi_select_df |> distinct(station_name) |> pull() |> sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
