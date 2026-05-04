@@ -1,3 +1,18 @@
+#' Fetch a table with UUID references to archival data files
+#'
+#' Archival data is stored in csv files hosted on lifewatch.com. To fetch these
+#' we must first query ETN for uuids that are needed to build the paths to read
+#' these csv files.
+#'
+#' @inheritParams get_animals
+#'
+#' @returns A tibble with a column `converted_archival_file_uuid` that contains
+#'   the UUID pointing to the archival data csv file. Other columns are:
+#'   `animal_id`, `tag_serial_number`, and `animal_project_code`.
+#' @export
+#'
+#' @examples
+#' get_archival_data_uuid(tag_serial_number = "22035610")
 get_archival_data_uuid <- function(credentials = list(
                                     username = Sys.getenv("ETN_USER"),
                                     password = Sys.getenv("ETN_PWD")),
