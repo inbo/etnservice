@@ -4,3 +4,5 @@
 ^README\.Rmd$
 [.]js$
 ^\.github$
+^\.positai$
+^\.claude$

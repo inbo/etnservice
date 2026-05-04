@@ -51,3 +51,4 @@ rsconnect/
 
 # Postman collection exports
 tests/postman/*.json
+.positai
