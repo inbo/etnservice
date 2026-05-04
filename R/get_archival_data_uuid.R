@@ -23,7 +23,7 @@ get_archival_data_uuid <- function(credentials = list(
       "tag_serial_number"
     )
     tag_serial_number_query <- glue::glue_sql(
-      "tag.tag_serial_number IN ({tag_serial_number*})",
+      "af.tag_serial_number IN ({tag_serial_number*})",
       .con = connection
     )
   }
@@ -38,7 +38,7 @@ get_archival_data_uuid <- function(credentials = list(
       "animal_project_code"
     )
     animal_project_code_query <- glue::glue_sql(
-      "animal.animal_project_code IN ({animal_project_code*})",
+      "af.animal_project_code IN ({animal_project_code*})",
       .con = connection
     )
   }
@@ -53,7 +53,7 @@ get_archival_data_uuid <- function(credentials = list(
       "animal_id"
     )
     animal_id_query <- glue::glue_sql(
-      "animal.animal_id IN ({animal_id*})",
+      "af.animal_id IN ({animal_id*})",
       .con = connection
     )
   }
@@ -61,11 +61,11 @@ get_archival_data_uuid <- function(credentials = list(
   # Build Query
   query <- glue::glue_sql("
     SELECT *
-      FROM digital_twin.archival_files
+      FROM digital_twin.archival_files AS af
       WHERE
         {tag_serial_number_query}
-        {animal_project_code_query}
-        {animal_id_query}
+        AND {animal_project_code_query}
+        AND {animal_id_query}
 
 
        ", .con = connection
@@ -81,19 +81,19 @@ get_archival_data_uuid <- function(credentials = list(
       levels = list_tag_serial_numbers(credentials)
    ))
 
-  req <- httr2::request("https://www.lifewatch.be") |>
-    httr2::req_url_path_append("etn","archival-data",
-                               "file",
-                               "588B1CFE-7ED4-4F74-8841-E1A567532370")
-
-  req |>
-    httr2::req_perform() |>
-    httr2::resp_body_raw() |>
-    readr::read_csv()
-
-  req |>
-    httr2::req_get_url() |>
-    readr::read_csv()
+  # req <- httr2::request("https://www.lifewatch.be") |>
+  #   httr2::req_url_path_append("etn","archival-data",
+  #                              "file",
+  #                              "588B1CFE-7ED4-4F74-8841-E1A567532370")
+  #
+  # req |>
+  #   httr2::req_perform() |>
+  #   httr2::resp_body_raw() |>
+  #   readr::read_csv()
+  #
+  # req |>
+  #   httr2::req_get_url() |>
+  #   readr::read_csv()
 
   sensor_reading
 }
