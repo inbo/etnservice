@@ -1,6 +1,7 @@
 get_archival_data_uuid <- function(credentials = list(
-                                    username = Sys.getenv("ETN_USER"),
-                                    password = Sys.getenv("ETN_PWD")),
+                                     username = Sys.getenv("ETN_USER"),
+                                     password = Sys.getenv("ETN_PWD")
+                                   ),
                                    tag_serial_number = NULL,
                                    animal_project_code = NULL,
                                    animal_id = NULL) {
@@ -66,8 +67,7 @@ get_archival_data_uuid <- function(credentials = list(
         {tag_serial_number_query}
         AND {animal_project_code_query}
         AND {animal_id_query}
-       ", .con = connection
-  )
+       ", .con = connection)
   uuid_tbl <- DBI::dbGetQuery(connection, query)
 
   # Close connection
@@ -77,7 +77,7 @@ get_archival_data_uuid <- function(credentials = list(
   uuid_tbl <- uuid_tbl |>
     dplyr::arrange(factor(.data$tag_serial_number,
       levels = list_tag_serial_numbers(credentials)
-   ))
+    ))
 
   # Return uuids
   dplyr::as_tibble(uuid_tbl)
