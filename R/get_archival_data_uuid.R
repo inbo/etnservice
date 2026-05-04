@@ -1,7 +1,9 @@
 get_archival_data_uuid <- function(credentials = list(
                                     username = Sys.getenv("ETN_USER"),
                                     password = Sys.getenv("ETN_PWD")),
-                                   tag_serial_number = NULL) {
+                                   tag_serial_number = NULL,
+                                   animal_project_code = NULL,
+                                   animal_id = NULL) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
