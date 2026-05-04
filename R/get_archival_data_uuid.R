@@ -31,9 +31,9 @@ get_archival_data_uuid <- function(credentials = list(
     SELECT *
       FROM digital_twin.archival_files
       WHERE
-                          {tag_serial_number_query}
-                          {animal_project_code_query}
-                          {animal_id_query}
+        {tag_serial_number_query}
+        {animal_project_code_query}
+        {animal_id_query}
 
 
        ", .con = connection
