@@ -1,8 +1,7 @@
-test_that("get_archival_data_uuid() returns a tibble", {
+test_that("get_archival_data_uuid() returns a data.frame", {
   df <- get_archival_data_uuid()
 
   expect_s3_class(df, "data.frame")
-  expect_s3_class(df, "tbl")
 })
 
 test_that("get_archival_data_uuid() returns expected columns", {
@@ -20,21 +19,21 @@ test_that("get_archival_data_uuid() returns expected columns", {
 test_that("get_archival_data_uuid() can query on animal_id", {
   expect_s3_class(
     get_archival_data_uuid(animal_id = 59241),
-    "tbl"
+    "data.frame"
   )
 })
 
 test_that("get_archival_data_uuid() can query on animal_project_code", {
   expect_s3_class(
     get_archival_data_uuid(animal_project_code = "2014_Frome"),
-    "tbl"
+    "data.frame"
   )
 })
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
   expect_s3_class(
     get_archival_data_uuid(tag_serial_number = "1249189"),
-    "tbl"
+    "data.frame"
   )
 })
 
