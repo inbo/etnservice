@@ -46,6 +46,19 @@ test_that("get_archival_data_uuid() can query on animal_project_code", {
   )
 })
 
+test_that("get_archival_data_uuid() supports case insensitive animal_project_code", {
+  selected_animal_project_code <- "2014_Frome"
+
+  expect_identical(
+    get_archival_data_uuid(
+      animal_project_code =
+        toupper(selected_animal_project_code)
+    ),
+    get_archival_data_uuid(
+      animal_project_code =
+        selected_animal_project_code
+    )
+  )
 })
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
