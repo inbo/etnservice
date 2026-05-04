@@ -18,23 +18,46 @@ test_that("get_archival_data_uuid() returns expected columns", {
 })
 
 test_that("get_archival_data_uuid() can query on animal_id", {
+  selected_animal_id <- 59241
+  animal_uuid <-
+    get_archival_data_uuid(animal_id = selected_animal_id)
+
   expect_s3_class(
-    get_archival_data_uuid(animal_id = 59241),
+    animal_uuid,
     "data.frame"
+  )
+
+  expect_identical(
+    unique(animal_uuid$animal_id),
+    selected_animal_id
   )
 })
 
 test_that("get_archival_data_uuid() can query on animal_project_code", {
+  selected_animal_project_code <- "2014_Frome"
   expect_s3_class(
-    get_archival_data_uuid(animal_project_code = "2014_Frome"),
+    get_archival_data_uuid(animal_project_code = selected_animal_project_code),
     "data.frame"
+  )
+
+  expect_identical(
+    unique(animal_uuid$animal_project_code),
+    selected_animal_project_code
   )
 })
 
+})
+
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
+  selected_tag_serial_number <- "1249189"
   expect_s3_class(
-    get_archival_data_uuid(tag_serial_number = "1249189"),
+    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number),
     "data.frame"
+  )
+
+  expect_identical(
+    unique(animal_uuid$tag_serial_number),
+    selected_tag_serial_number
   )
 })
 
