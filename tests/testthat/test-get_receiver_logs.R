@@ -47,7 +47,7 @@ test_that("get_receiver_logs() returns no duplicate rows", {
   log_df <- get_receiver_logs(deployment_id = test_deployment_id)
   expect_identical(
     log_df,
-    dplyr::distinct(test_df)
+    dplyr::distinct(log_df)
   )
 })
 
