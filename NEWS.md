@@ -1,4 +1,5 @@
 # etnservice (development version)
+- Added `get_archival_data_uuid()` which fetches a table with UUID references to archival data files. These UUIDs can be used to construct paths to download the archival data CSV files hosted on lifewatch.com (#126).
 
 # etnservice 0.5.1
 - Made sure `list_acoustic_project_codes()`, `list_animal_project_codes()`, `list_cpod_project_codes()` and `list_scientific_names()` always return values in the same order, regardless of the locale of the computer R is running on. (#116)
