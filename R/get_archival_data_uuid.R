@@ -66,8 +66,6 @@ get_archival_data_uuid <- function(credentials = list(
         {tag_serial_number_query}
         AND {animal_project_code_query}
         AND {animal_id_query}
-
-
        ", .con = connection
   )
   uuid_tbl <- DBI::dbGetQuery(connection, query)
@@ -80,20 +78,6 @@ get_archival_data_uuid <- function(credentials = list(
     dplyr::arrange(factor(.data$tag_serial_number,
       levels = list_tag_serial_numbers(credentials)
    ))
-
-  # req <- httr2::request("https://www.lifewatch.be") |>
-  #   httr2::req_url_path_append("etn","archival-data",
-  #                              "file",
-  #                              "588B1CFE-7ED4-4F74-8841-E1A567532370")
-  #
-  # req |>
-  #   httr2::req_perform() |>
-  #   httr2::resp_body_raw() |>
-  #   readr::read_csv()
-  #
-  # req |>
-  #   httr2::req_get_url() |>
-  #   readr::read_csv()
 
   # Return uuids
   dplyr::as_tibble(uuid_tbl)
