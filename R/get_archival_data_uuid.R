@@ -36,7 +36,7 @@ get_archival_data_uuid <- function(credentials = list(
     tag_serial_number <- check_value(
       as.character(tag_serial_number), # Cast to character
       list_tag_serial_numbers(credentials),
-      "tag_serial_number"
+      name = "tag_serial_number"
     )
     tag_serial_number_query <- glue::glue_sql(
       "af.tag_serial_number IN ({tag_serial_number*})",
@@ -67,7 +67,7 @@ get_archival_data_uuid <- function(credentials = list(
     animal_id <- check_value(
       as.character(animal_id), # Cast to character
       list_animal_ids(credentials),
-      "animal_id"
+      name = "animal_id"
     )
     animal_id_query <- glue::glue_sql(
       "af.animal_id IN ({animal_id*})",
