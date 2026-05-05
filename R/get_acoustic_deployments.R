@@ -205,7 +205,7 @@ get_acoustic_deployments <- function(
 
   # Sort data
   deployments <-
-    deployments %>%
+    deployments |>
     dplyr::arrange(
       .data$acoustic_project_code,
       factor(.data$station_name, levels = list_station_names(credentials)),

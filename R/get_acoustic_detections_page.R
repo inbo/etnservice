@@ -264,7 +264,8 @@ get_acoustic_detections_page <- function(credentials = list(
   # Apply mapping -----
   if (!count) {
     # No need to apply mapping if we're only returning the number of records
-    returned_page <- returned_page %>%
+    returned_page <-
+      returned_page |>
       dplyr::transmute(
         detection_id = .data$detection_id_pk,
         date_time = .data$datetime,
