@@ -18,7 +18,7 @@ test_that("get_archival_data_uuid() returns expected columns", {
 })
 
 test_that("get_archival_data_uuid() can query on animal_id", {
-  selected_animal_id <- 59241
+  selected_animal_id <- 100878L
   animal_uuid <-
     get_archival_data_uuid(animal_id = selected_animal_id)
 
@@ -34,20 +34,22 @@ test_that("get_archival_data_uuid() can query on animal_id", {
 })
 
 test_that("get_archival_data_uuid() can query on animal_project_code", {
-  selected_animal_project_code <- "2014_Frome"
+  selected_animal_project_code <- "Lumpfish"
+  project_uuid <-
+    get_archival_data_uuid(animal_project_code = selected_animal_project_code)
   expect_s3_class(
-    get_archival_data_uuid(animal_project_code = selected_animal_project_code),
+    project_uuid,
     "data.frame"
   )
 
   expect_identical(
-    unique(animal_uuid$animal_project_code),
+    unique(project_uuid$animal_project_code),
     selected_animal_project_code
   )
 })
 
 test_that("get_archival_data_uuid() supports case insensitive animal_project_code", {
-  selected_animal_project_code <- "2014_Frome"
+  selected_animal_project_code <- "Lumpfish"
 
   expect_identical(
     get_archival_data_uuid(
@@ -59,28 +61,20 @@ test_that("get_archival_data_uuid() supports case insensitive animal_project_cod
         selected_animal_project_code
     )
   )
-
-  # Extra test for project that caused failure in etn package
-  expect_identical(
-    get_archival_data_uuid(
-      animal_project_code = "Lumpfish"
-    ),
-    get_archival_data_uuid(
-      animal_project_code = "LUMPFISH"
-    )
-  )
-
 })
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
-  selected_tag_serial_number <- "1249189"
+  selected_tag_serial_number <- "A12965"
+  tag_uuid <-
+    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number)
+
   expect_s3_class(
-    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number),
+    tag_uuid,
     "data.frame"
   )
 
   expect_identical(
-    unique(animal_uuid$tag_serial_number),
+    unique(tag_uuid$tag_serial_number),
     selected_tag_serial_number
   )
 })
