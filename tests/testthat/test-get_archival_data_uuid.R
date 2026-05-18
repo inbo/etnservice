@@ -60,11 +60,12 @@ test_that("get_archival_data_uuid() supports case insensitive animal_project_cod
     )
   )
 
+  # Extra test for project that caused failure in etn package
   expect_identical(
-    get_achival_data_uuid(
+    get_archival_data_uuid(
       animal_project_code = "Lumpfish"
     ),
-    get_achival_data_uuid(
+    get_archival_data_uuid(
       animal_project_code = "LUMPFISH"
     )
   )
