@@ -59,6 +59,16 @@ test_that("get_archival_data_uuid() supports case insensitive animal_project_cod
         selected_animal_project_code
     )
   )
+
+  expect_identical(
+    get_achival_data_uuid(
+      animal_project_code = "Lumpfish"
+    ),
+    get_achival_data_uuid(
+      animal_project_code = "LUMPFISH"
+    )
+  )
+
 })
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
