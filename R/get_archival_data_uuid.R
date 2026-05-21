@@ -89,12 +89,6 @@ get_archival_data_uuid <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
-  # Sort data
-  uuid_tbl <- uuid_tbl |>
-    dplyr::arrange(factor(.data$tag_serial_number,
-      levels = list_tag_serial_numbers(credentials)
-    ))
-
   # Return uuids
   dplyr::as_tibble(uuid_tbl)
 }
