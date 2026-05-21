@@ -35,13 +35,16 @@ test_that("get_archival_data_uuid() can query on animal_id", {
 
 test_that("get_archival_data_uuid() can query on animal_project_code", {
   selected_animal_project_code <- "2014_Frome"
+  project_uuid <-
+    get_archival_data_uuid(animal_project_code = selected_animal_project_code)
+
   expect_s3_class(
-    get_archival_data_uuid(animal_project_code = selected_animal_project_code),
+    project_uuid,
     "data.frame"
   )
 
   expect_identical(
-    unique(animal_uuid$animal_project_code),
+    unique(project_uuid$animal_project_code),
     selected_animal_project_code
   )
 })
@@ -63,13 +66,15 @@ test_that("get_archival_data_uuid() supports case insensitive animal_project_cod
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
   selected_tag_serial_number <- "1249189"
+  tag_uuid <-
+    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number)
   expect_s3_class(
-    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number),
+    tag_uuid,
     "data.frame"
   )
 
   expect_identical(
-    unique(animal_uuid$tag_serial_number),
+    unique(tag_uuid$tag_serial_number),
     selected_tag_serial_number
   )
 })
