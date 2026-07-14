@@ -16,10 +16,6 @@ get_acoustic_deployment_logs <- function(credentials = list(
                                 username = Sys.getenv("ETN_USER"),
                                 password = Sys.getenv("ETN_PWD")),
                               deployment_id,
-                              receiver_id = NULL,
-                              station_name = NULL,
-                              start_date = NULL,
-                              end_date = NULL,
                               limit = FALSE) {
   # Check if credentials object has right shape
   check_credentials(credentials)
