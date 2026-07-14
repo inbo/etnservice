@@ -22,8 +22,8 @@ get_version <- function() {
   # Get all functions from etnservice and their code
   fn_names <- ls(envir = getNamespace("etnservice"))
   fn_code <- purrr::map(fn_names,
-                            ~ get(.x, envir = getNamespace("etnservice"))) |>
-    purrr::map(deparse) |>
+                            ~ get(.x, envir = getNamespace("etnservice"))) %>%
+    purrr::map(deparse) %>%
     purrr::set_names(fn_names)
   # Calculate hashes for the functions, report on the installed version of
   # etnservice

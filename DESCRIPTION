@@ -16,8 +16,6 @@ Description: Provides API endpoints to the European Tracking Network.
 License: MIT + file LICENSE
 URL: https://github.com/inbo/etnservice
 BugReports: https://github.com/inbo/etnservice/issues
-Depends:
-    R (>= 4.1.0)
 Imports: 
     arrow,
     assertthat,
@@ -25,6 +23,7 @@ Imports:
     dplyr,
     glue,
     httr,
+    jsonlite,
     lubridate,
     methods,
     odbc,
@@ -33,7 +32,6 @@ Imports:
     stringr,
     utils
 Suggests: 
-    jsonlite,
     purrr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

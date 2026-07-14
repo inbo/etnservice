@@ -270,7 +270,7 @@ get_acoustic_detections <- function(credentials = list(
 
   # Sort data (faster than in SQL)
   detections <-
-    detections |>
+    detections %>%
     dplyr::arrange(
       factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(credentials)),
       .data$date_time

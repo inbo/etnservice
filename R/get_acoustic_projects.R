@@ -78,7 +78,7 @@ get_acoustic_projects <- function(credentials = list(
 
   # Sort data
   projects <-
-    projects |>
+    projects %>%
     dplyr::arrange(.data$project_code)
 
   dplyr::as_tibble(projects)

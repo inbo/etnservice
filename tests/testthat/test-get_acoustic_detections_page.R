@@ -69,7 +69,7 @@ test_that("get_acoustic_detections_page() allows setting of page_size", {
       animal_project_code = "2011_rivierprik",
       start_date = "2012-01-10",
       end_date = "2012-01-11"
-    ) |>
+    ) %>%
     nrow()
   expect_identical(
     nrow(

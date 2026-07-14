@@ -55,6 +55,7 @@ This is a basic example which shows you how adress the API directly:
 
 ``` r
 library(httr2) # to talk to the internet
+library(magrittr) # to use pipes
 library(askpass) # to safly enter a password in R
 
 # To access the ETN database, we need a login (username + password). We'll ask
@@ -64,16 +65,16 @@ username <- "<your-username-here>"
 endpoint <- "https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"
 # Request the result of the function to be a json, and put in a request
 response <-
-    httr2::request(endpoint) |> 
+    httr2::request(endpoint) %>% 
     ## In this case we'll request the data in JSON format and parse it
-    httr2::req_url_path_append("json") |>
+    httr2::req_url_path_append("json") %>%
     httr2::req_body_json(
       list(credentials = list(username = username,
                               password = askpass::askpass()))
-    ) |> 
+    ) %>% 
     httr2::req_perform()
 # Take the response of the server, and convert it into an R object we can use
-response |>
+response %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 ```
 

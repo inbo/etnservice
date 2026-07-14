@@ -213,7 +213,7 @@ get_tags <- function(credentials = list(
 
   # Sort data
   tags <-
-    tags |>
+    tags %>%
     dplyr::arrange(factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials)))
 
   dplyr::as_tibble(tags)
