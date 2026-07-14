@@ -251,8 +251,7 @@ get_acoustic_detections_page <- function(credentials = list(
       AND det.detection_id_pk > {next_id_pk}
     {limit_query}
     ",
-    .con = connection,
-    page_size_query = ifelse(count, "ALL", page_size)
+    .con = connection
   )
 
   # Execute query -----
