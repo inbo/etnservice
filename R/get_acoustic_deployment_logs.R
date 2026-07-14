@@ -9,9 +9,9 @@
 #' @export
 #'
 #' @examples
-#' get_acoustic_deployment_logs(deployment_id = 6028,
-#'                   start_date = "2020",
-#'                   end_date = "2020-02-01")
+#' get_acoustic_deployment_logs(deployment_id = 6028)
+#' 
+#' get_acoustic_deployment_logs(deployment_id = c(53790, 1758), limit = TRUE)
 get_acoustic_deployment_logs <- function(credentials = list(
                                 username = Sys.getenv("ETN_USER"),
                                 password = Sys.getenv("ETN_PWD")),
@@ -45,52 +45,6 @@ get_acoustic_deployment_logs <- function(credentials = list(
     )
   }
 
-  # Check start_date
-  if (is.null(start_date)) {
-    start_date_query <- "True"
-  } else {
-    start_date <- check_date_time(start_date, "start_date")
-    start_date_query <- glue::glue_sql("log.datetime >= {start_date}", .con = connection)
-  }
-
-  # Check end_date
-  if (is.null(end_date)) {
-    end_date_query <- "True"
-  } else {
-    end_date <- check_date_time(end_date, "end_date")
-    end_date_query <- glue::glue_sql("log.datetime < {end_date}", .con = connection)
-  }
-
-  # Check receiver_id
-  if (is.null(receiver_id)) {
-    receiver_id_query <- "True"
-  } else {
-    receiver_id <- check_value(
-      receiver_id,
-      list_receiver_ids(credentials),
-      name = "receiver_id"
-    )
-    receiver_id_query <- glue::glue_sql(
-      "receiver.receiver IN ({receiver_id*})",
-      .con = connection
-    )
-  }
-
-  # Check station_name
-  if (is.null(station_name)) {
-    station_name_query <- "True"
-  } else {
-    station_name <- check_value(
-      station_name,
-      list_station_names(credentials),
-      "station_name"
-    )
-    station_name_query <- glue::glue_sql(
-      "dep.station_name IN ({station_name*})",
-      .con = connection
-    )
-  }
-
   # Check limit
   assertthat::assert_that(is.logical(limit),
                           msg = "limit must be a logical: TRUE/FALSE.")
@@ -117,11 +71,7 @@ get_acoustic_deployment_logs <- function(credentials = list(
       LEFT JOIN acoustic.receivers AS receiver
         ON dep.receiver_fk = receiver.id_pk
     WHERE
-      {start_date_query}
-      AND {end_date_query}
-      AND {deployment_id_query}
-      AND {receiver_id_query}
-      AND {station_name_query}
+      {deployment_id_query}
     {limit_query}",
     .con = connection,
     .null = "NULL"
