@@ -9,10 +9,10 @@
 #' @export
 #'
 #' @examples
-#' get_receiver_logs(deployment_id = 6028,
+#' get_acoustic_deployment_logs(deployment_id = 6028,
 #'                   start_date = "2020",
 #'                   end_date = "2020-02-01")
-get_receiver_logs <- function(credentials = list(
+get_acoustic_deployment_logs <- function(credentials = list(
                                 username = Sys.getenv("ETN_USER"),
                                 password = Sys.getenv("ETN_PWD")),
                               deployment_id,
