@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_acoustic_deployment_logs.R
 \name{get_acoustic_deployment_logs}
 \alias{get_acoustic_deployment_logs}
-\title{Retrieve log files/diagnostic information for acoustic receivers.}
+\title{Retrieve log files/diagnostic information for deployments of acoustic
+receivers.}
 \usage{
 get_acoustic_deployment_logs(
   credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
@@ -23,10 +24,13 @@ A tibble with receiver diagnostics data. The data is embedded in a
 \code{log_data} column that is JSON formatted.
 }
 \description{
-Retrieve log files/diagnostic information for acoustic receivers.
+This function retrieves log files and diagnostic information for deployments
+of acoustic receivers from the ETN database. The returned data includes
+deployment ID, receiver ID, station name, datetime, record type, and log data
+in JSON format.
 }
 \examples{
-get_acoustic_deployment_logs(deployment_id = 6028,
-                  start_date = "2020",
-                  end_date = "2020-02-01")
+get_acoustic_deployment_logs(deployment_id = 6028)
+
+get_acoustic_deployment_logs(deployment_id = c(53790, 1758), limit = TRUE)
 }
