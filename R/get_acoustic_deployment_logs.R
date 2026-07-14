@@ -1,4 +1,10 @@
-#' Retrieve log files/diagnostic information for acoustic receivers.
+#' Retrieve log files/diagnostic information for deployments of acoustic
+#' receivers.
+#'
+#' This function retrieves log files and diagnostic information for deployments
+#' of acoustic receivers from the ETN database. The returned data includes
+#' deployment ID, receiver ID, station name, datetime, record type, and log data
+#' in JSON format.
 #'
 #' @inheritParams get_acoustic_detections
 #' @inheritParams get_acoustic_deployments
@@ -10,7 +16,7 @@
 #'
 #' @examples
 #' get_acoustic_deployment_logs(deployment_id = 6028)
-#' 
+#'
 #' get_acoustic_deployment_logs(deployment_id = c(53790, 1758), limit = TRUE)
 get_acoustic_deployment_logs <- function(credentials = list(
                                 username = Sys.getenv("ETN_USER"),
