@@ -105,8 +105,8 @@ check_date_time <- function(date_time, date_name = "start_date") {
 #' @noRd
 
 get_credentials <-
-  function(username = Sys.getenv("userid"),
-           password = Sys.getenv("pwd")) {
+  function(username = Sys.getenv("ETN_USER"),
+           password = Sys.getenv("ETN_PWD")) {
     stringr::str_glue('list(username = "{username}", password = "{password}")')
   }
 
@@ -169,8 +169,8 @@ check_credentials <- function(credentials) {
 #' @family helper functions
 #' @noRd
 extract_temp_key <- function(response) {
-  response %>%
-    httr::content(as = "text") %>%
+  response |>
+    httr::content(as = "text") |>
     stringr::str_extract("(?<=tmp\\/).{15}(?=\\/)")
 }
 
@@ -188,13 +188,13 @@ extract_temp_key <- function(response) {
 #' @noRd
 #' @examples
 #' \dontrun{
-#' etn:::extract_temp_key(response) %>% get_val()
+#' etn:::extract_temp_key(response) |> get_val()
 #' }
 #'
 #' # using the opencpu test instance
 #' api_url <- "https://cloud.opencpu.org/ocpu/library/stats/R/rnorm"
-#' httr::POST(api_url, body = list(n = 10, mean = 5)) %>%
-#'   extract_temp_key() %>%
+#' httr::POST(api_url, body = list(n = 10, mean = 5)) |>
+#'   extract_temp_key() |>
 #'   get_val(api_domain = "https://cloud.opencpu.org/ocpu")
 get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
   httr::GET(
@@ -203,10 +203,10 @@ get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
       "tmp/{temp_key}/R/.val/rds",
       .sep = "/"
     )
-  ) %>%
-    httr::content(as = "raw") %>%
-    rawConnection() %>%
-    gzcon() %>%
+  ) |>
+    httr::content(as = "raw") |>
+    rawConnection() |>
+    gzcon() |>
     readRDS()
 }
 

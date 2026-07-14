@@ -1,4 +1,9 @@
 # etnservice (development version)
+- The function `write_dwc()` has been updated in the `etn` package and is no longer needed in `etnservice`. (#141)
+- The `jsonlite` package is no longer a direct dependency, it is only used by a maintenance script. (#144)
+- etnservice now relies on R >= 4.1.0 and uses base pipes (`|>` rather than `%>%`) (#151).
+# etnservice 0.6.0
+- Added `get_receiver_logs()` to fetch receiver logs from the database. The data is returned as a tibble with a column with logs in JSON format. (#117)
 
 # etnservice 0.5.1
 - Made sure `list_acoustic_project_codes()`, `list_animal_project_codes()`, `list_cpod_project_codes()` and `list_scientific_names()` always return values in the same order, regardless of the locale of the computer R is running on. (#116)

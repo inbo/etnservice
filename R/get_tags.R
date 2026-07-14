@@ -23,8 +23,8 @@
 #' @examples
 #' # Set credentials
 #' credentials <- list(
-#'    username = Sys.getenv("userid"),
-#'    password = Sys.getenv("pwd")
+#'    username = Sys.getenv("ETN_USER"),
+#'    password = Sys.getenv("ETN_PWD")
 #'  )
 #'
 #' # Get all tags
@@ -41,8 +41,8 @@
 #' get_tags(credentials, acoustic_tag_id = "A69-1601-16130")
 #' get_tags(credentials, acoustic_tag_id = c("A69-1601-16129", "A69-1601-16130"))
 get_tags <- function(credentials = list(
-                       username = Sys.getenv("userid"),
-                       password = Sys.getenv("pwd")
+                       username = Sys.getenv("ETN_USER"),
+                       password = Sys.getenv("ETN_PWD")
                      ),
                      tag_type = NULL,
                      tag_subtype = NULL,
@@ -213,7 +213,7 @@ get_tags <- function(credentials = list(
 
   # Sort data
   tags <-
-    tags %>%
+    tags |>
     dplyr::arrange(factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials)))
 
   dplyr::as_tibble(tags)

@@ -37,8 +37,8 @@
 #'
 #' @export
 get_acoustic_detections_page <- function(credentials = list(
-                                           username = Sys.getenv("userid"),
-                                           password = Sys.getenv("pwd")
+                                           username = Sys.getenv("ETN_USER"),
+                                           password = Sys.getenv("ETN_PWD")
                                          ),
                                          next_id_pk = 0,
                                          page_size = 100000,
@@ -264,7 +264,8 @@ get_acoustic_detections_page <- function(credentials = list(
   # Apply mapping -----
   if (!count) {
     # No need to apply mapping if we're only returning the number of records
-    returned_page <- returned_page %>%
+    returned_page <-
+      returned_page |>
       dplyr::transmute(
         detection_id = .data$detection_id_pk,
         date_time = .data$datetime,

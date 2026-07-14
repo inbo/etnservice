@@ -1,6 +1,6 @@
 credentials <- list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
+  username = Sys.getenv("ETN_USER"),
+  password = Sys.getenv("ETN_PWD")
 )
 
 test_that("get_animal_projects() returns error for incorrect connection", {
@@ -23,7 +23,7 @@ test_that("get_animal_projects() returns a tibble", {
 
 test_that("get_animal_projects() returns unique project_id", {
   df <- get_animal_projects(credentials)
-  expect_equal(nrow(df), nrow(df %>% distinct(project_id)))
+  expect_equal(nrow(df), nrow(df |> distinct(project_id)))
 })
 
 test_that("get_animal_projects() returns the expected columns", {
@@ -56,7 +56,7 @@ test_that("get_animal_projects() allows selecting on animal_project_code", {
   single_select <- "2014_demer"
   single_select_df <- get_animal_projects(credentials, animal_project_code = single_select)
   expect_equal(
-    single_select_df %>% distinct(project_code) %>% pull(),
+    single_select_df |> distinct(project_code) |> pull(),
     c(single_select)
   )
   expect_equal(nrow(single_select_df), 1)
@@ -71,7 +71,7 @@ test_that("get_animal_projects() allows selecting on animal_project_code", {
   multi_select <- c("2014_demer", "2015_dijle")
   multi_select_df <- get_animal_projects(credentials, animal_project_code = multi_select)
   expect_equal(
-    multi_select_df %>% distinct(project_code) %>% pull() %>% sort(),
+    multi_select_df |> distinct(project_code) |> pull() |> sort(),
     c(multi_select)
   )
   expect_equal(nrow(multi_select_df), 2)
@@ -79,7 +79,7 @@ test_that("get_animal_projects() allows selecting on animal_project_code", {
 
 test_that("get_animal_projects() returns projects of type 'animal'", {
   expect_equal(
-    get_animal_projects(credentials) %>% distinct(project_type) %>% pull(),
+    get_animal_projects(credentials) |> distinct(project_type) |> pull(),
     "animal"
   )
 })

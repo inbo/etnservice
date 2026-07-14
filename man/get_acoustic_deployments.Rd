@@ -5,7 +5,7 @@
 \title{Get acoustic deployment data}
 \usage{
 get_acoustic_deployments(
-  credentials = list(username = Sys.getenv("userid"), password = Sys.getenv("pwd")),
+  credentials = list(username = Sys.getenv("ETN_USER"), password = Sys.getenv("ETN_PWD")),
   deployment_id = NULL,
   receiver_id = NULL,
   acoustic_project_code = NULL,
@@ -41,8 +41,8 @@ results.
 \examples{
 # Set credentials
 credentials <- list(
-   username = Sys.getenv("userid"),
-   password = Sys.getenv("pwd")
+   username = Sys.getenv("ETN_USER"),
+   password = Sys.getenv("ETN_PWD")
  )
 
 # Get all acoustic deployments

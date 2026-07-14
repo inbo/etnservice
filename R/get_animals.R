@@ -21,8 +21,8 @@
 #' @examples
 #' # Set credentials
 #' credentials <- list(
-#'    username = Sys.getenv("userid"),
-#'    password = Sys.getenv("pwd")
+#'    username = Sys.getenv("ETN_USER"),
+#'    password = Sys.getenv("ETN_PWD")
 #'  )
 #'
 #' # Get all animals
@@ -45,8 +45,8 @@
 #' # Get animals of a specific species from a specific project
 #' get_animals(credentials, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
 get_animals <- function(credentials = list(
-                          username = Sys.getenv("userid"),
-                          password = Sys.getenv("pwd")
+                          username = Sys.getenv("ETN_USER"),
+                          password = Sys.getenv("ETN_PWD")
                         ),
                         animal_id = NULL,
                         tag_serial_number = NULL,
@@ -223,24 +223,24 @@ get_animals <- function(credentials = list(
 
   # Collapse tag information, to obtain one row = one animal
   tag_cols <-
-    animals %>%
-    dplyr::select(dplyr::starts_with("tag"), dplyr::starts_with("acoustic_tag_id")) %>%
+    animals |>
+    dplyr::select(dplyr::starts_with("tag"), dplyr::starts_with("acoustic_tag_id")) |>
     names()
   other_cols <-
-    animals %>%
-    dplyr::select(-dplyr::starts_with("tag"), -dplyr::starts_with("acoustic_tag_id")) %>%
+    animals |>
+    dplyr::select(-dplyr::starts_with("tag"), -dplyr::starts_with("acoustic_tag_id")) |>
     names()
   animals <-
-    animals %>%
-    dplyr::group_by_at(other_cols) %>%
-    dplyr::summarize_at(tag_cols, paste, collapse = ",") %>% # Collapse multiple tags by comma
-    dplyr::ungroup() %>%
-    dplyr::mutate_at(tag_cols, gsub, pattern = "NA", replacement = "") %>% # Use "" instead of "NA"
+    animals |>
+    dplyr::group_by_at(other_cols) |>
+    dplyr::summarize_at(tag_cols, paste, collapse = ",") |> # Collapse multiple tags by comma
+    dplyr::ungroup() |>
+    dplyr::mutate_at(tag_cols, gsub, pattern = "NA", replacement = "") |> # Use "" instead of "NA"
     dplyr::select(names(animals)) # Use the original column order
 
   # Sort data
   animals <-
-    animals %>%
+    animals |>
     dplyr::arrange(
       .data$animal_project_code,
       .data$release_date_time,

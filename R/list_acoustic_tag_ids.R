@@ -6,8 +6,8 @@
 #'
 #' @export
 list_acoustic_tag_ids <- function(credentials = list(
-  username = Sys.getenv("userid"),
-  password = Sys.getenv("pwd")
+  username = Sys.getenv("ETN_USER"),
+  password = Sys.getenv("ETN_PWD")
 )) {
   connection <- connect_to_etn(credentials$username, credentials$password)
   acoustic_tag_id_sql <- glue::glue_sql(
