@@ -2,6 +2,7 @@
 - The function `write_dwc()` has been updated in the `etn` package and is no longer needed in `etnservice`. (#141)
 - The `jsonlite` package is no longer a direct dependency, it is only used by a maintenance script. (#144)
 - etnservice now relies on R >= 4.1.0 and uses base pipes (`|>` rather than `%>%`) (#151).
+- The function `get_receiver_logs()` has been renamed to `get_acoustic_deployment_logs()` during the review process of respective the etn client function. `get_acoustic_deployment_logs()` also supports less arguments but has a greatly simplified user interface. (#160)
 # etnservice 0.6.0
 - Added `get_receiver_logs()` to fetch receiver logs from the database. The data is returned as a tibble with a column with logs in JSON format. (#117)
 
