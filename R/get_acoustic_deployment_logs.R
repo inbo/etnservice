@@ -78,16 +78,16 @@ get_acoustic_deployment_logs <- function(credentials = list(
     )
 
   ## Query database
-  receiver_logs <- DBI::dbGetQuery(connection, query)
+  deployment_logs <- DBI::dbGetQuery(connection, query)
   # Close connection
   DBI::dbDisconnect(connection)
 
   # Sort data
-  receiver_logs <-
-    receiver_logs |>
+  deployment_logs <-
+    deployment_logs |>
     dplyr::arrange(factor(
       .data$deployment_id, levels = list_deployment_ids(credentials)
     ))
 
-  dplyr::as_tibble(receiver_logs)
+  dplyr::as_tibble(deployment_logs)
 }
