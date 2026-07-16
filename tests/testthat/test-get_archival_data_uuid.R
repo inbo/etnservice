@@ -18,19 +18,22 @@ test_that("get_archival_data_uuid() returns expected columns", {
 })
 
 test_that("get_archival_data_uuid() can query on animal_id", {
-  selected_animal_id <- 59241
-  animal_uuid <-
-    get_archival_data_uuid(animal_id = selected_animal_id)
+  get_archival_data_uuid()$animal_id |>
+    sample(size = 3) |>
+    purrr::walk(
+      \(selected_animal_id){
+        animal_uuid_df <- get_archival_data_uuid(animal_id = selected_animal_id)
+        expect_s3_class(
+          animal_uuid_df,
+          "data.frame"
+        )
 
-  expect_s3_class(
-    animal_uuid,
-    "data.frame"
-  )
-
-  expect_identical(
-    unique(animal_uuid$animal_id),
-    selected_animal_id
-  )
+        expect_identical(
+          unique(animal_uuid_df$animal_id),
+          selected_animal_id
+        )
+      }
+    )
 })
 
 test_that("get_archival_data_uuid() can query on animal_project_code", {
