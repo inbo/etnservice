@@ -33,6 +33,8 @@ Imports:
     stringr,
     utils
 Suggests: 
+    gh,
+    httr2,
     jsonlite,
     purrr,
     testthat (>= 3.0.0)
