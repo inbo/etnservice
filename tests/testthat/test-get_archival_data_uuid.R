@@ -18,8 +18,9 @@ test_that("get_archival_data_uuid() returns expected columns", {
 })
 
 test_that("get_archival_data_uuid() can query on animal_id", {
+  number_of_ids_to_test <- 3
   get_archival_data_uuid()$animal_id |>
-    sample(size = 3) |>
+    sample(size = number_of_ids_to_test) |>
     purrr::walk(
       \(selected_animal_id){
         animal_uuid_df <- get_archival_data_uuid(animal_id = selected_animal_id)
