@@ -29,6 +29,13 @@ get_acoustic_deployment_logs <- function(credentials = list(
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+
   # Check connection
   check_connection(connection)
 

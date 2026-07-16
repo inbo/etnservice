@@ -31,7 +31,8 @@ Imports:
     readr,
     rlang,
     stringr,
-    utils
+    utils,
+    withr
 Suggests: 
     jsonlite,
     purrr,
