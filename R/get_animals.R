@@ -221,6 +221,9 @@ get_animals <- function(credentials = list(
     ", .con = connection)
   animals <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Collapse tag information, to obtain one row = one animal
   tag_cols <-
     animals |>
@@ -246,9 +249,6 @@ get_animals <- function(credentials = list(
       .data$release_date_time,
       factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials))
     )
-
-  # Close connection
-  DBI::dbDisconnect(connection)
 
   # Return animals
   dplyr::as_tibble(animals) # Is already a tibble, but added if code above changes
