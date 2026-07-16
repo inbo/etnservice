@@ -107,17 +107,20 @@ test_that("get_archival_data_uuid() supports case insensitive animal_project_cod
 })
 
 test_that("get_archival_data_uuid() can query on tag_serial_number", {
-  selected_tag_serial_number <- "1249189"
-  tag_uuid <-
-    get_archival_data_uuid(tag_serial_number = selected_tag_serial_number)
-  expect_s3_class(
-    tag_uuid,
-    "data.frame"
-  )
+  number_of_ids_to_test <- 3
+  sample(unique(get_archival_data_uuid()$tag_serial_number), size = number_of_ids_to_test) |>
+    purrr::walk(\(selected_tag_serial_number) {
+      tag_uuid <-
+        get_archival_data_uuid(tag_serial_number = selected_tag_serial_number)
+      expect_s3_class(
+        tag_uuid,
+        "data.frame"
+      )
 
-  expect_identical(
-    unique(tag_uuid$tag_serial_number),
-    selected_tag_serial_number
-  )
+      expect_identical(
+        unique(tag_uuid$tag_serial_number),
+        selected_tag_serial_number
+      )
+    })
 })
 
