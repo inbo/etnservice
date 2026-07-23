@@ -35,7 +35,14 @@ get_cpod_projects <- function(credentials = list(
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-
+ 
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+  
   # Check connection
   check_connection(connection)
 
@@ -72,12 +79,13 @@ get_cpod_projects <- function(credentials = list(
     ", .con = connection)
   projects <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Sort data
   projects <-
     projects |>
     dplyr::arrange(.data$project_code)
-  # Close connection
-  DBI::dbDisconnect(connection)
 
   # Return data
   dplyr::as_tibble(projects)

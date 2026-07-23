@@ -96,6 +96,13 @@ get_acoustic_detections <- function(credentials = list(
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+  
   # Check if we can make a connection
   check_connection(connection)
 
@@ -268,6 +275,9 @@ get_acoustic_detections <- function(credentials = list(
     ", .con = connection)
   detections <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Sort data (faster than in SQL)
   detections <-
     detections |>
@@ -275,8 +285,6 @@ get_acoustic_detections <- function(credentials = list(
       factor(.data$acoustic_tag_id, levels = list_acoustic_tag_ids(credentials)),
       .data$date_time
     )
-  # Close connection
-  DBI::dbDisconnect(connection)
 
   # Return detections
   dplyr::as_tibble(detections)
