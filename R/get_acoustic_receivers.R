@@ -37,7 +37,13 @@ get_acoustic_receivers <- function(credentials = list(
                                    status = NULL) {
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-
+  
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
   # Check connection
   check_connection(connection)
 
@@ -122,13 +128,13 @@ get_acoustic_receivers <- function(credentials = list(
     ", .con = connection)
   receivers <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Sort data
   receivers <-
     receivers |>
     dplyr::arrange(.data$receiver_id)
-
-  # Close connection
-  DBI::dbDisconnect(connection)
 
   # Return receivers
   dplyr::as_tibble(receivers)

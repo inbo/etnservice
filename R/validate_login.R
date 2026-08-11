@@ -22,8 +22,8 @@ validate_login <- function(username, password) {
 
   tryCatch(
     {
-      connection <- connect_to_etn(username, password)
-      DBI::dbDisconnect(connection)
+      connection <- 
+        withr::local_db_connection(connect_to_etn(username, password))
       return(TRUE)
     },
     error = function(e) {

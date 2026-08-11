@@ -58,7 +58,14 @@ get_animals <- function(credentials = list(
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-
+ 
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+  
   # Check connection
   check_connection(connection)
 
@@ -221,6 +228,9 @@ get_animals <- function(credentials = list(
     ", .con = connection)
   animals <- DBI::dbGetQuery(connection, query)
 
+  # Close connection
+  DBI::dbDisconnect(connection)
+
   # Collapse tag information, to obtain one row = one animal
   tag_cols <-
     animals |>
@@ -246,9 +256,6 @@ get_animals <- function(credentials = list(
       .data$release_date_time,
       factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials))
     )
-
-  # Close connection
-  DBI::dbDisconnect(connection)
 
   # Return animals
   dplyr::as_tibble(animals) # Is already a tibble, but added if code above changes
