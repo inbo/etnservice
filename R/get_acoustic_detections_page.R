@@ -66,7 +66,7 @@ get_acoustic_detections_page <- function(credentials = list(
       DBI::dbDisconnect(connection)
     }
   )
-  
+
   # Check if we can make a connection
   check_connection(connection)
 
@@ -94,7 +94,7 @@ get_acoustic_detections_page <- function(credentials = list(
     tag_serial_number_query <- "True"
   } else {
     tag_serial_number <- check_value(
-      tag_serial_number,
+      as.character(tag_serial_number), # Cast to character
       list_tag_serial_numbers(credentials),
       "tag_serial_number"
     )
