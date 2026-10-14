@@ -1,4 +1,4 @@
-# etnservice (development version)
+# etnservice 0.7.1
 - Fixed a bug in `get_acoustic_detections_page()` where the `tag_serial_number` argument was not cast to character causing database errors. (#174)
 
 # etnservice 0.7.0
