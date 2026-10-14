@@ -136,5 +136,5 @@ test_that("pagination via next_id_pk returns non-overlapping pages", {
 
 test_that("get_acoustic_detections_page() casts integer tag_serial_number to characters", {
   get_acoustic_detections_page(tag_serial_number = 22084648) |>
-    expect_s3_class(df, "data.frame")
+    expect_s3_class("data.frame")
 })
