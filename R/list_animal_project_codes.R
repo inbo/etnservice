@@ -15,26 +15,27 @@ list_animal_project_codes <- function(credentials = list(
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
       DBI::dbDisconnect(connection)
     }
   )
-  
-  project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
+
+  check_connection(connection)
+  query <-
+    glue::glue_sql("
+    SELECT project_code AS animal_project_code
+    FROM digital_twin.get_projects(p_project_type => ARRAY['animal']::text[])
+      ",
     .con = connection
-  )
-  query <- glue::glue_sql(
-    "SELECT DISTINCT project_code FROM ({project_sql}) AS project WHERE project_type = 'animal'",
-    .con = connection
-  )
+    )
+
   data <- DBI::dbGetQuery(connection, query)
 
   # Close connection
   DBI::dbDisconnect(connection)
 
-  stringr::str_sort(data$project_code)
+  stringr::str_sort(data$animal_project_code)
 }
