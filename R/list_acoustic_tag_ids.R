@@ -25,9 +25,14 @@ list_acoustic_tag_ids <- function(credentials = list(
   check_connection(connection)
 
   query <- glue::glue_sql("
-    SELECT DISTINCT acoustic_tag_id, acoustic_tag_id_alternative
-    FROM digital_twin.get_tags()
-    WHERE acoustic_tag_id IS NOT NULL OR acoustic_tag_id_alternative IS NOT NULL
+  SELECT acoustic_tag_id FROM digital_twin.get_tags()
+  WHERE acoustic_tag_id IS NOT NULL
+
+  UNION
+
+  SELECT acoustic_tag_id_alternative AS acoustic_tag_id
+  FROM digital_twin.get_tags()
+  WHERE acoustic_tag_id_alternative IS NOT NULL
   ",
     .con = connection
   )
@@ -38,7 +43,5 @@ list_acoustic_tag_ids <- function(credentials = list(
   DBI::dbDisconnect(connection)
 
   # Return acoustic_tag_ids
-  c(data$acoustic_tag_id, data$acoustic_tag_id_alternative) |>
-    unique() |>
-    stringr::str_sort(numeric = TRUE)
+  stringr::str_sort(data$acoustic_tag_id, numeric = TRUE)
 }
