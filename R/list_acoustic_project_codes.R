@@ -25,9 +25,10 @@ list_acoustic_project_codes <- function(credentials = list(
 
   check_connection(connection)
 
-  query <- glue::glue_sql(
-    "SELECT DISTINCT project_code FROM digital_twin.get_projects()
-    WHERE project_type = 'acoustic'",
+  query <- glue::glue_sql("
+    SELECT DISTINCT project_code
+    FROM digital_twin.get_projects(p_project_type => ARRAY['acoustic']::text[])
+    ",
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
