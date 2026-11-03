@@ -12,10 +12,10 @@ list_acoustic_project_codes <- function(credentials = list(
                                         )) {
   # Check if credentials object has right shape
   check_credentials(credentials)
-  
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
@@ -25,12 +25,9 @@ list_acoustic_project_codes <- function(credentials = list(
 
   check_connection(connection)
 
-  project_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
-    .con = connection
-  )
   query <- glue::glue_sql(
-    "SELECT DISTINCT project_code FROM ({project_sql}) AS project WHERE project_type = 'acoustic'",
+    "SELECT DISTINCT project_code FROM digital_twin.get_projects()
+    WHERE project_type = 'acoustic'",
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
