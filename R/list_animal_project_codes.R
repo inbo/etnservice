@@ -26,7 +26,7 @@ list_animal_project_codes <- function(credentials = list(
   check_connection(connection)
   query <-
     glue::glue_sql("
-    SELECT project_code AS animal_project_code
+    SELECT DISTINCT project_code AS animal_project_code
     FROM digital_twin.get_projects(p_project_type => ARRAY['animal']::text[])
       ",
     .con = connection
