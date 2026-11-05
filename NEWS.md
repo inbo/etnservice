@@ -1,5 +1,11 @@
 # etnservice (development version)
 
+# etnservice 0.7.2
+- etnservice now relies on R >= 4.2.0 due to the dependency on `odbc` and `arrow` (#179). 
+
+# etnservice 0.7.1
+- Fixed a bug in `get_acoustic_detections_page()` where the `tag_serial_number` argument was not cast to character causing database errors. (#174)
+
 # etnservice 0.7.0
 - Added `get_archival_data_uuid()` which fetches a table with UUID references to archival data files. These UUIDs can be used to construct paths to download the archival data CSV files hosted on lifewatch.com (#126).
 - The function `write_dwc()` has been updated in the `etn` package and is no longer needed in `etnservice`. (#141)
