@@ -46,11 +46,23 @@ is password protected. A login can be requested at
 
 etnservice needs direct access to the [ETN](https://lifewatch.be/etn/) database, thus a local install will not function without a copy of this database.
 
-You can install the development version of etnservice from [GitHub](https://github.com/) with:
+You can install the development version of etnservice from
+[GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("inbo/etnservice")
+# install.packages("pak")
+pak::pak("inbo/etnservice")
+```
+
+Alternativly you can also install the latest release via the INBO
+R-Universe:
+
+``` r
+install.packages("etnservice", repos = c(inbo = "https://inbo.r-universe.dev"))
+```
+
+If you are having trouble installing etn in RStudio, it may be easier to
+run the install command in R directly.
 ```
 
 ## How to use the API
