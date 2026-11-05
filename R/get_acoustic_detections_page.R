@@ -60,6 +60,13 @@ get_acoustic_detections_page <- function(credentials = list(
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
 
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+
   # Check if we can make a connection
   check_connection(connection)
 
@@ -87,7 +94,7 @@ get_acoustic_detections_page <- function(credentials = list(
     tag_serial_number_query <- "True"
   } else {
     tag_serial_number <- check_value(
-      tag_serial_number,
+      as.character(tag_serial_number), # Cast to character
       list_tag_serial_numbers(credentials),
       "tag_serial_number"
     )
@@ -251,8 +258,7 @@ get_acoustic_detections_page <- function(credentials = list(
       AND det.detection_id_pk > {next_id_pk}
     {limit_query}
     ",
-    .con = connection,
-    page_size_query = ifelse(count, "ALL", page_size)
+    .con = connection
   )
 
   # Execute query -----
