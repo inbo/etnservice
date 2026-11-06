@@ -113,7 +113,6 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     .con = connection
   ))
 
-  # Build query via sql function
   argument <- "acoustic_project_code"
   value <- acoustic_project_code
   pg_class <-
@@ -133,12 +132,10 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
       no = glue::glue("p_{argument} => {pg_array}")
     )
 
-  # Place query via sql function
+
   query <-
-    glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})",
-                   .con = connection)
+    glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})", .con = connection)
+
   projects <-
     DBI::dbGetQuery(conn = connection, statement = query)
-   # Return projects data.frame
-  projects
 }
