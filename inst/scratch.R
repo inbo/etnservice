@@ -108,21 +108,19 @@ acoustic_project_code <- c("Winde_Tjeukemeer", "lauwersmeer")
 acoustic_project_code <- NULL
 
 sql_get_projects <- function(acoustic_project_code = NULL) {
-  # Get function description
+  # Get function description: arguments and expected data types
   fns <- DBI::dbGetQuery(connection, glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
     .con = connection
   ))
 
   argument <- "acoustic_project_code"
   value <- acoustic_project_code
-  class <- "text"
   pg_class <-
     fns[fns$function_name == "get_projects", "description"] |>
     jsonlite::fromJSON() |>
     purrr::chuck(1, "arguments") |>
     purrr::chuck("acoustic_project_code", "argument_type")
   pg_array <- glue::glue_sql("ARRAY[{value*}]::{pg_class}",
-    pg_class = DBI::SQL(glue::glue("{class}[]")),
     .con = connection
   )
 
