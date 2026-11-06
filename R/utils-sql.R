@@ -8,24 +8,25 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
 
   # Capture the function arguments to translate into SQL
   args <-
-    as.list(
-    rlang::call_match(call = sys.call(),
-                      fn = sys.function(),
-                      defaults = TRUE)
-  )
+    mget(names(formals()), envir = environment()) |>
+    # Drop arguments set to NULL, we don't need to pass these to the sql function
+    purrr::compact()
+
   # Build query via sql function
     sql_fn_args <-
     purrr::imap(
       # Drop function name
-    args[-1],
+    args,
     \(value, argument) {
       pg_class <-
         fns[fns$function_name == "get_projects", "description"] |>
         jsonlite::fromJSON() |>
         purrr::chuck(1, "arguments") |>
         purrr::chuck(argument, "argument_type")
-      pg_array <- glue::glue_sql("ARRAY[{value*}]::{pg_class}",
-                                 value = value,
+      pg_array <- glue::glue_sql("ARRAY[{value*}]::{DBI::SQL(pg_class)}",
+                                 # Stop DBI from converting logicals into integers
+                                 value = as.character(value),
+                                 # Avoid the class being wrapped in ticks by glue
                                  # Look up the postgress class via the result of digital_twin.get_functions()
                                  pg_class = fns[fns$function_name == "get_projects", "description"] |>
                                    jsonlite::fromJSON() |>
@@ -33,14 +34,10 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
                                    purrr::chuck(argument, "argument_type"),
                                  .con = connection
       )
-      ifelse(
-        # The shape of the test determines the length of the output
-        is.null(value),
-        yes = rlang::missing_arg,
-        no = glue::glue("p_{argument} => {pg_array}")
-      )
+      glue::glue("p_{argument} => {pg_array}")
     }
-  )
+  ) |>
+      glue::glue_sql_collapse(sep = ", ")
 
   # Place query via sql function
   query <-
