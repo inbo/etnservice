@@ -107,7 +107,7 @@ acoustic_project_code <- c("Winde_Tjeukemeer")
 acoustic_project_code <- c("Winde_Tjeukemeer", "lauwersmeer")
 acoustic_project_code <- NULL
 
-sql_get_projects <- function(acoustic_project_code = NULL) {
+sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, moratorium = NULL, include_otn = NULL) {
   # Get function description: arguments and expected data types
   fns <- DBI::dbGetQuery(connection, glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
     .con = connection
