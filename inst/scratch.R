@@ -106,30 +106,38 @@ fetch_sql_fn <- function(fn_name, conn) {
 acoustic_project_code <- c("Winde_Tjeukemeer")
 acoustic_project_code <- c("Winde_Tjeukemeer", "lauwersmeer")
 acoustic_project_code <- NULL
-argument <- "acoustic_project_code"
 
-value <- acoustic_project_code
-class <- "text"
-pg_class <-
-  fns[fns$function_name == "get_projects", "description"] |>
-  jsonlite::fromJSON() |>
-  purrr::chuck(1, "arguments") |>
-  purrr::chuck("acoustic_project_code", "argument_type")
-pg_array <- glue::glue_sql("ARRAY[{value*}]::{pg_class}",
-                 pg_class = DBI::SQL(glue::glue("{class}[]")),
-                 .con = connection)
+sql_get_projects <- function(acoustic_project_code = NULL) {
+  # Get function description
+  fns <- DBI::dbGetQuery(connection, glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
+    .con = connection
+  ))
 
-sql_fn_args <-
-  ifelse(
-  # The shape of the test determines the length of the output
-  is.null(acoustic_project_code),
-  yes = "",
-  no = glue::glue("p_{argument} => {pg_array}")
-)
+  argument <- "acoustic_project_code"
+  value <- acoustic_project_code
+  class <- "text"
+  pg_class <-
+    fns[fns$function_name == "get_projects", "description"] |>
+    jsonlite::fromJSON() |>
+    purrr::chuck(1, "arguments") |>
+    purrr::chuck("acoustic_project_code", "argument_type")
+  pg_array <- glue::glue_sql("ARRAY[{value*}]::{pg_class}",
+    pg_class = DBI::SQL(glue::glue("{class}[]")),
+    .con = connection
+  )
+
+  sql_fn_args <-
+    ifelse(
+      # The shape of the test determines the length of the output
+      is.null(acoustic_project_code),
+      yes = "",
+      no = glue::glue("p_{argument} => {pg_array}")
+    )
 
 
-query <-
-  glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})", .con = connection)
+  query <-
+    glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})", .con = connection)
 
-projects <-
-  DBI::dbGetQuery(conn = connection, statement = query)
+  projects <-
+    DBI::dbGetQuery(conn = connection, statement = query)
+}
