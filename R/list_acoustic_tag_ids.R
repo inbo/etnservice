@@ -11,10 +11,10 @@ list_acoustic_tag_ids <- function(credentials = list(
 )) {
   # Check if credentials object has right shape
   check_credentials(credentials)
-  
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
@@ -24,15 +24,19 @@ list_acoustic_tag_ids <- function(credentials = list(
 
   check_connection(connection)
 
-  acoustic_tag_id_sql <- glue::glue_sql(
-    readr::read_file(system.file("sql", "acoustic_tag_id.sql", package = "etnservice")),
+  query <- glue::glue_sql("
+  SELECT acoustic_tag_id FROM digital_twin.get_tags()
+  WHERE acoustic_tag_id IS NOT NULL
+
+  UNION
+
+  SELECT acoustic_tag_id_alternative AS acoustic_tag_id
+  FROM digital_twin.get_tags()
+  WHERE acoustic_tag_id_alternative IS NOT NULL
+  ",
     .con = connection
   )
-  query <- glue::glue_sql("
-    SELECT DISTINCT acoustic_tag_id
-    FROM ({acoustic_tag_id_sql}) AS acoustic_tag_id
-    WHERE acoustic_tag_id IS NOT NULL
-  ", .con = connection)
+
   data <- DBI::dbGetQuery(connection, query)
 
   # Close connection

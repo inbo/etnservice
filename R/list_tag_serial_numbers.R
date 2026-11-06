@@ -15,7 +15,7 @@ list_tag_serial_numbers <- function(credentials = list(
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
@@ -26,15 +26,17 @@ list_tag_serial_numbers <- function(credentials = list(
   # Check if we can make a connection
   check_connection(connection)
 
-  query <- glue::glue_sql(
-    "SELECT DISTINCT serial_number FROM common.tag_device",
-    .con = connection
-  )
+  query <-
+    glue::glue_sql("
+    SELECT DISTINCT tag_serial_number
+    FROM digital_twin.get_tags()",
+                   .con = connection)
+
   data <- DBI::dbGetQuery(connection, query)
 
   # Close connection
   DBI::dbDisconnect(connection)
 
   # Return vector
-  stringr::str_sort(data$serial_number, numeric = TRUE)
+  stringr::str_sort(data$tag_serial_number, numeric = TRUE)
 }
