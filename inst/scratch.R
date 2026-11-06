@@ -119,7 +119,7 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     fns[fns$function_name == "get_projects", "description"] |>
     jsonlite::fromJSON() |>
     purrr::chuck(1, "arguments") |>
-    purrr::chuck(argument, "argument_type")
+    purrr::chuck("acoustic_project_code", "argument_type")
   pg_array <- glue::glue_sql("ARRAY[{value*}]::{pg_class}",
     .con = connection
   )
