@@ -1,4 +1,6 @@
 # etnservice (development version)
+
+# etnservice 0.7.2
 - etnservice now relies on R >= 4.2.0 due to the dependency on `odbc` and `arrow` (#179). 
 
 # etnservice 0.7.1
