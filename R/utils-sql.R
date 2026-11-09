@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param acoustic_project_code
+#' @param project_type
+#' @param moratorium
+#' @param include_otn
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, moratorium = NULL, include_otn = NULL) {
   # Get function description: arguments and expected data types
   fns <-
