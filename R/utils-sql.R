@@ -61,7 +61,8 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})",
                    .con = connection)
   projects <-
-    DBI::dbGetQuery(conn = connection, statement = query)
+    DBI::dbGetQuery(conn = connection, statement = query) |>
+    dplyr::arrange(data$project_code)
   # Return projects data.frame
   projects
 }
