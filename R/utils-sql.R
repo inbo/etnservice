@@ -1,14 +1,20 @@
-#' Title
+#' Get project data from the digital twin SQL function
 #'
-#' @param acoustic_project_code
-#' @param project_type
-#' @param moratorium
-#' @param include_otn
 #'
-#' @returns
-#' @export
+#' @param acoustic_project_code Character vector of acoustic project codes to
+#'   filter on. Defaults to `NULL` (no filter).
+#' @param project_type Character vector of project types to filter on. Defaults
+#'   to `NULL` (no filter).
+#' @param moratorium Logical vector to filter on the moratorium flag. Defaults
+#'   to `NULL` (no filter).
+#' @param include_otn Logical vector to filter on whether projects are included
+#'   in OTN. Defaults to `NULL` (no filter).
+#'
+#' @returns A tibble with project data, sorted by `project_code`.
 #'
 #' @examples
+#' sql_get_projects(acoustic_project_code = "demer")
+#' sql_get_projects(acoustic_project_code = "Winde_Tjeukemeer", moratorium = TRUE)
 sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, moratorium = NULL, include_otn = NULL) {
   # Get function description: arguments and expected data types
   fns <-
