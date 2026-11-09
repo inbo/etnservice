@@ -29,7 +29,23 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     # Drop arguments set to NULL, we don't need to pass these to the sql function
     purrr::compact()
 
-  # Build query via sql function
+  # For arguments ending on code, id or name, check if they contain a valid value.
+  args |>
+    purrr::keep_at(\(arg) {
+      any(stringr::str_ends(arg, stringr::fixed("code")),
+          stringr::str_ends(arg, stringr::fixed("id")),
+          stringr::str_ends(arg, stringr::fixed("name"))
+      )
+          }) |>
+  purrr::imap(\(value, argument) {check_value(value,
+                                                    do.call(
+                                                      # Call the argument listing function by guessing the function name
+                                                      glue::glue("list_", argument, "s"),
+                                                      # No arguments needed for list functions
+                                                      args = list()
+                                                    ))})
+
+  # Build query via sql function,
     sql_fn_args <-
     purrr::imap(
       # Drop function name
@@ -61,8 +77,7 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})",
                    .con = connection)
   projects <-
-    DBI::dbGetQuery(conn = connection, statement = query) |>
-    dplyr::arrange(data$project_code)
+    DBI::dbGetQuery(conn = connection, statement = query)
   # Return projects data.frame
   projects
 }
