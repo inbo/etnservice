@@ -15,13 +15,21 @@
 #' @examples
 #' sql_get_projects(acoustic_project_code = "demer")
 #' sql_get_projects(acoustic_project_code = "Winde_Tjeukemeer", moratorium = TRUE)
-sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, moratorium = NULL, include_otn = NULL) {
+sql_get_projects <- function(
+  acoustic_project_code = NULL,
+  project_type = NULL,
+  moratorium = NULL,
+  include_otn = NULL
+) {
   # Get function description: arguments and expected data types
   fns <-
-    DBI::dbGetQuery(connection,
-                    glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
-                                   .con = connection
-                    ))
+    DBI::dbGetQuery(
+      connection,
+      glue::glue_sql(
+        "SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
+        .con = connection
+      )
+    )
 
   # Capture the function arguments to translate into SQL
   args <-
@@ -29,9 +37,9 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     # Drop arguments set to NULL, we don't need to pass these to the sql function
     purrr::compact()
 
-  # Check if the provided value for arguments is valid, and convert if neccesairy.
+  # Check if the provided value for arguments is valid, and convert if neccesairy
   args <-
-    purrr::imap(args, \(value, argument){
+    purrr::imap(args, \(value, argument) {
       # For arguments ending on code, id or name, check the value against the
       # respective list_ function, and convert to lowercase to match against the
       # database (this is not built into the sql functions).
@@ -59,62 +67,124 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     })
 
   # Build query via sql function,
-    sql_fn_args <-
+  sql_fn_args <-
     purrr::imap(
       # Drop function name
-    args,
-    \(value, argument) {
-      pg_class <-
-        fns[fns$function_name == "get_projects", "description"] |>
-        jsonlite::fromJSON() |>
-        purrr::chuck(1, "arguments") |>
-        purrr::chuck(argument, "argument_type")
-      pg_array <- glue::glue_sql("ARRAY[{value*}]",
-                                 # Stop DBI from converting logicals into integers
-                                 value = as.character(value),
-                                 # Avoid the class being wrapped in ticks by glue
-                                 # Look up the postgress class via the result of digital_twin.get_functions()
-                                 pg_class = fns[fns$function_name == "get_projects", "description"] |>
-                                   jsonlite::fromJSON() |>
-                                   purrr::chuck(1, "arguments") |>
-                                   purrr::chuck(argument, "argument_type"),
-                                 .con = connection
-      )
-      glue::glue("p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
-                 pg_value = ifelse(
-                   test = pg_class == "boolean",
-                   # Convert R logical to SQL boolean
-                   yes = as.integer(value),
-                   no = pg_array
-                 ))
-    }
-  ) |>
-      glue::glue_sql_collapse(sep = ", ")
+      args,
+      \(value, argument) {
+        pg_class <-
+          fns[fns$function_name == "get_projects", "description"] |>
+          jsonlite::fromJSON() |>
+          purrr::chuck(1, "arguments") |>
+          purrr::chuck(argument, "argument_type")
+        pg_array <- glue::glue_sql(
+          "ARRAY[{value*}]",
+          # Stop DBI from converting logicals into integers
+          value = as.character(value),
+          # Avoid the class being wrapped in ticks by glue
+          # Look up the postgress class via the result of digital_twin.get_functions()
+          pg_class = fns[fns$function_name == "get_projects", "description"] |>
+            jsonlite::fromJSON() |>
+            purrr::chuck(1, "arguments") |>
+            purrr::chuck(argument, "argument_type"),
+          .con = connection
+        )
+        glue::glue(
+          "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
+          pg_value = ifelse(
+            test = pg_class == "boolean",
+            # Convert R logical to SQL boolean
+            yes = as.integer(value),
+            no = pg_array
+          )
+        )
+      }
+    ) |>
+    glue::glue_sql_collapse(sep = ", ")
 
   # Place query via sql function
   query <-
-    glue::glue_sql("SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})",
-                   .con = connection)
+    glue::glue_sql(
+      "SELECT * FROM digital_twin.get_projects({DBI::SQL(sql_fn_args)})",
+      .con = connection
+    )
   projects <-
     DBI::dbGetQuery(conn = connection, statement = query)
   # Return projects data.frame
   projects
 }
-db_function_args <- function() {
-  fns <-
-    DBI::dbGetQuery(connection,
-                    glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
-                                   .con = connection
-                    ))
 
+
+# fns <-
+#   DBI::dbGetQuery(connection,
+#                   glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
+#                                  .con = connection
+#                   ))
+# args <- fns[fns$function_name == "get_animals", "description"] |>
+#   jsonlite::fromJSON() |>
+#   purrr::chuck(1, "arguments") |>
+#   names() |>
+#   unique() |>
+#   purrr::set_names() |>
+#   purrr::map(~NULL)
+#
+# get_animals <- rlang::new_function(args = args,
+#                                    body = {
+#                                      # Capture the function arguments to translate into SQL
+#                                      args <-
+#                                        mget(names(formals()), envir = environment()) |>
+#                                        # Drop arguments set to NULL, we don't need to pass these to the sql function
+#                                        purrr::compact()
+#                                      return(args)
+#                                    })
+
+db_function_args <- function(
+  credentials = list(
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
+  )
+) {
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+
+  fns <-
+    DBI::dbGetQuery(
+      connection,
+      glue::glue_sql(
+        "SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
+        .con = connection
+      )
+    )
+  # Close connection
+  DBI::dbDisconnect(connection)
+
+  # Parse to a tibble
   tibble::tibble(
     fn_name = fns$function_name,
     fn_desc = fns[fns$function_name == fn_name, "description"]
   ) |>
-    dplyr::mutate(fn_desc = purrr::map(fn_desc, ~jsonlite::fromJSON(.x) |>
-                                        purrr::chuck(1, "arguments"))) |>
-    tidyr::unnest_longer(fn_desc, indices_to = "argument", values_to = "arg_values") |>
+    dplyr::mutate(
+      fn_desc = purrr::map(
+        fn_desc,
+        ~ jsonlite::fromJSON(.x) |>
+          purrr::chuck(1, "arguments")
+      )
+    ) |>
+    tidyr::unnest_longer(
+      fn_desc,
+      indices_to = "argument",
+      values_to = "arg_values"
+    ) |>
     tidyr::unnest_wider(arg_values) |>
     dplyr::distinct()
-
 }
