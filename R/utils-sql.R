@@ -29,21 +29,33 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
     # Drop arguments set to NULL, we don't need to pass these to the sql function
     purrr::compact()
 
-  # For arguments ending on code, id or name, check if they contain a valid value.
-  args |>
-    purrr::keep_at(\(arg) {
-      stringr::str_ends(arg, stringr::fixed("code")) |
-          stringr::str_ends(arg, stringr::fixed("id")) |
-          stringr::str_ends(arg, stringr::fixed("name")
-      )
-          }) |>
-    purrr::imap(\(value, argument) {
-      check_value(value, do.call(
-        # Call the argument listing function by guessing the function name
-        glue::glue("list_", argument, "s"),
-        # No arguments needed for list functions
-        args = list()
-      ))
+  # Check if the provided value for arguments is valid, and convert if neccesairy.
+  args <-
+    purrr::imap(args, \(value, argument){
+      # For arguments ending on code, id or name, check the value against the
+      # respective list_ function, and convert to lowercase to match against the
+      # database (this is not built into the sql functions).
+      if (
+        any(
+          stringr::str_ends(argument, stringr::fixed("code")),
+          stringr::str_ends(argument, stringr::fixed("name")),
+          stringr::str_ends(argument, stringr::fixed("id"))
+        )
+      ) {
+        check_value(
+          x = value,
+          y = do.call(
+            # Call the argument listing function by guessing the function name
+            glue::glue("list_", argument, "s"),
+            # No arguments needed for list functions
+            args = list()
+          ),
+          lowercase = TRUE
+        )
+        # For all other arguments, don't use check_value()
+      } else {
+        value
+      }
     })
 
   # Build query via sql function,
