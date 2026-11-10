@@ -69,7 +69,7 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
         jsonlite::fromJSON() |>
         purrr::chuck(1, "arguments") |>
         purrr::chuck(argument, "argument_type")
-      pg_array <- glue::glue_sql("ARRAY[{value*}]::{DBI::SQL(pg_class)}",
+      pg_array <- glue::glue_sql("ARRAY[{value*}]",
                                  # Stop DBI from converting logicals into integers
                                  value = as.character(value),
                                  # Avoid the class being wrapped in ticks by glue
@@ -80,7 +80,13 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
                                    purrr::chuck(argument, "argument_type"),
                                  .con = connection
       )
-      glue::glue("p_{argument} => {pg_array}")
+      glue::glue("p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
+                 pg_value = ifelse(
+                   test = pg_class == "boolean",
+                   # Convert R logical to SQL boolean
+                   yes = as.integer(value),
+                   no = pg_array
+                 ))
     }
   ) |>
       glue::glue_sql_collapse(sep = ", ")
