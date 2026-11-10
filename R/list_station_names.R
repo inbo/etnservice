@@ -12,19 +12,20 @@ list_station_names <- function(credentials = list(
                                )) {
   # Check if credentials object has right shape
   check_credentials(credentials)
-  
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
       DBI::dbDisconnect(connection)
     }
   )
-  
+
   query <- glue::glue_sql(
-    "SELECT DISTINCT station_name FROM acoustic.deployments WHERE station_name IS NOT NULL",
+    "SELECT DISTINCT station_name FROM digital_twin.get_deployments()
+    WHERE station_name IS NOT NULL",
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
