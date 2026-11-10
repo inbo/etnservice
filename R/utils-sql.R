@@ -100,3 +100,21 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
   # Return projects data.frame
   projects
 }
+db_function_args <- function() {
+  fns <-
+    DBI::dbGetQuery(connection,
+                    glue::glue_sql("SELECT * FROM digital_twin.{DBI::SQL('get_functions')}()",
+                                   .con = connection
+                    ))
+
+  tibble::tibble(
+    fn_name = fns$function_name,
+    fn_desc = fns[fns$function_name == fn_name, "description"]
+  ) |>
+    dplyr::mutate(fn_desc = purrr::map(fn_desc, ~jsonlite::fromJSON(.x) |>
+                                        purrr::chuck(1, "arguments"))) |>
+    tidyr::unnest_longer(fn_desc, indices_to = "argument", values_to = "arg_values") |>
+    tidyr::unnest_wider(arg_values) |>
+    dplyr::distinct()
+
+}
