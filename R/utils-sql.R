@@ -32,18 +32,19 @@ sql_get_projects <- function(acoustic_project_code = NULL, project_type = NULL, 
   # For arguments ending on code, id or name, check if they contain a valid value.
   args |>
     purrr::keep_at(\(arg) {
-      any(stringr::str_ends(arg, stringr::fixed("code")),
-          stringr::str_ends(arg, stringr::fixed("id")),
-          stringr::str_ends(arg, stringr::fixed("name"))
+      stringr::str_ends(arg, stringr::fixed("code")) |
+          stringr::str_ends(arg, stringr::fixed("id")) |
+          stringr::str_ends(arg, stringr::fixed("name")
       )
           }) |>
-  purrr::imap(\(value, argument) {check_value(value,
-                                                    do.call(
-                                                      # Call the argument listing function by guessing the function name
-                                                      glue::glue("list_", argument, "s"),
-                                                      # No arguments needed for list functions
-                                                      args = list()
-                                                    ))})
+    purrr::imap(\(value, argument) {
+      check_value(value, do.call(
+        # Call the argument listing function by guessing the function name
+        glue::glue("list_", argument, "s"),
+        # No arguments needed for list functions
+        args = list()
+      ))
+    })
 
   # Build query via sql function,
     sql_fn_args <-
