@@ -88,9 +88,8 @@ response %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 ```
 
-However, a fork of the [etn package](https://github.com/inbo/etn) is
-currently in development that will allow you to do this using built in
-functions.
+Tthe [etn package](https://github.com/inbo/etn) uses this package as the
+inner workings for it’s functions.
 
 Another example of the same request as above, but now using
 [curl](https://curl.se/):
