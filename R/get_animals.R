@@ -44,28 +44,29 @@
 #'
 #' # Get animals of a specific species from a specific project
 #' get_animals(credentials, animal_project_code = "2014_demer", scientific_name = "Rutilus rutilus")
-get_animals <- function(credentials = list(
-                          username = Sys.getenv("ETN_USER"),
-                          password = Sys.getenv("ETN_PWD")
-                        ),
-                        animal_id = NULL,
-                        tag_serial_number = NULL,
-                        animal_project_code = NULL,
-                        scientific_name = NULL) {
-
+get_animals <- function(
+  credentials = list(
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
+  ),
+  animal_id = NULL,
+  tag_serial_number = NULL,
+  animal_project_code = NULL,
+  scientific_name = NULL
+) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
- 
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
       DBI::dbDisconnect(connection)
     }
   )
-  
+
   # Check connection
   check_connection(connection)
 
@@ -137,7 +138,8 @@ get_animals <- function(credentials = list(
   )
 
   # Build query
-  query <- glue::glue_sql("
+  query <- glue::glue_sql(
+    "
     SELECT
       animal.id_pk AS animal_id,
       animal_project.projectcode AS animal_project_code,
@@ -164,6 +166,10 @@ get_animals <- function(credentials = list(
       animal.release_latitude AS release_latitude,
       animal.release_longitude AS release_longitude,
       animal.recapture_date AS recapture_date_time,
+      animal.recapture_location AS recapture_location,
+      animal.recapture_latitude AS recapture_latitude,
+      animal.recapture_longitude AS recapture_longitude,
+      animal.recapture_description AS recapture_description,
       animal.length_type AS length1_type,
       animal.length AS length1,
       animal.length_units AS length1_unit,
@@ -213,7 +219,7 @@ get_animals <- function(credentials = list(
       -- animal.end_date_tag
       -- animal.post_op_holding_period_new
       -- animal.external_id
-    FROM common.animal_release_limited AS animal
+    FROM common.animal_release AS animal
       LEFT JOIN common.animal_release_tag_device AS animal_with_tag
         ON animal.id_pk = animal_with_tag.animal_release_fk
         LEFT JOIN ({tag_sql}) AS tag
@@ -225,7 +231,9 @@ get_animals <- function(credentials = list(
       AND {animal_project_code_query}
       AND {tag_serial_number_query}
       AND {scientific_name_query}
-    ", .con = connection)
+    ",
+    .con = connection
+  )
   animals <- DBI::dbGetQuery(connection, query)
 
   # Close connection
@@ -234,11 +242,17 @@ get_animals <- function(credentials = list(
   # Collapse tag information, to obtain one row = one animal
   tag_cols <-
     animals |>
-    dplyr::select(dplyr::starts_with("tag"), dplyr::starts_with("acoustic_tag_id")) |>
+    dplyr::select(
+      dplyr::starts_with("tag"),
+      dplyr::starts_with("acoustic_tag_id")
+    ) |>
     names()
   other_cols <-
     animals |>
-    dplyr::select(-dplyr::starts_with("tag"), -dplyr::starts_with("acoustic_tag_id")) |>
+    dplyr::select(
+      -dplyr::starts_with("tag"),
+      -dplyr::starts_with("acoustic_tag_id")
+    ) |>
     names()
   animals <-
     animals |>
@@ -254,7 +268,10 @@ get_animals <- function(credentials = list(
     dplyr::arrange(
       .data$animal_project_code,
       .data$release_date_time,
-      factor(.data$tag_serial_number, levels = list_tag_serial_numbers(credentials))
+      factor(
+        .data$tag_serial_number,
+        levels = list_tag_serial_numbers(credentials)
+      )
     )
 
   # Return animals
