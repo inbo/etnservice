@@ -49,4 +49,3 @@
   available tag serial numbers
 - [`validate_login()`](validate_login.md) : Check ETN Database
   Credentials
-- [`write_dwc()`](write_dwc.md) : Transform ETN data to Darwin Core

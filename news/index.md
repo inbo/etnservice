@@ -5,6 +5,14 @@
 - etnservice now has a pkgdown website:
   [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/)
   ([\#138](https://github.com/inbo/etnservice/issues/138)).
+- write_dwc() has been removed from etnservice. It was an API function
+  that produced a Darwin Core occurrence table from the database. It
+  should only be run through the etn R package, which generates the
+  output from a Data Package via get_package(). The etnservice version
+  had fallen out of sync with etn, and it likely no longer worked as
+  expected. Keeping both implementations risked drift between the two
+  packages, so the function is retired here. Use etn::write_dwc()
+  instead ([\#190](https://github.com/inbo/etnservice/issues/190)).
 
 ## etnservice 0.7.2
 
@@ -27,8 +35,8 @@
   These UUIDs can be used to construct paths to download the archival
   data CSV files hosted on lifewatch.com
   ([\#126](https://github.com/inbo/etnservice/issues/126)).
-- The function [`write_dwc()`](../reference/write_dwc.md) has been
-  updated in the `etn` package and is no longer needed in `etnservice`.
+- The function `write_dwc()` has been updated in the `etn` package and
+  is no longer needed in `etnservice`.
   ([\#141](https://github.com/inbo/etnservice/issues/141))
 - The `jsonlite` package is no longer a direct dependency, it is only
   used by a maintenance script.
@@ -120,10 +128,9 @@
 - Add new function [`validate_login()`](../reference/validate_login.md)
   to check if the provided credentials grant access to ETN
   ([\#59](https://github.com/inbo/etnservice/issues/59)).
-- Fixed bug in [`write_dwc()`](../reference/write_dwc.md) where
-  providing no value for `rights_holder` would result in the function
-  failing to output a data.frame
-  ([\#69](https://github.com/inbo/etnservice/issues/69)).
+- Fixed bug in `write_dwc()` where providing no value for
+  `rights_holder` would result in the function failing to output a
+  data.frame ([\#69](https://github.com/inbo/etnservice/issues/69)).
 - etnservice will now no longer return duplicate receiver_ids in
   [`list_receiver_ids()`](../reference/list_receiver_ids.md)
   ([inbo/etn#333](https://github.com/inbo/etn/issues/333).

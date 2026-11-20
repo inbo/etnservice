@@ -124,9 +124,6 @@ get_version()
 #> $fn_checksums$validate_login
 #> [1] "372be31e067d95ce50c49762fd48d853"
 #> 
-#> $fn_checksums$write_dwc
-#> [1] "429afea324d6677f0d943559673a918b"
-#> 
 #> 
 #> $version
 #> [1] ‘0.7.2.9000’
