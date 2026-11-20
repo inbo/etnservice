@@ -73,33 +73,34 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"etnservice"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>inbo <span class="op">=</span> <span class="st">"https://inbo.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If you are having trouble installing etn in RStudio, it may be easier to run the install command in R directly.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## How to use the API</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>This is a basic example which shows you how adress the API directly<span class="sc">:</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="st">```</span><span class="at"> r</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">library(httr2) # to talk to the internet</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="at">library(askpass) # to safly enter a password in R</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at"># To access the ETN database, we need a login (username + password). We'll ask</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at"># for the password dynamically because that's safer than storing it as an object</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">username &lt;- "&lt;your-username-here&gt;"</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at"># All functions can be adressed directly in the URL</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="at">endpoint &lt;- "https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at"># Request the result of the function to be a json, and put in a request</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">response &lt;-</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="at">    httr2::request(endpoint) |&gt; </span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    ## In this case we'll request the data in JSON format and parse it</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    httr2::req_url_path_append("json") |&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    httr2::req_body_json(</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">      list(credentials = list(username = username,</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">                              password = askpass::askpass()))</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">    ) |&gt; </span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">    httr2::req_perform()</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at"># Take the response of the server, and convert it into an R object we can use</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">response |&gt;</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">    httr2::resp_body_json(simplifyVector = TRUE)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="how-to-use-the-api">How to use the API<a class="anchor" aria-label="anchor" href="#how-to-use-the-api"></a>
+</h2>
+<p>This is a basic example which shows you how adress the API directly:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://httr2.r-lib.org" class="external-link">httr2</a></span><span class="op">)</span> <span class="co"># to talk to the internet</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span> <span class="co"># to use pipes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.r-universe.dev/askpass" class="external-link">askpass</a></span><span class="op">)</span> <span class="co"># to safly enter a password in R</span></span>
+<span></span>
+<span><span class="co"># To access the ETN database, we need a login (username + password). We'll ask</span></span>
+<span><span class="co"># for the password dynamically because that's safer than storing it as an object</span></span>
+<span><span class="va">username</span> <span class="op">&lt;-</span> <span class="st">"&lt;your-username-here&gt;"</span></span>
+<span><span class="co"># All functions can be adressed directly in the URL</span></span>
+<span><span class="va">endpoint</span> <span class="op">&lt;-</span> <span class="st">"https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"</span></span>
+<span><span class="co"># Request the result of the function to be a json, and put in a request</span></span>
+<span><span class="va">response</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/request.html" class="external-link">request</a></span><span class="op">(</span><span class="va">endpoint</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="co">## In this case we'll request the data in JSON format and parse it</span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html" class="external-link">req_url_path_append</a></span><span class="op">(</span><span class="st">"json"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_body.html" class="external-link">req_body_json</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>credentials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>username <span class="op">=</span> <span class="va">username</span>,</span>
+<span>                              password <span class="op">=</span> <span class="fu">askpass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/askpass/man/askpass.html" class="external-link">askpass</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">req_perform</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Take the response of the server, and convert it into an R object we can use</span></span>
+<span><span class="va">response</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html" class="external-link">resp_body_json</a></span><span class="op">(</span>simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>However, a fork of the <a href="https://github.com/inbo/etn" class="external-link">etn package</a> is currently in development that will allow you to do this using built in functions.</p>
 <p>Another example of the same request as above, but now using <a href="https://curl.se/" class="external-link">curl</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
