@@ -170,7 +170,7 @@ check_credentials <- function(credentials) {
 #' @noRd
 extract_temp_key <- function(response) {
   response %>%
-    httr::content(as = "text") %>%
+    httr2::resp_body_string() %>%
     stringr::str_extract("(?<=tmp\\/).{15}(?=\\/)")
 }
 
@@ -197,15 +197,9 @@ extract_temp_key <- function(response) {
 #'   extract_temp_key() %>%
 #'   get_val(api_domain = "https://cloud.opencpu.org/ocpu")
 get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
-  httr::GET(
-    stringr::str_glue(
-      "{api_domain}",
-      "tmp/{temp_key}/R/.val/rds",
-      .sep = "/"
-    )
-  ) %>%
-    httr::content(as = "raw") %>%
-    rawConnection() %>%
+  httr2::req_url_path(api_domain) |>
+    httr2::req_url_path_append("tmp", temp_key, "R", ".val", "rds") |>
+    httr2::req_perform_connection() |>
     gzcon() %>%
     readRDS()
 }
