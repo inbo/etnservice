@@ -24,7 +24,6 @@ Imports:
     DBI,
     dplyr,
     glue,
-    httr,
     lubridate,
     methods,
     odbc,
