@@ -5,14 +5,19 @@
 - etnservice now has a pkgdown website:
   [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/)
   ([\#138](https://github.com/inbo/etnservice/issues/138)).
-- write_dwc() has been removed from etnservice. It was an API function
+- `write_dwc()` has been removed from etnservice. It was an API function
   that produced a Darwin Core occurrence table from the database. It
   should only be run through the etn R package, which generates the
   output from a Data Package via get_package(). The etnservice version
   had fallen out of sync with etn, and it likely no longer worked as
   expected. Keeping both implementations risked drift between the two
-  packages, so the function is retired here. Use etn::write_dwc()
+  packages, so the function is retired here. Use `etn::write_dwc()`
   instead ([\#190](https://github.com/inbo/etnservice/issues/190)).
+- The internal helpers `get_val()` and `extract_temp_key()` were removed
+  from `etnservice`, both were unused in this package and have since
+  migrated to become internal helpers in the `etn` package. After this
+  housekeeping, the `httr` package is no longer a dependency of
+  `etnservice` ([\#198](https://github.com/inbo/etnservice/issues/198)).
 
 ## etnservice 0.7.2
 

@@ -46,9 +46,6 @@ get_version()
 #> $fn_checksums$connect_to_etn
 #> [1] "563a5c8c8199c890cb69976480e92bd9"
 #> 
-#> $fn_checksums$extract_temp_key
-#> [1] "038b8ee90d1c0ee07be838cd0b4f32a0"
-#> 
 #> $fn_checksums$get_acoustic_deployment_logs
 #> [1] "32836bcf9f790f51a28bc341e4082116"
 #> 
@@ -84,9 +81,6 @@ get_version()
 #> 
 #> $fn_checksums$get_tags
 #> [1] "d99619d9c4ad5be47f8e08672599555f"
-#> 
-#> $fn_checksums$get_val
-#> [1] "d9ebee2ad1a58db16272337be7d2f29d"
 #> 
 #> $fn_checksums$get_version
 #> [1] "a05a33c40a35a1f8ccac458c90371165"
