@@ -1,5 +1,5 @@
 # etnservice (development version)
-- etnservice now has a pkgdown website: [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/). (#138)
+- etnservice now has a pkgdown website: [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/) (#138).
 
 
 # etnservice 0.7.2
