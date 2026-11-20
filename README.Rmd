@@ -95,7 +95,7 @@ response %>%
 
 ```
 
-However, a fork of the [etn package](https://github.com/inbo/etn) is currently in development that will allow you to do this using built in functions. 
+The [etn package](https://github.com/inbo/etn) uses this package as its backend.
 
 Another example of the same request as above, but now using [curl](https://curl.se/):
 ```{bash,eval = FALSE}
