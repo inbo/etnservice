@@ -41,7 +41,7 @@ Data are transformed into an
 \href{https://rs.gbif.org/core/dwc_occurrence_2022-02-02.xml}{Occurrence core}.
 This \strong{follows recommendations} discussed and created by Peter Desmet,
 Jonas Mortelmans, Jonathan Pye, John Wieczorek and others.
-See the \href{https://github.com/inbo/etn/tree/main/inst/sql}{SQL file(s)}
+See the \href{https://github.com/inbo/etnservice/tree/main/inst/sql}{SQL file(s)}
 used by this function for details.
 
 Key features of the Darwin Core transformation:

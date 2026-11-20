@@ -21,7 +21,7 @@
 #' [Occurrence core](https://rs.gbif.org/core/dwc_occurrence_2022-02-02.xml).
 #' This **follows recommendations** discussed and created by Peter Desmet,
 #' Jonas Mortelmans, Jonathan Pye, John Wieczorek and others.
-#' See the [SQL file(s)](https://github.com/inbo/etn/tree/main/inst/sql)
+#' See the [SQL file(s)](https://github.com/inbo/etnservice/tree/main/inst/sql)
 #' used by this function for details.
 #'
 #' Key features of the Darwin Core transformation:
