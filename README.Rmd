@@ -63,7 +63,7 @@ install.packages("etnservice", repos = c(inbo = "https://inbo.r-universe.dev"))
 
 If you are having trouble installing etn in RStudio, it may be easier to
 run the install command in R directly.
-```
+
 
 ## How to use the API
 
