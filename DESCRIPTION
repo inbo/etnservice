@@ -25,6 +25,7 @@ Imports:
     dplyr,
     glue,
     httr,
+    jsonlite,
     lubridate,
     methods,
     odbc,
@@ -34,7 +35,6 @@ Imports:
     utils,
     withr
 Suggests: 
-    jsonlite,
     purrr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

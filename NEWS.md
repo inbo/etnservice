@@ -1,4 +1,6 @@
 # etnservice (development version)
+- etnservice now has a pkgdown website: [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/) (#138).
+
 
 # etnservice 0.7.2
 - etnservice now relies on R >= 4.2.0 due to the dependency on `odbc` and `arrow` (#179). 
