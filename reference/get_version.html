@@ -74,7 +74,107 @@ etnservice deployed via opencpu.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_version</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in purrr::map(fn_names, ~get(.x, envir = getNamespace("etnservice"))) %&gt;%     purrr::map(deparse) %&gt;% purrr::set_names(fn_names):</span> could not find function "%&gt;%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$check_connection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5c5242691df9c5eb2aa1ec68e73a66e8"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$check_credentials</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a23ad58612dc39f09f3c2bbd9ac942c2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$check_date_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "b98be30e71c5184449d9de88d143792c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$check_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "f32ce25ad512a36ff95e96d51afb59e6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$connect_to_etn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "563a5c8c8199c890cb69976480e92bd9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$extract_temp_key</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "038b8ee90d1c0ee07be838cd0b4f32a0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_deployment_logs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "32836bcf9f790f51a28bc341e4082116"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_deployments</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ae068e48247d1d6523397a443cef5d6e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_detections</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2e74d82ab1b8630b7acddf59c1420d0b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_detections_page</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9025d39b15acd587a7c45dd877d1e607"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_projects</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2f16f6db52120168f69d5669e745bd1f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_acoustic_receivers</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "bb33147533b3e7fe48fa10a1da12e0dc"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_animal_projects</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "27e98dad575e5bfbd66a8e2b194320de"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_animals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5134ba849050903a0d82978dde18915c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_archival_data_uuid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7dc3753b43eb5a0412413086d2fb5764"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_cpod_projects</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "893d9b41ae9990684ead60257a48a6d5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_credentials</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d364b895ab16f03535218c5681a821c2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_tags</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d99619d9c4ad5be47f8e08672599555f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_val</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d9ebee2ad1a58db16272337be7d2f29d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$get_version</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a05a33c40a35a1f8ccac458c90371165"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_acoustic_project_codes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "549f1a9f18b1efb9d6c50cc46b0bdb42"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_acoustic_tag_ids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "98e5af3e72f5ae924a99b945084f4858"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_animal_ids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "463783012ee23e6fe8bbdde06e3f1361"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_animal_project_codes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e5d0b2d8e74553816d41261c50257491"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_cpod_project_codes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ca2badf6a650620462f4ae5f0f666137"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_deployment_ids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ef1821c6c4912573746fc81d12e38030"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_receiver_ids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eca74641cbcfe4e8214f53ff861f9ebe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_scientific_names</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d8254960052a6dbeba9986af944d5a39"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_station_names</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "6a1e2736d13643889576aa773b99c46e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$list_tag_serial_numbers</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c41c2c11eadf5a3e02cb77a89ea57d90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$validate_login</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "372be31e067d95ce50c49762fd48d853"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fn_checksums$write_dwc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "429afea324d6677f0d943559673a918b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $version</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ‘0.7.2.9000’</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
