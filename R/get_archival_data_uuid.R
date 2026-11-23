@@ -6,7 +6,7 @@
 #'
 #' @inheritParams get_animals
 #'
-#' @returns A tibble with a column `converted_archival_file_uuid` that contains
+#' @return A tibble with a column `converted_archival_file_uuid` that contains
 #'   the UUID pointing to the archival data csv file. Other columns are:
 #'   `animal_id`, `tag_serial_number`, and `animal_project_code`.
 #' @export
