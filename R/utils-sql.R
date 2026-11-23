@@ -37,7 +37,7 @@ sql_get_projects <- function(
     # Drop arguments set to NULL, we don't need to pass these to the sql function
     purrr::compact()
 
-  # Check if the provided value for arguments is valid, and convert if neccesairy
+  # Check if the provided value for arguments is valid, and convert if necessary
   args <-
     purrr::imap(args, \(value, argument) {
       # For arguments ending on code, id or name, check the value against the
