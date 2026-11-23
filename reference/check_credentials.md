@@ -18,7 +18,7 @@ check_credentials(credentials)
 
 ## Value
 
-TRUE if the credentials are valid, an error otherwise
+TRUE if the credentials are valid, an error otherwise.
 
 ## Examples
 
