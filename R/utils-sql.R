@@ -114,6 +114,7 @@ sql_get_projects <- function(
   projects
 }
 
+format_sql_args <- function(fn, ...) {}
 
 # fns <-
 #   DBI::dbGetQuery(connection,

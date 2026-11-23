@@ -44,14 +44,16 @@
 #' # Get acoustic deployments for two specific stations
 #' get_acoustic_deployments(credentials, station_name = c("de-9", "de-10"))
 get_acoustic_deployments <- function(
-    credentials = list(username = Sys.getenv("ETN_USER"),
-                       password = Sys.getenv("ETN_PWD")),
-    deployment_id = NULL,
-    receiver_id = NULL,
-    acoustic_project_code = NULL,
-    station_name = NULL,
-    open_only = FALSE) {
-
+  credentials = list(
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
+  ),
+  deployment_id = NULL,
+  receiver_id = NULL,
+  acoustic_project_code = NULL,
+  station_name = NULL,
+  open_only = FALSE
+) {
   # Check if credentials object has right shape
   check_credentials(credentials)
 
@@ -132,7 +134,7 @@ get_acoustic_deployments <- function(
 
   # Build query
   sql_fn_args <- format_sql_args(
-    function = "get_deployments",
+    fn = "get_deployments",
     deployment_ids = deployment_id,
     receiver_ids = receiver_id,
     acoustic_project_codes = acoustic_project_code,
@@ -141,9 +143,12 @@ get_acoustic_deployments <- function(
     deployment_type = "Acoustic"
   )
 
-  query <- glue::glue_sql("
+  query <- glue::glue_sql(
+    "
     SELECT * FROM digital_twin.get_deployments({DBI::SQL(sql_fn_args)})
-                          ", .con = connection)
+                          ",
+    .con = connection
+  )
   deployments <- DBI::dbGetQuery(connection, query)
 
   # Close connection
