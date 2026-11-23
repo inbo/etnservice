@@ -65,13 +65,13 @@ get_acoustic_deployments <- function(
       DBI::dbDisconnect(connection)
     }
   )
-  
+
   # Check if we can make a connection
   check_connection(connection)
 
   # Check deployment_id
   if (is.null(deployment_id)) {
-    deployment_id_query <- "True"
+    # deployment_id_query <- "True"
   } else {
     deployment_id <- check_value(
       deployment_id,
@@ -86,7 +86,7 @@ get_acoustic_deployments <- function(
 
   # Check receiver_id
   if (is.null(receiver_id)) {
-    receiver_id_query <- "True"
+    # receiver_id_query <- "True"
   } else {
     receiver_id <- check_value(
       receiver_id,
@@ -101,7 +101,7 @@ get_acoustic_deployments <- function(
 
   # Check acoustic_project_code
   if (is.null(acoustic_project_code)) {
-    acoustic_project_code_query <- "True"
+    # acoustic_project_code_query <- "True"
   } else {
     acoustic_project_code <- check_value(
       acoustic_project_code,
@@ -117,7 +117,7 @@ get_acoustic_deployments <- function(
 
   # Check station_name
   if (is.null(station_name)) {
-    station_name_query <- "True"
+    # station_name_query <- "True"
   } else {
     station_name <- check_value(
       station_name,
@@ -131,75 +131,19 @@ get_acoustic_deployments <- function(
   }
 
   # Build query
+  sql_fn_args <- format_sql_args(
+    function = "get_deployments",
+    deployment_ids = deployment_id,
+    receiver_ids = receiver_id,
+    acoustic_project_codes = acoustic_project_code,
+    station_names = station_name,
+    # This function returns acoustic deployments only
+    deployment_type = "Acoustic"
+  )
+
   query <- glue::glue_sql("
-    SELECT
-      dep.id_pk AS deployment_id,
-      receiver.receiver AS receiver_id,
-      network_project.projectcode AS acoustic_project_code,
-      dep.station_name AS station_name,
-      location_name AS station_description,
-      location_manager AS station_manager,
-      dep.deploy_date_time AS deploy_date_time,
-      dep.deploy_lat AS deploy_latitude,
-      dep.deploy_long AS deploy_longitude,
-      dep.intended_lat AS intended_latitude,
-      dep.intended_long AS intended_longitude,
-      dep.mooring_type AS mooring_type,
-      dep.bottom_depth AS bottom_depth,
-      dep.riser_length AS riser_length,
-      dep.instrument_depth AS deploy_depth,
-      dep.battery_install_date AS battery_installation_date,
-      dep.drop_dead_date AS battery_estimated_end_date,
-      dep.activation_datetime AS activation_date_time,
-      dep.recover_date_time AS recover_date_time,
-      dep.recover_lat AS recover_latitude,
-      dep.recover_long AS recover_longitude,
-      dep.download_date_time AS download_date_time,
-      dep.data_downloaded AS download_file_name,
-      dep.valid_data_until_datetime AS valid_data_until_date_time,
-      dep.sync_date_time AS sync_date_time,
-      dep.time_drift AS time_drift,
-      dep.ar_battery_install_date AS ar_battery_installation_date,
-      dep.ar_confirm AS ar_confirm,
-      dep.transmit_profile AS transmit_profile,
-      dep.transmit_power_output AS transmit_power_output,
-      dep.log_temperature_stats_period AS log_temperature_stats_period,
-      dep.log_temperature_sample_period AS log_temperature_sample_period,
-      dep.log_tilt_sample_period AS log_tilt_sample_period,
-      dep.log_noise_stats_period AS log_noise_stats_period,
-      dep.log_noise_sample_period AS log_noise_sample_period,
-      dep.log_depth_stats_period AS log_depth_stats_period,
-      dep.log_depth_sample_period AS log_depth_sample_period,
-      dep.comments AS comments
-      -- dep.project: dep.project_fk instead
-      -- dep.check_complete_time
-      -- dep.voltage_at_deploy
-      -- dep.voltage_at_download
-      -- dep.location_description
-      -- dep.date_created
-      -- dep.date_modified
-      -- dep.distance_to_mouth
-      -- dep.source
-      -- dep.acousticreleasenumber: cpod
-      -- dep.hydrophonecablelength: cpod
-      -- dep.recordingname: cpod
-      -- dep.hydrophonesensitivity: cpod
-      -- dep.amplifiersensitivity: cpod
-      -- dep.sample_rate: cpod
-      -- dep.external_id
-    FROM
-      acoustic.deployments AS dep
-      LEFT JOIN acoustic.receivers AS receiver
-        ON dep.receiver_fk = receiver.id_pk
-      LEFT JOIN common.projects AS network_project
-        ON dep.project_fk = network_project.id
-    WHERE
-      dep.deployment_type = 'acoustic_telemetry'
-      AND {deployment_id_query}
-      AND {receiver_id_query}
-      AND {acoustic_project_code_query}
-      AND {station_name_query}
-    ", .con = connection)
+    SELECT * FROM digital_twin.get_deployments({DBI::SQL(sql_fn_args)})
+                          ", .con = connection)
   deployments <- DBI::dbGetQuery(connection, query)
 
   # Close connection
