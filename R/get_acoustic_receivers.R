@@ -133,7 +133,7 @@ get_acoustic_receivers <- function(credentials = list(
 
   # Sort data
   receivers <-
-    receivers %>%
+    receivers |>
     dplyr::arrange(.data$receiver_id)
 
   # Return receivers
