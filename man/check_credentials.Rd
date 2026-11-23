@@ -10,7 +10,7 @@ check_credentials(credentials)
 \item{credentials}{A list or data frame containing the credentials to be checked.}
 }
 \value{
-TRUE if the credentials are valid, an error otherwise
+TRUE if the credentials are valid, an error otherwise.
 }
 \description{
 This function checks if the provided credentials contain a "username" and "password" field,
