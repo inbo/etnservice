@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# etnservice
+# etnservice <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 
@@ -88,8 +88,8 @@ response %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 ```
 
-Tthe [etn package](https://github.com/inbo/etn) uses this package as the
-inner workings for it’s functions.
+The [etn package](https://github.com/inbo/etn) uses this package as its
+backend.
 
 Another example of the same request as above, but now using
 [curl](https://curl.se/):
