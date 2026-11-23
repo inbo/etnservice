@@ -100,7 +100,7 @@ check_date_time <- function(date_time, date_name = "start_date") {
 #'   you can set it manually too.
 #'
 #' @return A string as it is ingested by other functions that need
-#'   authentication
+#'   authentication.
 #' @family helper functions
 #' @noRd
 
@@ -117,7 +117,7 @@ get_credentials <-
 #'
 #' @param credentials A list or data frame containing the credentials to be checked.
 #'
-#' @return TRUE if the credentials are valid, an error otherwise
+#' @return TRUE if the credentials are valid, an error otherwise.
 #'
 #' @examples
 #' \dontrun{
@@ -151,61 +151,4 @@ check_credentials <- function(credentials) {
   )
 
   return(TRUE)
-}
-
-#' Extract the OCPU temp key from a response object
-#'
-#' When posting a request to the opencpu api service without the json flag, a
-#' response object is returned containing all the generated objects, with a
-#' unique temp key in the path. To retrieve these objects in a subsequent GET
-#' request, it is convenient to retrieve this temp key from the original
-#' response object
-#'
-#' @param response The response resulting from a POST request to a opencpu api
-#'   service
-#'
-#' @return the OCPU temp key to be used as part of a GET request to an opencpu
-#'   api service
-#' @family helper functions
-#' @noRd
-extract_temp_key <- function(response) {
-  response |>
-    httr::content(as = "text") |>
-    stringr::str_extract("(?<=tmp\\/).{15}(?=\\/)")
-}
-
-#' Retrieve the result of a function called to the opencpu api
-#'
-#' Loading the evaluated object into the current environment, to be used
-#' internally in functions calling the opencpu api service to convert a response
-#' object included in the response from a post request, to the corresponding
-#' objects resulting from the original call.
-#'
-#' @param temp_key the temp key returned from the POST request to the API
-#'
-#' @return the uncompressed object resulting form a GET request to the API
-#' @family helper functions
-#' @noRd
-#' @examples
-#' \dontrun{
-#' etn:::extract_temp_key(response) |> get_val()
-#' }
-#'
-#' # using the opencpu test instance
-#' api_url <- "https://cloud.opencpu.org/ocpu/library/stats/R/rnorm"
-#' httr::POST(api_url, body = list(n = 10, mean = 5)) |>
-#'   extract_temp_key() |>
-#'   get_val(api_domain = "https://cloud.opencpu.org/ocpu")
-get_val <- function(temp_key, api_domain = "https://opencpu.lifewatch.be") {
-  httr::GET(
-    stringr::str_glue(
-      "{api_domain}",
-      "tmp/{temp_key}/R/.val/rds",
-      .sep = "/"
-    )
-  ) |>
-    httr::content(as = "raw") |>
-    rawConnection() |>
-    gzcon() |>
-    readRDS()
 }

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# etnservice
+# etnservice <a href="https://inbo.github.io/etnservice/"><img src="man/figures/logo.png" align="right" height="139" alt="etnservice website" /></a>
 
 <!-- badges: start -->
 
@@ -59,37 +59,37 @@ install.packages("etnservice", repos = c(inbo = "https://inbo.r-universe.dev"))
 If you are having trouble installing etn in RStudio, it may be easier to
 run the install command in R directly.
 
-    ## How to use the API
+## How to use the API
 
-    This is a basic example which shows you how adress the API directly:
+This is a basic example which shows you how adress the API directly:
 
+``` r
+library(httr2) # to talk to the internet
+library(magrittr) # to use pipes
+library(askpass) # to safly enter a password in R
 
-    ``` r
-    library(httr2) # to talk to the internet
-    library(askpass) # to safly enter a password in R
+# To access the ETN database, we need a login (username + password). We'll ask
+# for the password dynamically because that's safer than storing it as an object
+username <- "<your-username-here>"
+# All functions can be adressed directly in the URL
+endpoint <- "https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"
+# Request the result of the function to be a json, and put in a request
+response <-
+    httr2::request(endpoint) %>% 
+    ## In this case we'll request the data in JSON format and parse it
+    httr2::req_url_path_append("json") %>%
+    httr2::req_body_json(
+      list(credentials = list(username = username,
+                              password = askpass::askpass()))
+    ) %>% 
+    httr2::req_perform()
+# Take the response of the server, and convert it into an R object we can use
+response %>%
+    httr2::resp_body_json(simplifyVector = TRUE)
+```
 
-    # To access the ETN database, we need a login (username + password). We'll ask
-    # for the password dynamically because that's safer than storing it as an object
-    username <- "<your-username-here>"
-    # All functions can be adressed directly in the URL
-    endpoint <- "https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names"
-    # Request the result of the function to be a json, and put in a request
-    response <-
-        httr2::request(endpoint) |> 
-        ## In this case we'll request the data in JSON format and parse it
-        httr2::req_url_path_append("json") |>
-        httr2::req_body_json(
-          list(credentials = list(username = username,
-                                  password = askpass::askpass()))
-        ) |> 
-        httr2::req_perform()
-    # Take the response of the server, and convert it into an R object we can use
-    response |>
-        httr2::resp_body_json(simplifyVector = TRUE)
-
-However, a fork of the [etn package](https://github.com/inbo/etn) is
-currently in development that will allow you to do this using built in
-functions.
+The [etn package](https://github.com/inbo/etn) uses this package as its
+backend.
 
 Another example of the same request as above, but now using
 [curl](https://curl.se/):

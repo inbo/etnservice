@@ -24,7 +24,7 @@ test_that("get_acoustic_deployments() returns a tibble", {
 
 test_that("get_acoustic_deployments() returns unique deployment_id", {
   df <- get_acoustic_deployments(credentials)
-  expect_equal(nrow(df), nrow(df |> distinct(deployment_id)))
+  expect_equal(nrow(df), nrow(df %>% distinct(deployment_id)))
 })
 
 test_that("get_acoustic_deployments() returns the expected columns", {
@@ -81,7 +81,7 @@ test_that("get_acoustic_deployments() allows selecting on deployment_id", {
   single_select <- 1437 # From demer
   single_select_df <- get_acoustic_deployments(credentials, deployment_id = single_select)
   expect_equal(
-    single_select_df |> distinct(deployment_id) |> pull(),
+    single_select_df %>% distinct(deployment_id) %>% pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -90,7 +90,7 @@ test_that("get_acoustic_deployments() allows selecting on deployment_id", {
   multi_select <- c("1437", 1588) # Characters are allowed
   multi_select_df <- get_acoustic_deployments(credentials, deployment_id = multi_select)
   expect_equal(
-    multi_select_df |> distinct(deployment_id) |> pull() |> sort(),
+    multi_select_df %>% distinct(deployment_id) %>% pull() %>% sort(),
     c(as.integer(multi_select)) # Output will be all integer
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -105,7 +105,7 @@ test_that("get_acoustic_deployments() allows selecting on receiver_id", {
   single_select <- "VR2W-124070" # From demer
   single_select_df <- get_acoustic_deployments(credentials, receiver_id = single_select)
   expect_equal(
-    single_select_df |> distinct(receiver_id) |> pull(),
+    single_select_df %>% distinct(receiver_id) %>% pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -114,7 +114,7 @@ test_that("get_acoustic_deployments() allows selecting on receiver_id", {
   multi_select <- c("VR2W-124070", "VR2W-124078")
   multi_select_df <- get_acoustic_deployments(credentials, receiver_id = multi_select)
   expect_equal(
-    multi_select_df |> distinct(receiver_id) |> pull() |> sort(),
+    multi_select_df %>% distinct(receiver_id) %>% pull() %>% sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -129,7 +129,7 @@ test_that("get_acoustic_deployments() allows selecting on acoustic_project_code"
   single_select <- "demer"
   single_select_df <- get_acoustic_deployments(credentials, acoustic_project_code = single_select)
   expect_equal(
-    single_select_df |> distinct(acoustic_project_code) |> pull(),
+    single_select_df %>% distinct(acoustic_project_code) %>% pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -144,7 +144,7 @@ test_that("get_acoustic_deployments() allows selecting on acoustic_project_code"
   multi_select <- c("demer", "dijle")
   multi_select_df <- get_acoustic_deployments(credentials, acoustic_project_code = multi_select)
   expect_equal(
-    multi_select_df |> distinct(acoustic_project_code) |> pull() |> sort(),
+    multi_select_df %>% distinct(acoustic_project_code) %>% pull() %>% sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))
@@ -159,7 +159,7 @@ test_that("get_acoustic_deployments() allows selecting on station_name", {
   single_select <- "de-9" # From demer
   single_select_df <- get_acoustic_deployments(credentials, station_name = single_select)
   expect_equal(
-    single_select_df |> distinct(station_name) |> pull(),
+    single_select_df %>% distinct(station_name) %>% pull(),
     c(single_select)
   )
   expect_gt(nrow(single_select_df), 0)
@@ -168,7 +168,7 @@ test_that("get_acoustic_deployments() allows selecting on station_name", {
   multi_select <- c("de-10", "de-9") # Note that sort() will put de-10 before de-9
   multi_select_df <- get_acoustic_deployments(credentials, station_name = multi_select)
   expect_equal(
-    multi_select_df |> distinct(station_name) |> pull() |> sort(),
+    multi_select_df %>% distinct(station_name) %>% pull() %>% sort(),
     c(multi_select)
   )
   expect_gt(nrow(multi_select_df), nrow(single_select_df))

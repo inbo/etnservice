@@ -23,7 +23,7 @@ test_that("get_cpod_projects() returns a tibble", {
 
 test_that("get_cpod_projects() returns unique project_id", {
   df <- get_cpod_projects(credentials)
-  expect_equal(nrow(df), nrow(df |> distinct(project_id)))
+  expect_equal(nrow(df), nrow(df %>% distinct(project_id)))
 })
 
 test_that("get_cpod_projects() returns the expected columns", {
@@ -56,7 +56,7 @@ test_that("get_cpod_projects() allows selecting on cpod_project_code", {
   single_select <- "cpod-lifewatch"
   single_select_df <- get_cpod_projects(credentials, cpod_project_code = single_select)
   expect_equal(
-    single_select_df |> distinct(project_code) |> pull(),
+    single_select_df %>% distinct(project_code) %>% pull(),
     c(single_select)
   )
   expect_equal(nrow(single_select_df), 1)
@@ -71,7 +71,7 @@ test_that("get_cpod_projects() allows selecting on cpod_project_code", {
   multi_select <- c("cpod-lifewatch", "cpod-od-natuur")
   multi_select_df <- get_cpod_projects(credentials, cpod_project_code = multi_select)
   expect_equal(
-    multi_select_df |> distinct(project_code) |> pull() |> sort(),
+    multi_select_df %>% distinct(project_code) %>% pull() %>% sort(),
     c(multi_select)
   )
   expect_equal(nrow(multi_select_df), 2)
@@ -79,7 +79,7 @@ test_that("get_cpod_projects() allows selecting on cpod_project_code", {
 
 test_that("get_cpod_projects() returns projects of type 'cpod'", {
   expect_equal(
-    get_cpod_projects(credentials) |> distinct(project_type) |> pull(),
+    get_cpod_projects(credentials) %>% distinct(project_type) %>% pull(),
     "cpod"
   )
 })
