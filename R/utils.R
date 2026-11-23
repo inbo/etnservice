@@ -100,7 +100,7 @@ check_date_time <- function(date_time, date_name = "start_date") {
 #'   you can set it manually too.
 #'
 #' @return A string as it is ingested by other functions that need
-#'   authentication
+#'   authentication.
 #' @family helper functions
 #' @noRd
 
@@ -117,7 +117,7 @@ get_credentials <-
 #'
 #' @param credentials A list or data frame containing the credentials to be checked.
 #'
-#' @return TRUE if the credentials are valid, an error otherwise
+#' @return TRUE if the credentials are valid, an error otherwise.
 #'
 #' @examples
 #' \dontrun{
