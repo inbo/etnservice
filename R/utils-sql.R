@@ -114,7 +114,42 @@ sql_get_projects <- function(
   projects
 }
 
-format_sql_args <- function(fn, ...) {}
+format_sql_args <- function(fn, ...) {
+  if (!any(fn %in% db_function_args()$fn_name)) {
+    cli::cli_abort("{fn} is not a recognized {.pkg etnservice} function.")
+  }
+  args <- rlang::list2(...)
+  purrr::imap(
+    # Drop function name
+    args,
+    \(value, argument) {
+      pg_class <-
+        db_function_args() |>
+        dplyr::filter(.data$function_name == fn, argument = arg) |>
+        dplyr::pull("argument_type")
+
+      pg_array <- glue::glue_sql(
+        "ARRAY[{value*}]",
+        # Stop DBI from converting logicals into integers
+        value = as.character(value),
+        # Avoid the class being wrapped in ticks by glue
+        # Look up the postgress class via the result of digital_twin.get_functions()
+        pg_class = pg_class,
+        .con = connection
+      )
+      glue::glue(
+        "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
+        pg_value = ifelse(
+          test = pg_class == "boolean",
+          # Convert R logical to SQL boolean
+          yes = as.integer(value),
+          no = pg_array
+        )
+      )
+    }
+  ) |>
+    glue::glue_sql_collapse(sep = ", ")
+}
 
 # fns <-
 #   DBI::dbGetQuery(connection,
