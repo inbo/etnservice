@@ -255,16 +255,16 @@ get_animals <- function(
     ) |>
     names()
   animals <-
-    animals |>
-    dplyr::group_by_at(other_cols) |>
-    dplyr::summarize_at(tag_cols, paste, collapse = ",") |> # Collapse multiple tags by comma
-    dplyr::ungroup() |>
-    dplyr::mutate_at(tag_cols, gsub, pattern = "NA", replacement = "") |> # Use "" instead of "NA"
+    animals %>%
+    dplyr::group_by_at(other_cols) %>%
+    dplyr::summarize_at(tag_cols, paste, collapse = ",") %>% # Collapse multiple tags by comma
+    dplyr::ungroup() %>%
+    dplyr::mutate_at(tag_cols, gsub, pattern = "NA", replacement = "") %>% # Use "" instead of "NA"
     dplyr::select(names(animals)) # Use the original column order
 
   # Sort data
   animals <-
-    animals |>
+    animals %>%
     dplyr::arrange(
       .data$animal_project_code,
       .data$release_date_time,

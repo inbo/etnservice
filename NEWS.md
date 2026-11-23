@@ -1,4 +1,8 @@
 # etnservice (development version)
+- etnservice now has a pkgdown website: [inbo.github.io/etnservice/](https://inbo.github.io/etnservice/) (#138).
+- `write_dwc()` has been removed from etnservice. It was an API function that produced a Darwin Core occurrence table from the database. It should only be run through the etn R package, which generates the output from a Data Package via get_package(). The etnservice version had fallen out of sync with etn, and it likely no longer worked as expected. Keeping both implementations risked drift between the two packages, so the function is retired here. Use `etn::write_dwc()` instead (#190).
+- The internal helpers `get_val()` and `extract_temp_key()` were removed from `etnservice`, both were unused in this package and have since migrated to become internal helpers in the `etn` package. After this housekeeping, the `httr` package is no longer a dependency of `etnservice` (#198).
+- etnservice now has a new logo using a public domain image thanks to the biodiversity heritage library (DOI: https://doi.org/10.5962/bhl.title.13625) (#200).
 
 # etnservice 0.7.2
 - etnservice now relies on R >= 4.2.0 due to the dependency on `odbc` and `arrow` (#179). 

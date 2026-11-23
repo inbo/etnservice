@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/inbo/etnservice",
   "issueTracker": "https://github.com/inbo/etnservice/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.6.0.9005",
+  "version": "0.7.2.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "runtimePlatform": "R version 4.6.1 (2026-06-24)",
   "author": [
     {
       "@type": "Person",
@@ -95,7 +95,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 4.1.0"
+      "version": ">= 4.2.0"
     },
     "2": {
       "@type": "SoftwareApplication",
@@ -159,18 +159,6 @@
     },
     "7": {
       "@type": "SoftwareApplication",
-      "identifier": "httr",
-      "name": "httr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=httr"
-    },
-    "8": {
-      "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
       "provider": {
@@ -181,12 +169,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "odbc",
       "name": "odbc",
@@ -198,7 +186,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=odbc"
     },
-    "11": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -210,7 +198,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -222,7 +210,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "13": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -234,12 +222,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "14": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
-    "15": {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -253,5 +241,10 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "27767.549KB"
+  "fileSize": "203.545KB",
+  "releaseNotes": "https://github.com/inbo/etnservice/blob/main/NEWS.md",
+  "readme": "https://github.com/inbo/etnservice/blob/main/README.md",
+  "contIntegration": "https://github.com/inbo/etnservice/actions/workflows/R-CMD-check-lite.yaml",
+  "developmentStatus": ["https://lifecycle.r-lib.org/articles/stages.html#experimental", "https://www.repostatus.org/#wip"],
+  "keywords": ["r", "r-package", "animal-movement", "animal-tracking", "api", "biologging", "data-access", "fish", "lifewatch", "opencpu", "oscibio", "rstats"]
 }

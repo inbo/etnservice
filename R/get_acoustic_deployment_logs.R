@@ -10,7 +10,7 @@
 #' @inheritParams get_acoustic_deployments
 #' @inheritParams list_animal_ids
 #'
-#' @returns A tibble with receiver diagnostics data. The data is embedded in a
+#' @return A tibble with receiver diagnostics data. The data is embedded in a
 #'   `log_data` column that is JSON formatted.
 #' @export
 #'

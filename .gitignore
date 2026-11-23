@@ -51,6 +51,4 @@ rsconnect/
 
 # Postman collection exports
 tests/postman/*.json
-
-# PositAI (default RStudio)
-.positai
+docs
