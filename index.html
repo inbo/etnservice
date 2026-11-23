@@ -5,6 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Serve Data from the European Tracking Network • etnservice</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -12,6 +17,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Serve Data from the European Tracking Network">
 <meta name="description" content="Provides API endpoints to the European Tracking Network. Designed to be used with OpenCPU and the etn package.">
 <meta property="og:description" content="Provides API endpoints to the European Tracking Network. Designed to be used with OpenCPU and the etn package.">
+<meta property="og:image" content="https://inbo.github.io/etnservice/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -46,8 +52,11 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="etnservice">etnservice<a class="anchor" aria-label="anchor" href="#etnservice"></a>
-</h1></div>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="etnservice-">etnservice 
+<a class="anchor" aria-label="anchor" href="#etnservice-"></a>
+</h1>
+</div>
 <!-- badges: start -->
 
 <p>The goal of etnservice is to to serve data from the European Tracking Network as a restful API.</p>
@@ -101,7 +110,7 @@
 <span><span class="co"># Take the response of the server, and convert it into an R object we can use</span></span>
 <span><span class="va">response</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html" class="external-link">resp_body_json</a></span><span class="op">(</span>simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Tthe <a href="https://github.com/inbo/etn" class="external-link">etn package</a> uses this package as the inner workings for it’s functions.</p>
+<p>The <a href="https://github.com/inbo/etn" class="external-link">etn package</a> uses this package as its backend.</p>
 <p>Another example of the same request as above, but now using <a href="https://curl.se/" class="external-link">curl</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--location</span> <span class="st">'https://opencpu.lifewatch.be/library/etnservice/R/list_scientific_names/json'</span> <span class="dt">\</span></span>

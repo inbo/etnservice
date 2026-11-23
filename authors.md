@@ -20,12 +20,12 @@ Source:
 
 Huybrechts P, Desmet P (2026). *etnservice: Serve Data from the European
 Tracking Network*. R package version 0.7.2.9000,
-<https://github.com/inbo/etnservice>.
+<https://inbo.github.io/etnservice/>.
 
     @Manual{,
       title = {etnservice: Serve Data from the European Tracking Network},
       author = {Pieter Huybrechts and Peter Desmet},
       year = {2026},
       note = {R package version 0.7.2.9000},
-      url = {https://github.com/inbo/etnservice},
+      url = {https://inbo.github.io/etnservice/},
     }

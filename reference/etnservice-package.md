@@ -7,7 +7,7 @@ used with OpenCPU and the 'etn' package.
 
 Useful links:
 
-- <https://github.com/inbo/etnservice>
+- <https://inbo.github.io/etnservice/>
 
 - Report bugs at <https://github.com/inbo/etnservice/issues>
 

@@ -39,7 +39,7 @@ get_tags(
 
   Character (vector). One or more acoustic tag identifiers, i.e.
   identifiers found in
-  [`get_acoustic_detections()`](get_acoustic_detections.md).
+  [`get_acoustic_detections()`](https://inbo.github.io/etnservice/reference/get_acoustic_detections.md).
 
 ## Value
 
