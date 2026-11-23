@@ -6,12 +6,14 @@
 \alias{etnservice-package}
 \title{etnservice: Serve Data from the European Tracking Network}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Provides API endpoints to the European Tracking Network. Designed to be used with OpenCPU and the 'etn' package.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/inbo/etnservice}
+  \item \url{https://inbo.github.io/etnservice/}
   \item Report bugs at \url{https://github.com/inbo/etnservice/issues}
 }
 
