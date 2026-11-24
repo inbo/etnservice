@@ -114,39 +114,71 @@ sql_get_projects <- function(
   projects
 }
 
-format_sql_args <- function(fn, ...) {
+format_sql_args <- function(
+  fn,
+  credentials = list(
+    username = Sys.getenv("ETN_USER"),
+    password = Sys.getenv("ETN_PWD")
+  ),
+  ...
+) {
+  # Check if credentials object has right shape
+  check_credentials(credentials)
+
+  # Create connection object
+  connection <- connect_to_etn(credentials$username, credentials$password)
+
+  # Ensure the connection is closed when the function exits, even when it fails.
+  withr::defer(
+    if (DBI::dbIsValid(connection)) {
+      DBI::dbDisconnect(connection)
+    }
+  )
+
+  # Check if requested function is a database function
   if (!any(fn %in% db_function_args()$fn_name)) {
     cli::cli_abort("{fn} is not a recognized {.pkg etnservice} function.")
   }
   args <- rlang::list2(...)
-  purrr::imap(
-    # Drop function name
-    args,
-    \(value, argument) {
-      pg_class <-
-        db_function_args() |>
-        dplyr::filter(.data$function_name == fn, argument = arg) |>
-        dplyr::pull("argument_type")
 
-      pg_array <- glue::glue_sql(
-        "ARRAY[{value*}]",
-        # Stop DBI from converting logicals into integers
-        value = as.character(value),
-        # Avoid the class being wrapped in ticks by glue
-        # Look up the postgress class via the result of digital_twin.get_functions()
-        pg_class = pg_class,
-        .con = connection
+  fn_args <- dplyr::filter(
+    db_function_args(),
+    .data$fn_name == fn,
+    .data$argument %in% names(args)
+  ) |>
+    dplyr::mutate(
+      pg_value = dplyr::case_when(
+        # detect and format arrays
+        stringr::str_ends(.data$argument_type, stringr::fixed("[]")) ~
+          glue::glue_sql(
+            "ARRAY[{value*}]",
+            # TODO: make sure args is correctly matched
+            value = purrr::chuck(args, argument),
+            .con = connection
+          ),
+        .data$argument_type == "boolean" ~ as.integer(purrr::chuck(
+          args,
+          argument
+        )),
+        .data$argument_type %in%
+          c("character", "text") ~ as.character(purrr::chuck(args, argument)),
+        .data$argument_type == "integer" ~ as.integer(purrr::chuck(
+          args,
+          argument
+        )),
+        .data$argument_type == "timestamp" ~ as.POSIXct(purrr::chuck(
+          args,
+          argument
+        )),
+        # When no type is matched, just use value as is
+        .default = value
       )
-      glue::glue(
-        "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
-        pg_value = ifelse(
-          test = pg_class == "boolean",
-          # Convert R logical to SQL boolean
-          yes = as.integer(value),
-          no = pg_array
-        )
-      )
-    }
+    )
+  glue::glue(
+    "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
+    argument = fn_args$argument,
+    pg_value = fn_args$pg_value,
+    pg_class = fn_args$argument_type
   ) |>
     glue::glue_sql_collapse(sep = ", ")
 }
