@@ -163,27 +163,27 @@ format_sql_args <- function(
     .data$argument %in% names(args)
   ) |>
     dplyr::mutate(
-      pg_value = dplyr::case_when(
-        # detect and format arrays
-        stringr::str_ends(argument_type, stringr::fixed("[]")) ~
-          glue::glue_sql(
-            "ARRAY[{value*}]",
-            # TODO: make sure args is correctly matched
-            value = args[argument],
-            .con = connection
-          ),
-        .data$argument_type == "boolean" ~ as.integer(args[argument]),
-        .data$argument_type %in%
-          c("character", "text") ~ as.character(args[argument]),
-        .data$argument_type == "integer" ~ as.integer(args[argument]),
-        .data$argument_type == "timestamp" ~ as.POSIXct(args[argument]),
-        # When no type is matched, just use value as is
-        .default = DBI::SQL(args[argument])
-      )
+      value = unname(args[.data$argument]),
+      pg_value = purrr::map2_chr(
+        .data$value,
+        .data$argument_type,
+        \(val, type) {
+          if (stringr::str_ends(type, stringr::fixed("[]"))) {
+            # Casting ::{DBI::SQL(type)} also prevents errors on empty arrays
+            glue::glue_sql("ARRAY[{val*}]::{DBI::SQL(type)}", .con = connection)
+          } else if (type == "boolean") {
+            glue::glue_sql("{as.integer(val)}", .con = connection)
+          } else {
+            # Safely quotes strings/dates via connection instead of raw DBI::SQL()
+            glue::glue_sql("{val}", .con = connection)
+          }
+        }
+      ) |>
+        DBI::SQL()
     )
   # Format to sql argument syntax and collapse
   glue::glue(
-    "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
+    "p_{argument} => {pg_value}",
     argument = fn_args$argument,
     pg_value = fn_args$pg_value,
     pg_class = fn_args$argument_type
