@@ -155,7 +155,11 @@ format_sql_args <- function(
   if (!any(fn %in% db_function_args()$fn_name)) {
     cli::cli_abort("{fn} is not a recognized {.pkg etnservice} function.")
   }
-  args <- rlang::list2(...)
+  args <- rlang::list2(...) |>
+    # Drop NULL arguments: don't pass NULL as a query value to the SQL function,
+    # omit these arguments instead. Otherwise the functions would interpret a
+    # missing argument as actually searching for NULL values.
+    purrr::discard(is.null)
 
   fn_args <- dplyr::filter(
     db_function_args(),
