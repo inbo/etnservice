@@ -5,10 +5,10 @@ test_that("get_version() returns a version object as `package_version`", {
 test_that("get_version() returns installed etnservice version", {
   expect_identical(
     as.character(get_version()$version),
-    installed.packages(noCache = TRUE) %>%
-      dplyr::as_tibble() %>%
-      dplyr::filter(Package == "etnservice") %>%
-      dplyr::pull("Version") %>%
+    installed.packages(noCache = TRUE) |>
+      dplyr::as_tibble() |>
+      dplyr::filter(Package == "etnservice") |>
+      dplyr::pull("Version") |>
       unique()
   )
 })

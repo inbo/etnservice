@@ -11,10 +11,10 @@ list_animal_ids <- function(credentials = list(
                             )) {
   # Check if credentials object has right shape
   check_credentials(credentials)
-  
+
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
@@ -24,7 +24,7 @@ list_animal_ids <- function(credentials = list(
 
   check_connection(connection)
   query <- glue::glue_sql(
-    "SELECT DISTINCT id_pk FROM common.animal_release",
+    "SELECT DISTINCT animal_id FROM digital_twin.get_animals()",
     .con = connection
   )
   data <- DBI::dbGetQuery(connection, query)
@@ -32,5 +32,5 @@ list_animal_ids <- function(credentials = list(
   # Close connection
   DBI::dbDisconnect(connection)
 
-  sort(data$id_pk)
+  sort(data$animal_id)
 }

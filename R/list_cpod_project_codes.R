@@ -16,25 +16,24 @@ list_cpod_project_codes <- function(credentials = list(
 
   # Create connection object
   connection <- connect_to_etn(credentials$username, credentials$password)
-  
+
   # Ensure the connection is closed when the function exits, even when it fails.
   withr::defer(
     if (DBI::dbIsValid(connection)) {
       DBI::dbDisconnect(connection)
     }
   )
-  
+
   # Check if we can make a connection
   check_connection(connection)
 
-  project_query <- glue::glue_sql(
-    readr::read_file(system.file("sql", "project.sql", package = "etnservice")),
-    .con = connection
+  query <- glue::glue_sql("
+  SELECT DISTINCT project_code
+  FROM digital_twin.get_projects(p_project_type => ARRAY['cpod']::text[])
+  ",
+  .con = connection
   )
-  query <- glue::glue_sql(
-    "SELECT DISTINCT project_code FROM ({project_query}) AS project WHERE project_type = 'cpod'",
-    .con = connection
-  )
+
   data <- DBI::dbGetQuery(connection, query)
 
   # Close connection
