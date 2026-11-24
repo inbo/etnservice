@@ -126,6 +126,9 @@ sql_get_projects <- function(
 #' @examples
 #' format_sql_args(
 #'   fn = "get_deployments",
+#'   deployment_ids = c(74408, 74686, 78130),
+#'   acoustic_project_codes = c("Inforbiomares", "PTN_PROTECT2012"),
+#'   deployment_type = "acoustic_telemetry"
 #'   )
 format_sql_args <- function(
   fn,
@@ -162,29 +165,20 @@ format_sql_args <- function(
     dplyr::mutate(
       pg_value = dplyr::case_when(
         # detect and format arrays
-        stringr::str_ends(.data$argument_type, stringr::fixed("[]")) ~
+        stringr::str_ends(argument_type, stringr::fixed("[]")) ~
           glue::glue_sql(
             "ARRAY[{value*}]",
             # TODO: make sure args is correctly matched
-            value = purrr::chuck(args, .data$argument),
+            value = args[argument],
             .con = connection
           ),
-        .data$argument_type == "boolean" ~ as.integer(purrr::chuck(
-          args,
-          .data$argument
-        )),
+        .data$argument_type == "boolean" ~ as.integer(args[argument]),
         .data$argument_type %in%
-          c("character", "text") ~ as.character(purrr::chuck(args, argument)),
-        .data$argument_type == "integer" ~ as.integer(purrr::chuck(
-          args,
-          .data$argument
-        )),
-        .data$argument_type == "timestamp" ~ as.POSIXct(purrr::chuck(
-          args,
-          .data$argument
-        )),
+          c("character", "text") ~ as.character(args[argument]),
+        .data$argument_type == "integer" ~ as.integer(args[argument]),
+        .data$argument_type == "timestamp" ~ as.POSIXct(args[argument]),
         # When no type is matched, just use value as is
-        .default = value
+        .default = DBI::SQL(args[argument])
       )
     )
   # Format to sql argument syntax and collapse
