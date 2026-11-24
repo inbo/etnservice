@@ -139,8 +139,9 @@ get_acoustic_deployments <- function(
     receiver_ids = receiver_id,
     acoustic_project_codes = acoustic_project_code,
     station_names = station_name,
-    # This function returns acoustic deployments only
-    deployment_type = "Acoustic"
+    # This function returns acoustic deployments only, value from docs via
+    # db_function_args()
+    deployment_type = "acoustic_telemetry"
   )
 
   query <- glue::glue_sql(
