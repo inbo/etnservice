@@ -114,13 +114,26 @@ sql_get_projects <- function(
   projects
 }
 
+#' Title
+#'
+#' @param fn
+#' @param ...
+#' @param credentials
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' format_sql_args(
+#'   fn = "get_deployments",
+#'   )
 format_sql_args <- function(
   fn,
+  ...,
   credentials = list(
     username = Sys.getenv("ETN_USER"),
     password = Sys.getenv("ETN_PWD")
-  ),
-  ...
+  )
 ) {
   # Check if credentials object has right shape
   check_credentials(credentials)
@@ -153,27 +166,28 @@ format_sql_args <- function(
           glue::glue_sql(
             "ARRAY[{value*}]",
             # TODO: make sure args is correctly matched
-            value = purrr::chuck(args, argument),
+            value = purrr::chuck(args, .data$argument),
             .con = connection
           ),
         .data$argument_type == "boolean" ~ as.integer(purrr::chuck(
           args,
-          argument
+          .data$argument
         )),
         .data$argument_type %in%
           c("character", "text") ~ as.character(purrr::chuck(args, argument)),
         .data$argument_type == "integer" ~ as.integer(purrr::chuck(
           args,
-          argument
+          .data$argument
         )),
         .data$argument_type == "timestamp" ~ as.POSIXct(purrr::chuck(
           args,
-          argument
+          .data$argument
         )),
         # When no type is matched, just use value as is
         .default = value
       )
     )
+  # Format to sql argument syntax and collapse
   glue::glue(
     "p_{argument} => {pg_value}::{DBI::SQL(pg_class)}",
     argument = fn_args$argument,
